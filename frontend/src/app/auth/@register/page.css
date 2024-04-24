@@ -1,0 +1,25 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #000116 70%, #000344);
+  height: 100vh;
+  color: #fff;
+}
+
+.register-logo img {
+  width: 250px;
+  height: 250px;
+}
+
+.register-card {
+  border: 1px solid red;
+  padding: 1rem;
+}
+
+.register-card input {
+  font-size: 24px;
+  padding-left: 0.5rem;
+}
