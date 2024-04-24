@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { model } = require("mongoose");
 
-function verifyToken(req, res, next) {
+function authMiddleware(req, res, next) {
   const token = req.header("Authorization");
   if (!token) {
     return res.status(401).json({ error: "Access denied" });
@@ -15,4 +15,4 @@ function verifyToken(req, res, next) {
   }
 }
 
-model.exports = verifyToken;
+model.exports = authMiddleware;

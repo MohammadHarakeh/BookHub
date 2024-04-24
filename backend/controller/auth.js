@@ -1,10 +1,8 @@
-const express = require("express");
-const router = expres.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-router.post("/register", async (req, res) => {
+const register = async (req, res) => {
   try {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -15,9 +13,9 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Registration failed" });
   }
-});
+};
 
-router.post("/login", async (req, res) => {
+const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -40,4 +38,6 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Login failed" });
   }
-});
+};
+
+module.exports = { register, login };
