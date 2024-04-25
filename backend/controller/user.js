@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const Post = require("../models/Post");
+const Follow = require("../models/Follow");
+const jwt = require("jsonwebtoken");
 
 const updateProfile = async (req, res) => {
   try {
