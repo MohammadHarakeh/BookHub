@@ -67,4 +67,4 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { updateProfile };
+module.exports = { updateProfile, createPost };
