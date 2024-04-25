@@ -9,6 +9,18 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
 
+  const register = async () => {
+    try {
+      const formData = {
+        email: email,
+        username: username,
+        password: password,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleContinue = () => {
     if (step === 1 && email.trim() !== "") {
       setStep(2);
@@ -77,6 +89,11 @@ const Register: React.FC = () => {
             </button>
           </div>
         )}
+        <div className="switch-paragraph">
+          <p>
+            Already have an account? <span>Sign in</span>
+          </p>
+        </div>
       </div>
     </div>
   );
