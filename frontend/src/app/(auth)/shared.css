@@ -1,0 +1,60 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #000116 70%, #000344);
+  height: 100vh;
+  color: #fff;
+}
+
+.register-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.register-logo img {
+  width: 225px;
+  height: 225px;
+}
+
+.register-card {
+  box-shadow: 0 0 10px rgba(156, 157, 213, 0.5);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 10px;
+}
+
+.register-card input {
+  font-size: 20px;
+  padding: 0.5rem;
+  background-color: #2d2e3e;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  margin: 0.5rem 0rem;
+}
+
+.input-btn-container {
+  display: flex;
+  margin-top: 0.25rem;
+}
+
+.switch-paragraph {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.switch-paragraph span {
+  color: #36ff00;
+  cursor: pointer;
+}
