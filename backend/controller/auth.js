@@ -26,22 +26,30 @@ const updateProfile = async (req, res) => {
       twitter_link,
     } = req.body;
 
-    const userId = req.user.userId;
+    console.log(req.body);
+
+    const userId = req.user._id;
+
+    console.log(userId);
 
     const user = await User.findById(userId);
 
     if (!user) {
-      user.profile.bio = bio;
-      user.profile.location = location;
-      user.profile.profile_picture = profile_picture;
-      user.profile.linkedin_link = linkedin_link;
-      user.profile.instagram_link = instagram_link;
-      user.profile.twitter_link = twitter_link;
-
-      await user.save();
-
-      res.status(200).json({ message: "Profile updated successfully" });
+      res.status(404).json({ message: "User not found" });
     }
+
+    if (bio !== undefined) user.profile.bio = bio;
+    if (location !== undefined) user.profile.location = location;
+    if (profile_picture !== undefined)
+      user.profile.profile_picture = profile_picture;
+    if (linkedin_link !== undefined) user.profile.linkedin_link = linkedin_link;
+    if (instagram_link !== undefined)
+      user.profile.instagram_link = instagram_link;
+    if (twitter_link !== undefined) user.profile.twitter_link = twitter_link;
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res.status(500).json({ error: "Profile update failed" });
   }

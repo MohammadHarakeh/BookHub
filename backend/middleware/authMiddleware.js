@@ -1,18 +1,24 @@
 const jwt = require("jsonwebtoken");
-const { model } = require("mongoose");
+const User = require("../models/User");
 
-function authMiddleware(req, res, next) {
-  const token = req.header("Authorization");
-  if (!token) {
-    return res.status(401).json({ error: "Access denied" });
-  }
+const authMiddleware = async (req, res, next) => {
   try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).send("Unauthenticated");
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.userId = decoded.userId;
+    console.log(decoded.userId);
+    if (!decoded || !decoded.userId)
+      return res.status(401).send("Unauthenticated");
+
+    const user = await User.findById(decoded.userId);
+    if (!user) return res.status(401).send("Unauthenticated");
+
+    req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({ error: "Invalid token" });
+    console.log("Internal server error:", error);
+    return res.status(500).send("Internal server error.");
   }
-}
-
-model.exports = authMiddleware;
+};
+module.exports = authMiddleware;
