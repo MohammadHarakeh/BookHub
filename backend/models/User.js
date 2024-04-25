@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profile: {
+    bio: String,
+    location: String,
+    profile_picture: String,
+    linkedin_link: String,
+    instagram_link: String,
+    twitter_link: String,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
