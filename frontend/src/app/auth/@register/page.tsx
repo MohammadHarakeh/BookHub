@@ -9,6 +9,16 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
 
+  const handleContinue = () => {
+    if (step === 1 && email.trim() !== "") {
+      setStep(2);
+    } else if (step === 2 && username.trim() !== "") {
+      setStep(3);
+    } else if (step === 3 && password.trim() !== "") {
+      console.log("User registered:", { email, username, password });
+    }
+  };
+
   return (
     <div className="register-container">
       <div className="register-logo">
