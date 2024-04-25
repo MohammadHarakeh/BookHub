@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./page.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 
@@ -42,8 +44,16 @@ const Register: React.FC = () => {
   };
 
   const handleContinue = () => {
-    if (step === 1 && email.trim() !== "" && !emailRegex.test(email)) {
+    if (step === 1 && email.trim() !== "") {
+      if (!emailRegex.test(email)) {
+        toast.error("Invalid email address");
+        return;
+      }
       setStep(2);
+    } else if (step === 2 && username.trim().length < 5) {
+      toast.error("Username must be at least 5 characters");
+    } else if (step === 3 && password.trim().length < 6) {
+      toast.error("Password must be at least 6 characters");
     } else if (step === 2 && username.trim() !== "") {
       setStep(3);
     } else if (step === 3 && password.trim() !== "") {
@@ -54,9 +64,15 @@ const Register: React.FC = () => {
 
   return (
     <div className="register-container">
+      <ToastContainer
+        theme="dark"
+        toastStyle={{ backgroundColor: "#0e0f32" }}
+      />
+
       <div className="register-logo">
         <img src={mainLogo.src} alt="My Image" />
       </div>
+
       <div className="register-card">
         <div className="register-title">
           <h1>Join BookHub</h1>
