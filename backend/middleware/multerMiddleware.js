@@ -3,10 +3,17 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploadedPosts/");
+    if (req.route.path === "/updateProfile") {
+      cb(null, "profilePictures/");
+    } else {
+      cb(null, "uploadPosts/");
+    }
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    const extname = path.extname(file.originalname);
+    const filename =
+      Date.now() + "-" + Math.round(Math.random() * 1e9) + extname;
+    cb(null, filename);
   },
 });
 
@@ -20,6 +27,9 @@ const upload = multer({
       cb(new Error("Only images are allowed"));
     }
   },
-}).single("image");
+});
 
-module.exports = upload;
+const postUpload = upload.single("image");
+const profilePictureUpload = upload.single("image");
+
+module.exports = { postUpload, profilePictureUpload };

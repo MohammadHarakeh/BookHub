@@ -2,17 +2,23 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const Follow = require("../models/Follow");
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const fs = require("fs");
+const multerMiddleware = require("../middleware/multerMiddleware");
+const multer = require("multer");
 
 const updateProfile = async (req, res) => {
   try {
-    const {
-      bio,
-      location,
-      profile_picture,
-      linkedin_link,
-      instagram_link,
-      twitter_link,
-    } = req.body;
+    multerMiddleware(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: err.message });
+      } else if (err) {
+        return res.status(500).json({ error: "File upload failed" });
+      }
+    });
+
+    const { bio, location, linkedin_link, instagram_link, twitter_link } =
+      req.body;
 
     const userId = req.user._id;
 
@@ -30,6 +36,17 @@ const updateProfile = async (req, res) => {
       if (instagram_link !== undefined)
         user.profile.instagram_link = instagram_link;
       if (twitter_link !== undefined) user.profile.twitter_link = twitter_link;
+
+      if (req.file) {
+        const oldProfilePicturePath = user.profile.profile_picture;
+        const newProfilePicturePath = req.file.path;
+
+        if (oldProfilePicturePath) {
+          fs.unlinkSync(oldProfilePicturePath);
+        }
+
+        user.profile.profile_picture = newProfilePicturePath;
+      }
 
       await user.save();
 
