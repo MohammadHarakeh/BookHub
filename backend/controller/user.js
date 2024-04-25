@@ -44,4 +44,27 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const createPost = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const userId = decodedToken.userId;
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
+
+    const { content } = req.body;
+    const image = req.file.path;
+
+    const post = new Post({ userId, content, image });
+
+    await post.save();
+
+    res.status(201).json({ message: "Post created successfully", post });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to create post", error });
+  }
+};
+
 module.exports = { updateProfile };
