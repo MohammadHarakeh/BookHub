@@ -7,11 +7,13 @@ const {
   updateProfile,
   createPost,
   getAllPosts,
+  deletePost,
 } = require("../controller/user");
 
 router.post("/updateProfile", authMiddleware, updateProfile);
 
-router.post("/createPost", multerMiddleware, createPost);
 router.get("/getAllPosts", getAllPosts);
+router.post("/createPost", multerMiddleware, createPost);
+router.delete("/deletePost/:postId", authMiddleware, deletePost);
 
 module.exports = router;

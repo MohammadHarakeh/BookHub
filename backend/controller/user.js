@@ -14,11 +14,7 @@ const updateProfile = async (req, res) => {
       twitter_link,
     } = req.body;
 
-    console.log(req.body);
-
     const userId = req.user._id;
-
-    console.log(userId);
 
     const user = await User.findById(userId);
 
@@ -78,24 +74,25 @@ const createPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.postId);
+    const post = await Post.findByIdAndDelete(req.params.postId);
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    if (post.userId.toString() !== req.user.userId) {
+    if (!post.userId.equals(req.user._id)) {
+      console.log("Post ID: ", post.userId);
+      console.log("User ID: ", req.user._id);
       return res
         .status(403)
         .json({ message: "Unauthorized: You can only delete your own posts" });
     }
 
-    await post.remove();
-
-    res.status(200).json({ message: "Failed to delete post", error });
+    res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Failed to delete post", error });
   }
 };
 
-module.exports = { updateProfile, createPost, getAllPosts };
+module.exports = { updateProfile, createPost, getAllPosts, deletePost };
