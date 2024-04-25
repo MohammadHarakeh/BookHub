@@ -4,7 +4,8 @@ import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./page.css";
+import "../@register/page.css";
+import "../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 
 const Register: React.FC = () => {

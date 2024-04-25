@@ -5,7 +5,7 @@ export default function AuthLayout({
   login: React.ReactNode;
   register: React.ReactNode;
 }) {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return isLoggedIn ? (
     <div>
       <div>{register}</div>
