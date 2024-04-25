@@ -44,6 +44,15 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find().populate("userId", "username");
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch posts", error });
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -67,12 +76,25 @@ const createPost = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
+const deletePost = async (req, res) => {
   try {
-    const posts = await Post.find().populate("userId", "username");
-    res.status(200).json(posts);
+    const post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (post.userId.toString() !== req.user.userId) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized: You can only delete your own posts" });
+    }
+
+    await post.remove();
+
+    res.status(200).json({ message: "Failed to delete post", error });
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch posts", error });
+    res.status(500).json({ message: "Failed to delete post", error });
   }
 };
 
