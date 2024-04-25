@@ -14,6 +14,34 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  const login = async () => {
+    try {
+      const body = JSON.stringify({
+        identifier: email,
+        password: password,
+      });
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/auth/login`,
+        body
+      );
+
+      if (response.status === 200) {
+        console.log("Loggedin successfully");
+        setEmail("");
+        setPassword("");
+        toast.success("Logged in successfully");
+      } else {
+        console.error("Failed to login:", response.status);
+        toast.error("Failed to login");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error("Failed to login");
+    }
+  };
+
   const switchToRegister = () => {
     router.push("/register");
   };
@@ -51,7 +79,7 @@ const Login: React.FC = () => {
           ></input>
 
           <div className="button-container">
-            <button>Sign in</button>
+            <button onClick={login}>Sign in</button>
           </div>
         </div>
 
