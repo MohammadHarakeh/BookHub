@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { sendRequest } from "../../tools/apiRequest";
+import { requestMethods } from "../../tools/apiRequestMethods";
 import "./page.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 
@@ -9,24 +11,43 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
 
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+
   const register = async () => {
     try {
-      const formData = {
+      const body = JSON.stringify({
         email: email,
         username: username,
         password: password,
-      };
+      });
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/auth/register`,
+        body
+      );
+
+      if (response.status === 201) {
+        console.log("User registered successfully");
+        setStep(1);
+        setEmail("");
+        setUsername("");
+        setPassword("");
+      } else {
+        console.error("Failed to register user:", response.status);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("error registering using:", error);
     }
   };
 
   const handleContinue = () => {
-    if (step === 1 && email.trim() !== "") {
+    if (step === 1 && email.trim() !== "" && !emailRegex.test(email)) {
       setStep(2);
     } else if (step === 2 && username.trim() !== "") {
       setStep(3);
     } else if (step === 3 && password.trim() !== "") {
+      register();
       console.log("User registered:", { email, username, password });
     }
   };
