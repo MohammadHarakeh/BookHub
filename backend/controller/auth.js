@@ -15,6 +15,38 @@ const register = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  try {
+    const {
+      bio,
+      location,
+      profile_picture,
+      linkedin_link,
+      instagram_link,
+      twitter_link,
+    } = req.body;
+
+    const userId = req.user.userId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      user.profile.bio = bio;
+      user.profile.location = location;
+      user.profile.profile_picture = profile_picture;
+      user.profile.linkedin_link = linkedin_link;
+      user.profile.instagram_link = instagram_link;
+      user.profile.twitter_link = twitter_link;
+
+      await user.save();
+
+      res.status(200).json({ message: "Profile updated successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Profile update failed" });
+  }
+};
+
 const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
@@ -42,4 +74,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+module.exports = { register, login, updateProfile };
