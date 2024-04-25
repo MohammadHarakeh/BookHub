@@ -27,8 +27,53 @@ const Register: React.FC = () => {
       <div className="register-card">
         <h1>Join BookHub</h1>
         <h1>Where Stories Unite!</h1>
-        <input placeholder="Email"></input>
-        <button>Continue</button>
+        <div className="input-btn-container">
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          ></input>
+          {step === 1 && (
+            <button className="continue-btn" onClick={handleContinue}>
+              Continue
+            </button>
+          )}
+
+          {step >= 2 && (
+            <div>
+              <input
+                placeholder="Username"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
+              {step === 2 && (
+                <button className="continue-btn" onClick={handleContinue}>
+                  Continue
+                </button>
+              )}
+            </div>
+          )}
+
+          {step === 3 && (
+            <div>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <button className="continue-btn" onClick={handleContinue}>
+                Register
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
