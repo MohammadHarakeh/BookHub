@@ -67,4 +67,13 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { updateProfile, createPost };
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = (await Post.find()).populate("userId", "username");
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch posts", error });
+  }
+};
+
+module.exports = { updateProfile, createPost, getAllPosts };
