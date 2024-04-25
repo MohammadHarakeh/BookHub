@@ -7,10 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import "../shared.css";
 import "./page.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
+import { useRouter } from "next/navigation";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const switchToRegister = () => {
+    router.push("/register");
+  };
 
   return (
     <div className="register-container">
@@ -51,7 +57,8 @@ const Login: React.FC = () => {
 
         <div className="switch-paragraph">
           <p>
-            Already have an account? <span>Sign in</span>
+            Don't have an account?
+            <span onClick={switchToRegister}> Signup</span>
           </p>
         </div>
       </div>

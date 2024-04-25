@@ -135,7 +135,8 @@ const Register: React.FC = () => {
         )}
         <div className="switch-paragraph">
           <p>
-            Already have an account?<span onClick={switchToLogin}>Sign in</span>
+            Already have an account?{" "}
+            <span onClick={switchToLogin}>Sign in</span>
           </p>
         </div>
       </div>

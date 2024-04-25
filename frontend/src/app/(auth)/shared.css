@@ -24,7 +24,7 @@
 
 .register-card {
   box-shadow: 0 0 10px rgba(156, 157, 213, 0.5);
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -57,4 +57,8 @@
 .switch-paragraph span {
   color: #36ff00;
   cursor: pointer;
+}
+
+.switch-paragraph span:hover {
+  color: #2e9e0f;
 }
