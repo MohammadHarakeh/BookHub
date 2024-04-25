@@ -5,7 +5,7 @@ import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../shared.css";
-import "./page.css";
+import "../@login/page.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 
 const Login: React.FC = () => {
@@ -36,7 +36,17 @@ const Login: React.FC = () => {
             }}
           ></input>
 
-          <button className="continue-btn">Continue</button>
+          <input
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          ></input>
+
+          <div className="button-container">
+            <button>Sign in</button>
+          </div>
         </div>
 
         <div className="switch-paragraph">

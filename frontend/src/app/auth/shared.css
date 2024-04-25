@@ -36,12 +36,13 @@
   padding: 0.5rem;
   background-color: #2d2e3e;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   color: #fff;
   margin: 0.5rem 0rem;
 }
 
 .input-btn-container {
+  display: flex;
   margin-top: 0.25rem;
 }
 

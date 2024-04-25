@@ -1,4 +1,4 @@
-.continue-btn {
+.button-container button {
   cursor: pointer;
   background-color: #65b450;
   outline: none;
@@ -7,7 +7,30 @@
   border-radius: 5px;
   height: 2.5rem;
   padding: 0rem 0.75rem;
-  margin-left: 1rem;
   color: #fff;
   font-weight: 500;
+  width: 100%;
+}
+.button-container {
+  width: 75%;
+  margin-top: 0.5rem;
+}
+
+.register-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+}
+
+.input-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-btn-container input {
+  width: 75%;
 }
