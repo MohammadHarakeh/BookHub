@@ -10,10 +10,10 @@ import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
 
 const Register: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [step, setStep] = useState<number>(1);
   const router = useRouter();
 
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -38,6 +38,7 @@ const Register: React.FC = () => {
         setEmail("");
         setUsername("");
         setPassword("");
+        router.push("/login");
       } else {
         console.error("Failed to register user:", response.status);
       }
@@ -90,7 +91,7 @@ const Register: React.FC = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setEmail(e.target.value.toLowerCase());
             }}
           ></input>
 
@@ -107,7 +108,7 @@ const Register: React.FC = () => {
               placeholder="Username"
               value={username}
               onChange={(e) => {
-                setUsername(e.target.value);
+                setUsername(e.target.value.toLowerCase());
               }}
             />
             {step === 2 && (
