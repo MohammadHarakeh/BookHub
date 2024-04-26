@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +8,8 @@ import styles from "./page.module.css";
 import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
+
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -45,6 +47,11 @@ const Login: React.FC = () => {
   const switchToRegister = () => {
     router.push("/register");
   };
+
+  useEffect(() => {
+    console.log(process.env.GOOGLE_CLIENT_ID);
+    console.log(process.env.GOOGLE_CLIENT_SECRET);
+  });
 
   return (
     <div className="register-container">
@@ -87,16 +94,25 @@ const Login: React.FC = () => {
             <button onClick={login}>Sign in</button>
           </div>
         </div>
-
         <div className={styles.or_line}>
           <div className={styles.line} />
           or
           <div className={styles.line} />
         </div>
-
+        {/* 
         <div className={styles.button_container}>
-          <button>Sign in with Google</button>
-        </div>
+          <button>
+            Sign in with Google
+          </button>
+        </div> */}
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
 
         <div className="switch-paragraph">
           <p>
