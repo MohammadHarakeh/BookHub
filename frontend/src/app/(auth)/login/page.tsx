@@ -79,6 +79,10 @@ const Login: React.FC = () => {
             }}
           ></input>
 
+          <div className="forgot-password">
+            <p>Forgot password?</p>
+          </div>
+
           <div className="button-container">
             <button onClick={login}>Sign in</button>
           </div>

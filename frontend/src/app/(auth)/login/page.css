@@ -38,3 +38,15 @@
 .button-container button:hover {
   background-color: #2d691c;
 }
+
+.forgot-password {
+  display: flex;
+  justify-content: flex-start;
+  width: 75%;
+  color: #36ff00;
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  color: #2e9e0f;
+}
