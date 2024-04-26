@@ -58,6 +58,10 @@
   background-color: #2d691c;
 }
 
+.button_container {
+  width: 75%;
+}
+
 .forgot_password {
   display: flex;
   justify-content: flex-start;
