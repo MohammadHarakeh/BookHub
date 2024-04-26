@@ -13,7 +13,7 @@
 }
 .button-container {
   width: 75%;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .register-card {
@@ -49,4 +49,21 @@
 
 .forgot-password:hover {
   color: #2e9e0f;
+}
+
+.or-line {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 75%;
+  flex: 1;
+  font-size: 1.25rem;
+  margin: 0.5rem 0rem;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #9c9dd5;
+  margin: 0 0.5rem;
 }

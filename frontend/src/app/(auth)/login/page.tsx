@@ -88,6 +88,16 @@ const Login: React.FC = () => {
           </div>
         </div>
 
+        <div className="or-line">
+          <div className="line" />
+          or
+          <div className="line" />
+        </div>
+
+        <div className="button-container">
+          <button>Sign in with Google</button>
+        </div>
+
         <div className="switch-paragraph">
           <p>
             Don't have an account?

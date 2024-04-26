@@ -16,11 +16,11 @@ const Header: React.FC = () => {
         </div>
 
         <div className="header-links">
-          <Link href="/about">About</Link>
+          <Link href="/about">Stories</Link>
         </div>
 
         <div className="header-links">
-          <Link href="/contact">Contact</Link>
+          <Link href="/contact">Profile</Link>
         </div>
       </div>
 
