@@ -12,3 +12,7 @@
   color: #fff;
   font-weight: 500;
 }
+
+.continue-btn:hover {
+  background-color: #2d691c;
+}
