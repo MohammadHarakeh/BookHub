@@ -4,8 +4,8 @@ import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./page.css";
-import "../shared.css";
+import styles from "./page.module.css";
+import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
 
@@ -96,7 +96,7 @@ const Register: React.FC = () => {
           ></input>
 
           {step === 1 && (
-            <button className="continue-btn" onClick={handleContinue}>
+            <button className={styles.continue_btn} onClick={handleContinue}>
               Continue
             </button>
           )}
@@ -112,7 +112,7 @@ const Register: React.FC = () => {
               }}
             />
             {step === 2 && (
-              <button className="continue-btn" onClick={handleContinue}>
+              <button className={styles.continue_btn} onClick={handleContinue}>
                 Continue
               </button>
             )}
@@ -129,7 +129,7 @@ const Register: React.FC = () => {
                 setPassword(e.target.value);
               }}
             />
-            <button className="continue-btn" onClick={handleContinue}>
+            <button className={styles.continue_btn} onClick={handleContinue}>
               Register
             </button>
           </div>

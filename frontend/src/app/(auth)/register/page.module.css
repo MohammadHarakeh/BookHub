@@ -1,4 +1,4 @@
-.continue-btn {
+.continue_btn {
   cursor: pointer;
   background-color: #65b450;
   outline: none;
@@ -13,6 +13,6 @@
   font-weight: 500;
 }
 
-.continue-btn:hover {
+.continue_btn:hover {
   background-color: #2d691c;
 }

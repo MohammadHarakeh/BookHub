@@ -1,4 +1,4 @@
-.button-container button {
+.button_container button {
   cursor: pointer;
   background-color: #65b450;
   outline: none;
@@ -11,19 +11,34 @@
   font-weight: 500;
   width: 100%;
 }
+
 .button-container {
   width: 75%;
   margin: 0.5rem 0;
 }
 
-.register-card {
+.register_card {
+  box-shadow: 0 0 10px rgba(156, 157, 213, 0.5);
+  padding: 2rem;
   display: flex;
+  flex-direction: column;
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
   width: 25%;
 }
 
-.input-btn-container {
+.register_card input {
+  font-size: 20px;
+  padding: 0.5rem;
+  background-color: #2d2e3e;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  margin: 0.5rem 0rem;
+}
+
+.input_btn_container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,15 +46,19 @@
   width: 100%;
 }
 
-.input-btn-container input {
+.input_btn_container button {
+  margin: 0.5rem 0rem;
+}
+
+.input_btn_container input {
   width: 75%;
 }
 
-.button-container button:hover {
+.button_container button:hover {
   background-color: #2d691c;
 }
 
-.forgot-password {
+.forgot_password {
   display: flex;
   justify-content: flex-start;
   width: 75%;
@@ -47,11 +66,11 @@
   cursor: pointer;
 }
 
-.forgot-password:hover {
+.forgot_password:hover {
   color: #2e9e0f;
 }
 
-.or-line {
+.or_line {
   display: flex;
   align-items: center;
   flex-direction: row;

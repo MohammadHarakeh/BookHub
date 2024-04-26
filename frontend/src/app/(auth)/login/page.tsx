@@ -4,8 +4,8 @@ import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../shared.css";
-import "./page.css";
+import styles from "./page.module.css";
+import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
 
@@ -57,11 +57,11 @@ const Login: React.FC = () => {
         <img src={mainLogo.src} alt="My Image" />
       </div>
 
-      <div className="register-card">
+      <div className={styles.register_card}>
         <div className="register-title">
           <h1>Login</h1>
         </div>
-        <div className="input-btn-container">
+        <div className={styles.input_btn_container}>
           <input
             placeholder="Email"
             value={email}
@@ -79,22 +79,22 @@ const Login: React.FC = () => {
             }}
           ></input>
 
-          <div className="forgot-password">
+          <div className={styles.forgot_password}>
             <p>Forgot password?</p>
           </div>
 
-          <div className="button-container">
+          <div className={styles.button_container}>
             <button onClick={login}>Sign in</button>
           </div>
         </div>
 
-        <div className="or-line">
-          <div className="line" />
+        <div className={styles.or_line}>
+          <div className={styles.line} />
           or
-          <div className="line" />
+          <div className={styles.line} />
         </div>
 
-        <div className="button-container">
+        <div className={styles.button_container}>
           <button>Sign in with Google</button>
         </div>
 
