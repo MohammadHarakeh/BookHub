@@ -10,15 +10,22 @@ const Header: React.FC = () => {
         <img src={mainLogo.src} alt="My Image" />
       </div>
 
-      <div>
-        <Link href="/">Home</Link>
-      </div>
-      <div>
-        <Link href="/about">About</Link>
+      <div className="header-links-wrapper">
+        <div className="header-links">
+          <Link href="/">Home</Link>
+        </div>
+
+        <div className="header-links">
+          <Link href="/about">About</Link>
+        </div>
+
+        <div className="header-links">
+          <Link href="/contact">Contact</Link>
+        </div>
       </div>
 
-      <div>
-        <Link href="/contact">Contact</Link>
+      <div className="user-profile">
+        <p>User image</p>
       </div>
     </header>
   );

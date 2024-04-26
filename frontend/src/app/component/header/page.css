@@ -1,15 +1,27 @@
 header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding-left: 4rem;
   padding-right: 4rem;
 }
 
-header link {
-  text-decoration: none;
-  color: white;
-}
-
 .header-logo img {
   width: 5rem;
+}
+
+.header-links-wrapper {
+  display: flex;
+  gap: 4rem;
+}
+
+.header-links a {
+  font-size: 2rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.user-profile p {
+  font-size: 2rem;
+  color: #fff;
 }
