@@ -8,9 +8,11 @@ const {
   createPost,
   getAllPosts,
   deletePost,
+  googleLogin,
 } = require("../controller/user");
 
 router.post("/updateProfile", authMiddleware, updateProfile);
+router.post("/googleLogin", googleLogin);
 
 router.get("/getAllPosts", getAllPosts);
 router.post("/createPost", multerMiddleware.postUpload, createPost);

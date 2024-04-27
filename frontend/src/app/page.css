@@ -1,0 +1,14 @@
+.homepage-left {
+  background-color: #0e0f32;
+  height: 100%;
+  width: 15%;
+  color: #fff;
+  padding: 0rem 4rem;
+  margin: 1rem 0rem;
+}
+
+.homepage-left-title {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.5rem;
+}

@@ -6,6 +6,41 @@ const path = require("path");
 const fs = require("fs");
 const multerMiddleware = require("../middleware/multerMiddleware");
 const multer = require("multer");
+const { OAuth2Client } = require("google-auth-library");
+
+const client = new OAuth2Client(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
+const bcrypt = require("bcryptjs");
+
+async function googleLogin(req, res) {
+  try {
+    const { name, email } = req.body;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      const randomPassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+      user = new User({
+        username: name,
+        email,
+        password: hashedPassword,
+      });
+
+      await user.save();
+    } else {
+      user.username = name;
+      await user.save();
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY);
+
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error logging in with Google" });
+  }
+}
 
 const updateProfile = async (req, res) => {
   try {
@@ -117,4 +152,5 @@ module.exports = {
   createPost,
   getAllPosts,
   deletePost,
+  googleLogin,
 };

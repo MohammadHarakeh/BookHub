@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -17,7 +18,27 @@ const Login: React.FC = () => {
   const router = useRouter();
 
   const googleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse) => console.log(tokenResponse),
+    onSuccess: async (response) => {
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v1/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          }
+        );
+        console.log("normal response:", res);
+
+        const backendResponse = await axios.post(
+          "http://localhost:3001/user/googleLogin",
+          res.data
+        );
+        console.log("backend response:", backendResponse);
+      } catch (err) {
+        console.error(err);
+      }
+    },
   });
 
   const login = async () => {
