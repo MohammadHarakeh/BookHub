@@ -107,12 +107,13 @@ const createPost = async (req, res) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const userId = decodedToken.userId;
 
-    if (!req.file) {
-      return res.status(400).json({ message: "No image uploaded" });
+    let image = null;
+
+    if (req.file) {
+      image = req.file.path;
     }
 
     const { content } = req.body;
-    const image = req.file.path;
 
     const post = new Post({ userId, content, image });
 

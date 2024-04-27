@@ -116,6 +116,7 @@ const Login: React.FC = () => {
             <button onClick={login}>Sign in</button>
           </div>
         </div>
+
         <div className={styles.or_line}>
           <div className={styles.line} />
           or

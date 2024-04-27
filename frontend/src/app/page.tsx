@@ -13,13 +13,15 @@ import { requestMethods } from "./tools/apiRequestMethods";
 
 export default function Home() {
   const [content, setContent] = useState<string>("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   const createPost = async () => {
     try {
       const formData = new FormData();
       formData.append("content", content);
-      formData.append("image", image);
+      if (image) {
+        formData.append("image", image);
+      }
 
       const response = await sendRequest(
         requestMethods.POST,
@@ -29,6 +31,7 @@ export default function Home() {
 
       if (response.status === 201) {
         setContent("");
+        setImage(null);
         console.log("Post uploaded successfully");
         toast.success("Post uploaded successfully");
       } else {
@@ -38,6 +41,13 @@ export default function Home() {
     } catch (error) {
       console.error("Failed to upload post", error);
       toast.error("Failed to upload post");
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImage(file);
     }
   };
 
@@ -81,7 +91,11 @@ export default function Home() {
               >
                 Choose File
               </label>
-              <input id="fileInput" type="file"></input>
+              <input
+                id="fileInput"
+                type="file"
+                onChange={handleImageChange}
+              ></input>
             </div>
             <button className="general-button" onClick={createPost}>
               upload

@@ -9,8 +9,7 @@ export const sendRequest = async (method, route, body) => {
     data: body,
     headers: {
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/json",
     },
   });
 
