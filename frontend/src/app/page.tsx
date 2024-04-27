@@ -21,6 +21,7 @@ export default function Home() {
     try {
       const formData = new FormData();
       formData.append("content", content);
+
       if (image) {
         formData.append("image", image);
       }
