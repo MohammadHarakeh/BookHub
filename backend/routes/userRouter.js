@@ -15,7 +15,12 @@ router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
 
 router.get("/getAllPosts", getAllPosts);
-router.post("/createPost", multerMiddleware.postUpload, createPost);
+router.post(
+  "/createPost",
+  authMiddleware,
+  multerMiddleware.postUpload,
+  createPost
+);
 router.delete("/deletePost/:postId", authMiddleware, deletePost);
 
 module.exports = router;

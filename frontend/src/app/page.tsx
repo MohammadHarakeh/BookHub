@@ -37,6 +37,8 @@ export default function Home() {
         setImagePreview(null);
         console.log("Post uploaded successfully");
         toast.success("Post uploaded successfully");
+        console.log(image);
+        console.log(content);
       } else {
         console.log("Failed to upload post");
         toast.error("Failed to upload post");

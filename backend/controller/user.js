@@ -107,13 +107,13 @@ const createPost = async (req, res) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const userId = decodedToken.userId;
 
-    let image = null;
+    let content = req.body.content || null; // Content is optional
+    let image = req.file ? req.file.path : null; // Image is optional
 
-    if (req.file) {
-      image = req.file.path;
+    // If neither content nor image is provided, return an error
+    if (!content && !image) {
+      return res.status(400).json({ message: "Content or image is required" });
     }
-
-    const { content } = req.body;
 
     const post = new Post({ userId, content, image });
 
