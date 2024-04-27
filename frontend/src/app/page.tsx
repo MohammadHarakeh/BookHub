@@ -13,7 +13,7 @@ export default function Home() {
         <div className="homepage-left">
           <div className="homepage-left-title">
             <p>Collaboration</p>
-            <button>
+            <button className="general-button">
               <FaPlus /> New
             </button>
           </div>
@@ -33,7 +33,17 @@ export default function Home() {
               placeholder="What's on your mind"
               className="homepage-input-text"
             ></input>
-            <input type="file"></input>
+
+            <div className="upload-image-container">
+              <label
+                htmlFor="fileInput"
+                className="file-input-label general-button"
+              >
+                Choose File
+              </label>
+              <input id="fileInput" type="file"></input>
+            </div>
+            <button className="general-button">upload</button>
           </div>
         </div>
       </div>

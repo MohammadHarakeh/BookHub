@@ -22,7 +22,7 @@
   width: 100%;
 }
 
-.homepage-left-title button {
+.general-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,7 +37,6 @@
   padding: 0rem 0.75rem;
   color: #fff;
   font-weight: 500;
-  width: 100%;
 }
 
 .homepage-left-stories p {
@@ -61,6 +60,7 @@
   margin-left: 3rem;
   background-color: #0e0f32;
   width: 100%;
+  padding: 0.5rem;
 }
 
 .homepage-middle-upload img {
@@ -70,11 +70,19 @@
 }
 
 .homepage-input-text {
-  width: 75%;
+  flex: 1;
   font-size: 1.5rem;
   border: none;
   border-radius: 1rem;
   padding: 0.5rem;
   background-color: #3e3f5b;
   color: #fff;
+}
+
+.upload-image-container input {
+  position: absolute;
+  font-size: 100px;
+  opacity: 0;
+  right: 0;
+  top: 0;
 }
