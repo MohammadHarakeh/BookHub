@@ -35,6 +35,7 @@ const Login: React.FC = () => {
           res.data
         );
         console.log("backend response:", backendResponse);
+        router.push("/");
       } catch (err) {
         console.error(err);
       }
