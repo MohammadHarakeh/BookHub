@@ -53,17 +53,21 @@
   width: 50%;
 }
 
+.homepage-middle-upload-container {
+  margin-left: 3rem;
+  background-color: #0e0f32;
+}
+
 .homepage-middle-upload {
   display: flex;
   align-items: center;
   gap: 2rem;
-  margin-left: 3rem;
-  background-color: #0e0f32;
+
   width: 100%;
   padding: 0.5rem;
 }
 
-.homepage-middle-upload img {
+.user-profile-small {
   width: 75px;
   height: 75px;
   border-radius: 37.5px;
@@ -85,4 +89,15 @@
   opacity: 0;
   right: 0;
   top: 0;
+}
+
+.imagePreview {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+.imagePreview img {
+  width: 20rem;
+  height: 20rem;
 }

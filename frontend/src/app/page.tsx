@@ -6,6 +6,7 @@ import Footer from "../app/component/footer/page";
 import { FaPlus } from "react-icons/fa";
 import profileImage from "../../public/images/profileImage.jpeg";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { send } from "process";
 import { sendRequest } from "./tools/apiRequest";
@@ -14,6 +15,7 @@ import { requestMethods } from "./tools/apiRequestMethods";
 export default function Home() {
   const [content, setContent] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const createPost = async () => {
     try {
@@ -32,6 +34,7 @@ export default function Home() {
       if (response.status === 201) {
         setContent("");
         setImage(null);
+        setImagePreview(null);
         console.log("Post uploaded successfully");
         toast.success("Post uploaded successfully");
       } else {
@@ -48,12 +51,17 @@ export default function Home() {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setImage(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
     }
   };
 
   return (
     <div className="home-wrapper">
-      <ToastContainer />
+      <ToastContainer
+        theme="dark"
+        toastStyle={{ backgroundColor: "#0e0f32" }}
+      />
       <Header />
       <div className="homepage-wrapper">
         <div className="homepage-left">
@@ -73,33 +81,38 @@ export default function Home() {
         </div>
 
         <div className="homepage-middle">
-          <div className="homepage-middle-upload">
-            <img src={profileImage.src}></img>
-            <input
-              placeholder="What's on your mind"
-              value={content}
-              onChange={(e) => {
-                setContent(e.target.value);
-              }}
-              className="homepage-input-text"
-            ></input>
-
-            <div className="upload-image-container">
-              <label
-                htmlFor="fileInput"
-                className="file-input-label general-button"
-              >
-                Choose File
-              </label>
+          <div className="homepage-middle-upload-container">
+            <div className="homepage-middle-upload">
+              <img src={profileImage.src} className="user-profile-small"></img>
               <input
-                id="fileInput"
-                type="file"
-                onChange={handleImageChange}
+                placeholder="What's on your mind"
+                value={content}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
+                className="homepage-input-text"
               ></input>
+
+              <div className="upload-image-container">
+                <label
+                  htmlFor="fileInput"
+                  className="file-input-label general-button"
+                >
+                  Choose File
+                </label>
+                <input
+                  id="fileInput"
+                  type="file"
+                  onChange={handleImageChange}
+                ></input>
+              </div>
+              <button className="general-button" onClick={createPost}>
+                upload
+              </button>
             </div>
-            <button className="general-button" onClick={createPost}>
-              upload
-            </button>
+            <div className="imagePreview">
+              {imagePreview && <img src={imagePreview} alt="Selected Image" />}
+            </div>
           </div>
         </div>
       </div>
