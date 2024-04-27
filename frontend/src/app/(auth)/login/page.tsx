@@ -56,7 +56,9 @@ const Login: React.FC = () => {
       );
 
       if (response.status === 200) {
-        console.log("Loggedin successfully");
+        const data = await response.data;
+        localStorage.setItem("token", JSON.stringify(data.token));
+        console.log("Logged in successfully");
         setEmail("");
         setPassword("");
         toast.success("Logged in successfully");
