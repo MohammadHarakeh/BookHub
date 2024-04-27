@@ -9,12 +9,18 @@ import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
 
+import jwt from "jsonwebtoken";
 import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
 
   const login = async () => {
     try {
@@ -47,11 +53,6 @@ const Login: React.FC = () => {
   const switchToRegister = () => {
     router.push("/register");
   };
-
-  useEffect(() => {
-    console.log(process.env.GOOGLE_CLIENT_ID);
-    console.log(process.env.GOOGLE_CLIENT_SECRET);
-  });
 
   return (
     <div className="register-container">
@@ -105,14 +106,23 @@ const Login: React.FC = () => {
             Sign in with Google
           </button>
         </div> */}
-        <GoogleLogin
+        {/* <GoogleLogin
           onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
+            const jwtToken = credentialResponse.credential as string;
+            try {
+              const decodedToken = jwt.decode(jwtToken);
+              console.log(decodedToken);
+            } catch (error) {
+              console.error("Error decoding JWT:", error);
+            }
           }}
           onError={() => {
             console.log("Login Failed");
           }}
-        />
+        /> */}
+        <div className={styles.button_container}>
+          <button onClick={() => googleLogin()}>Sign in with Google</button>
+        </div>
 
         <div className="switch-paragraph">
           <p>
@@ -124,5 +134,4 @@ const Login: React.FC = () => {
     </div>
   );
 };
-//testing
 export default Login;
