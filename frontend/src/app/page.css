@@ -1,3 +1,8 @@
+.homepage-wrapper {
+  display: flex;
+  margin: 1rem 0rem;
+}
+
 .homepage-left {
   background-color: #0e0f32;
   height: 100%;
@@ -5,7 +10,6 @@
   color: #fff;
   padding-left: 4rem;
   padding-right: 2rem;
-  margin: 1rem 0rem;
 }
 
 .homepage-left-title {
@@ -44,4 +48,33 @@
   margin: 1rem 0rem;
   padding: 0.5rem;
   border-radius: 10px;
+}
+
+.homepage-middle {
+  width: 50%;
+}
+
+.homepage-middle-upload {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: 3rem;
+  background-color: #0e0f32;
+  width: 100%;
+}
+
+.homepage-middle-upload img {
+  width: 75px;
+  height: 75px;
+  border-radius: 37.5px;
+}
+
+.homepage-input-text {
+  width: 75%;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  background-color: #3e3f5b;
+  color: #fff;
 }
