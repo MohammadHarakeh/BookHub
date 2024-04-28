@@ -87,14 +87,20 @@ const updateProfile = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const users = await User.find();
+
+    if (!users) {
+      return res.status(404).json({ message: "No users found" });
     }
-    const posts = user.posts;
-    res.status(200).json(posts);
+
+    let allPosts = [];
+    users.forEach((user) => {
+      allPosts.push(...user.posts);
+    });
+
+    res.status(200).json(allPosts);
   } catch (error) {
+    console.error("Error fetching posts:", error);
     res.status(500).json({ message: "Failed to fetch posts", error });
   }
 };
