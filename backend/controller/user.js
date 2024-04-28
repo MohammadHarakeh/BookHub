@@ -143,13 +143,16 @@ const deletePost = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const post = user.posts.id(postId);
+    const index = user.posts.findIndex(
+      (post) => post._id.toString() === postId
+    );
 
-    if (!post) {
+    if (index === -1) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    post.remove();
+    user.posts.splice(index, 1);
+
     await user.save();
 
     res.status(200).json({ message: "Post deleted successfully" });

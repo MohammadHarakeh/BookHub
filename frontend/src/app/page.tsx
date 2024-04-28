@@ -16,6 +16,7 @@ export default function Home() {
   const [content, setContent] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [posts, setPosts] = useState<any[]>([]);
 
   const createPost = async () => {
     try {
@@ -58,6 +59,7 @@ export default function Home() {
       );
       if (response.status === 200) {
         console.log("Fetched posts successfully", response.data);
+        setPosts(response.data);
       } else {
         console.error("Failed to fetch posts");
       }
@@ -77,7 +79,7 @@ export default function Home() {
 
   useEffect(() => {
     getAllPosts();
-  });
+  }, []);
 
   return (
     <div className="home-wrapper">
@@ -136,6 +138,14 @@ export default function Home() {
             <div className="imagePreview">
               {imagePreview && <img src={imagePreview} alt="Selected Image" />}
             </div>
+          </div>
+          <div className="homepage-middle-posts">
+            {posts.map((post) => (
+              <div key={post._id} className="posts">
+                <p>{post.content}</p>
+                {post.image && <img src={post.image} alt="Post Image" />}
+              </div>
+            ))}
           </div>
         </div>
       </div>
