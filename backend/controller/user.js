@@ -94,9 +94,21 @@ const getAllPosts = async (req, res) => {
     }
 
     let allPosts = [];
-    users.forEach((user) => {
-      allPosts.push(...user.posts);
-    });
+    for (const user of users) {
+      for (const post of user.posts) {
+        const postDetails = {
+          _id: post._id,
+          content: post.content,
+          image: post.image,
+          likes: post.likes,
+          comments: post.comments,
+          createdAt: post.createdAt,
+          username: user.username,
+          profile_picture: user.profile.profile_picture,
+        };
+        allPosts.push(postDetails);
+      }
+    }
 
     res.status(200).json(allPosts);
   } catch (error) {

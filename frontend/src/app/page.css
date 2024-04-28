@@ -103,5 +103,18 @@
 }
 
 .posts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   color: #fff;
+  background-color: #0e0f32;
+  margin: 1rem 3rem;
+  padding: 1rem;
+}
+
+.posts img {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 10px;
 }

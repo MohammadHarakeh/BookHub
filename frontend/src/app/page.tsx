@@ -142,7 +142,6 @@ export default function Home() {
           <div className="homepage-middle-posts">
             {posts.map((post) => (
               <div key={post._id} className="posts">
-                <p>{post.content}</p>
                 {post.image && (
                   <img
                     src={`http://localhost:3001/${
@@ -151,6 +150,7 @@ export default function Home() {
                     alt="Post Image"
                   />
                 )}
+                <p>{post.content}</p>
               </div>
             ))}
           </div>
