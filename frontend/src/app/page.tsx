@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import profileImage from "../../public/images/profileImage.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { send } from "process";
 import { sendRequest } from "./tools/apiRequest";
 import { requestMethods } from "./tools/apiRequestMethods";
@@ -50,6 +50,22 @@ export default function Home() {
     }
   };
 
+  const getAllPosts = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        "/user/getAllPosts"
+      );
+      if (response.status === 200) {
+        console.log("Fetched posts successfully", response.data);
+      } else {
+        console.error("Failed to fetch posts");
+      }
+    } catch (error) {
+      console.error("Error fetching posts");
+    }
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
@@ -58,6 +74,10 @@ export default function Home() {
       setImagePreview(imageUrl);
     }
   };
+
+  useEffect(() => {
+    getAllPosts();
+  });
 
   return (
     <div className="home-wrapper">
