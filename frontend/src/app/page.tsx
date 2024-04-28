@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { send } from "process";
 import { sendRequest } from "./tools/apiRequest";
 import { requestMethods } from "./tools/apiRequestMethods";
+import defaultImage from "../../public/images/defaultImage.png";
 
 export default function Home() {
   const [content, setContent] = useState<string>("");
@@ -142,6 +143,20 @@ export default function Home() {
           <div className="homepage-middle-posts">
             {posts.map((post) => (
               <div key={post._id} className="posts">
+                <div className="posts-info">
+                  {post.image ? (
+                    <img src={defaultImage.src} alt="Default Image" />
+                  ) : (
+                    <img
+                      src={`http://localhost:3001/${
+                        post.image.split("profilePictures\\")[1]
+                      }`}
+                      alt="Post Image"
+                    />
+                  )}
+
+                  <p>{post.username}</p>
+                </div>
                 {post.image && (
                   <img
                     src={`http://localhost:3001/${
