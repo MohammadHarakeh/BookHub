@@ -1,8 +1,5 @@
 const User = require("../models/User");
-const Post = require("../models/Post");
-const Follow = require("../models/Follow");
 const jwt = require("jsonwebtoken");
-const path = require("path");
 const fs = require("fs");
 const multerMiddleware = require("../middleware/multerMiddleware");
 const multer = require("multer");
@@ -54,39 +51,35 @@ const updateProfile = async (req, res) => {
 
     const { bio, location, linkedin_link, instagram_link, twitter_link } =
       req.body;
-
     const userId = req.user._id;
 
     const user = await User.findById(userId);
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
-    } else {
-      if (bio !== undefined) user.profile.bio = bio;
-      if (location !== undefined) user.profile.location = location;
-      if (profile_picture !== undefined)
-        user.profile.profile_picture = profile_picture;
-      if (linkedin_link !== undefined)
-        user.profile.linkedin_link = linkedin_link;
-      if (instagram_link !== undefined)
-        user.profile.instagram_link = instagram_link;
-      if (twitter_link !== undefined) user.profile.twitter_link = twitter_link;
+      return res.status(404).json({ message: "User not found" });
+    }
 
-      if (req.file) {
-        const oldProfilePicturePath = user.profile.profile_picture;
-        const newProfilePicturePath = req.file.path;
+    if (bio !== undefined) user.profile.bio = bio;
+    if (location !== undefined) user.profile.location = location;
+    if (linkedin_link !== undefined) user.profile.linkedin_link = linkedin_link;
+    if (instagram_link !== undefined)
+      user.profile.instagram_link = instagram_link;
+    if (twitter_link !== undefined) user.profile.twitter_link = twitter_link;
 
-        if (oldProfilePicturePath) {
-          fs.unlinkSync(oldProfilePicturePath);
-        }
+    if (req.file) {
+      const oldProfilePicturePath = user.profile.profile_picture;
+      const newProfilePicturePath = req.file.path;
 
-        user.profile.profile_picture = newProfilePicturePath;
+      if (oldProfilePicturePath) {
+        fs.unlinkSync(oldProfilePicturePath);
       }
 
-      await user.save();
-
-      res.status(200).json({ message: "Profile updated successfully" });
+      user.profile.profile_picture = newProfilePicturePath;
     }
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res.status(500).json({ error: "Profile update failed" });
   }
@@ -94,7 +87,12 @@ const updateProfile = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate("userId", "username");
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const posts = user.posts;
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch posts", error });
@@ -103,21 +101,24 @@ const getAllPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const userId = decodedToken.userId;
+    const userId = req.user._id;
 
-    let content = req.body.content || null; // Content is optional
-    let image = req.file ? req.file.path : null; // Image is optional
+    let content = req.body.content || null;
+    let image = req.file ? req.file.path : null;
 
-    // If neither content nor image is provided, return an error
     if (!content && !image) {
       return res.status(400).json({ message: "Content or image is required" });
     }
 
-    const post = new Post({ userId, content, image });
+    const user = await User.findById(userId);
 
-    await post.save();
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const post = { content, image };
+    user.posts.push(post);
+    await user.save();
 
     res.status(201).json({ message: "Post created successfully", post });
   } catch (error) {
@@ -127,19 +128,23 @@ const createPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const post = await Post.findByIdAndDelete(req.params.postId);
+    const userId = req.user._id;
+    const postId = req.params.postId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const post = user.posts.id(postId);
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    if (!post.userId.equals(req.user._id)) {
-      console.log("Post ID: ", post.userId);
-      console.log("User ID: ", req.user._id);
-      return res
-        .status(403)
-        .json({ message: "Unauthorized: You can only delete your own posts" });
-    }
+    post.remove();
+    await user.save();
 
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {

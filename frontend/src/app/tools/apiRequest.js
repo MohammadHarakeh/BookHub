@@ -27,6 +27,14 @@ export const sendRequest = async (method, route, body) => {
     };
   }
 
+  //add this remove the above
+  // requestData = {
+  //   method: method,
+  //   url: route,
+  //   data: body,
+  //   headers: headers,
+  // };
+
   const response = await axios.request(requestData);
   return response;
 };

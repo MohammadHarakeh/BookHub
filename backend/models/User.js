@@ -1,5 +1,45 @@
 const mongoose = require("mongoose");
 
+const postSchema = new mongoose.Schema({
+  content: String,
+  image: String,
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  comments: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      content: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const followSchema = new mongoose.Schema({
+  followeeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -42,6 +82,8 @@ const userSchema = new mongoose.Schema({
       default: "",
     },
   },
+  posts: [postSchema],
+  followers: [followSchema],
 });
 
 module.exports = mongoose.model("User", userSchema);
