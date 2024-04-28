@@ -143,7 +143,14 @@ export default function Home() {
             {posts.map((post) => (
               <div key={post._id} className="posts">
                 <p>{post.content}</p>
-                {post.image && <img src={post.image} alt="Post Image" />}
+                {post.image && (
+                  <img
+                    src={`http://localhost:3001/${
+                      post.image.split("uploadPosts\\")[1]
+                    }`}
+                    alt="Post Image"
+                  />
+                )}
               </div>
             ))}
           </div>
