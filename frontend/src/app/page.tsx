@@ -166,6 +166,7 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
+                <p className="post-content">{post.content}</p>
                 {post.image && (
                   <img
                     src={`http://localhost:3001/${
@@ -174,7 +175,6 @@ export default function Home() {
                     alt="Post Image"
                   />
                 )}
-                <p>{post.content}</p>
               </div>
             ))}
           </div>

@@ -9,6 +9,7 @@ const {
   getAllPosts,
   deletePost,
   googleLogin,
+  followUser,
 } = require("../controller/user");
 
 router.post("/updateProfile", authMiddleware, updateProfile);
@@ -22,5 +23,7 @@ router.post(
   createPost
 );
 router.delete("/deletePost/:postId", authMiddleware, deletePost);
+
+router.post("/followUser", authMiddleware, followUser);
 
 module.exports = router;

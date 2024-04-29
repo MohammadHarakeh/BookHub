@@ -174,10 +174,49 @@ const deletePost = async (req, res) => {
   }
 };
 
+const followUser = async (req, res) => {
+  try {
+    const { followeeId } = req.body;
+    const followerId = req.user._id;
+
+    const followee = await User.findById(followeeId);
+    if (!followee) {
+      return res.status(404).json({ message: "Followee not found" });
+    }
+
+    const alreadyFollowing = followee.followers.some(
+      (follower) => follower.followeeId.toString() === followerId.toString()
+    );
+
+    if (alreadyFollowing) {
+      followee.followers = followee.followers.filter(
+        (follower) => follower.followeeId.toString() !== followerId.toString()
+      );
+
+      await followee.save();
+
+      return res
+        .status(200)
+        .json({ message: "You unfollowed the user", followee });
+    } else {
+      followee.followers.push({ followeeId: followerId });
+      await followee.save();
+
+      return res
+        .status(200)
+        .json({ message: "You followed the user", followee });
+    }
+  } catch (error) {
+    console.error("Error following/unfollowing user:", error);
+    res.status(500).json({ message: "Failedto follow user", error });
+  }
+};
+
 module.exports = {
   updateProfile,
   createPost,
   getAllPosts,
   deletePost,
   googleLogin,
+  followUser,
 };

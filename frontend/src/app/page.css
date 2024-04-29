@@ -56,13 +56,14 @@
 .homepage-middle-upload-container {
   margin-left: 3rem;
   background-color: #0e0f32;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
 }
 
 .homepage-middle-upload {
   display: flex;
   align-items: center;
   gap: 2rem;
-
   width: 100%;
   padding: 0.5rem;
 }
@@ -112,6 +113,7 @@
   margin: 1rem 3rem;
   padding: 1rem;
   width: 95%;
+  border-radius: 10px;
 }
 
 .posts p {
@@ -145,4 +147,9 @@
 
 .post-time {
   color: #878787;
+}
+
+.post-content {
+  padding: 1rem 0rem;
+  width: 100%;
 }
