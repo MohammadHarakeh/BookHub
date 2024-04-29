@@ -39,6 +39,33 @@ async function googleLogin(req, res) {
   }
 }
 
+const getLoggedinUser = async (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ message: "Authorization token is required" });
+  }
+
+  const jwtToken = token.split("Bearer ")[1];
+
+  try {
+    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    req.user = user;
+
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.log("Error verifying JWT token", error);
+    console.log(jwtToken);
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
 const updateProfile = async (req, res) => {
   try {
     multerMiddleware(req, res, async (err) => {
@@ -219,4 +246,5 @@ module.exports = {
   deletePost,
   googleLogin,
   followUser,
+  getLoggedinUser,
 };

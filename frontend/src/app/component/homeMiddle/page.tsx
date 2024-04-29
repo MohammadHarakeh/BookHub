@@ -1,11 +1,9 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import defaultImage from "../../../../public/images/defaultImage.png";
-import profileImage from "../../../../public/images/profileImage.jpeg";
 import "./page.css";
 
 const HomeLeft = () => {
@@ -13,6 +11,7 @@ const HomeLeft = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
+  const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
 
   const createPost = async () => {
     try {
@@ -64,6 +63,24 @@ const HomeLeft = () => {
     }
   };
 
+  const getLoggedinUser = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        "/user/getLoggedinUser"
+      );
+      if (response.status === 200) {
+        // setUserProfileImage(response.data);
+        console.log(response.data);
+      } else {
+        setUserProfileImage(null);
+      }
+    } catch (error) {
+      console.error("Error fetching user profile image", error);
+      setUserProfileImage(null);
+    }
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
@@ -74,6 +91,7 @@ const HomeLeft = () => {
   };
 
   useEffect(() => {
+    getLoggedinUser();
     getAllPosts();
   }, []);
 
@@ -81,7 +99,11 @@ const HomeLeft = () => {
     <div className="homepage-middle">
       <div className="homepage-middle-upload-container">
         <div className="homepage-middle-upload">
-          <img src={profileImage.src} className="user-profile-small"></img>
+          {userProfileImage ? (
+            <img src={userProfileImage} className="user-profile-small" />
+          ) : (
+            <img src={defaultImage.src} className="user-profile-small" />
+          )}
           <input
             placeholder="What's on your mind"
             value={content}
@@ -89,8 +111,7 @@ const HomeLeft = () => {
               setContent(e.target.value);
             }}
             className="homepage-input-text"
-          ></input>
-
+          />
           <div className="upload-image-container">
             <label
               htmlFor="fileInput"
@@ -98,11 +119,7 @@ const HomeLeft = () => {
             >
               Choose File
             </label>
-            <input
-              id="fileInput"
-              type="file"
-              onChange={handleImageChange}
-            ></input>
+            <input id="fileInput" type="file" onChange={handleImageChange} />
           </div>
           <button className="general-button" onClick={createPost}>
             upload

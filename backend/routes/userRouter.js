@@ -10,8 +10,10 @@ const {
   deletePost,
   googleLogin,
   followUser,
+  getLoggedinUser,
 } = require("../controller/user");
 
+router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
 router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
 
