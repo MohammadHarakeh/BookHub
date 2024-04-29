@@ -36,6 +36,7 @@ const HomeLeft = () => {
         toast.success("Post uploaded successfully");
         console.log(image);
         console.log(content);
+        getAllPosts();
       } else {
         console.log("Failed to upload post");
         toast.error("Failed to upload post");
@@ -70,8 +71,11 @@ const HomeLeft = () => {
         "/user/getLoggedinUser"
       );
       if (response.status === 200) {
-        // setUserProfileImage(response.data);
-        console.log(response.data);
+        setUserProfileImage(response.data.user.profile.profile_picture);
+        console.log(
+          "User ProfileImage: ",
+          response.data.user.profile.profile_picture
+        );
       } else {
         setUserProfileImage(null);
       }
@@ -134,14 +138,18 @@ const HomeLeft = () => {
           <div key={post._id} className="posts">
             <div className="posts-info">
               {post.image ? (
-                <img src={defaultImage.src} alt="Default Image" />
+                post.image.includes("profilePictures\\") ? (
+                  <img
+                    src={`http://localhost:3001/${
+                      post.image.split("profilePictures\\")[1]
+                    }`}
+                    alt="Post Image"
+                  />
+                ) : (
+                  <img src={defaultImage.src} alt="Default Image" />
+                )
               ) : (
-                <img
-                  src={`http://localhost:3001/${
-                    post.image.split("profilePictures\\")[1]
-                  }`}
-                  alt="Post Image"
-                />
+                <img src={defaultImage.src} alt="Default Image" />
               )}
               <div className="posts-username-time">
                 <p>{post.username}</p>
@@ -155,6 +163,7 @@ const HomeLeft = () => {
                 </p>
               </div>
             </div>
+
             <p className="post-content">{post.content}</p>
             {post.image && (
               <img
