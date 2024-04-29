@@ -154,8 +154,17 @@ export default function Home() {
                       alt="Post Image"
                     />
                   )}
-
-                  <p>{post.username}</p>
+                  <div className="posts-username-time">
+                    <p>{post.username}</p>
+                    <p className="post-time">
+                      {new Date(post.createdAt).toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: true,
+                      })}
+                    </p>
+                  </div>
                 </div>
                 {post.image && (
                   <img

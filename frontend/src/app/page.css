@@ -125,8 +125,24 @@
   margin-bottom: 0.5rem;
 }
 
+.posts-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
 .posts-info img {
   width: 75px;
   height: 75px;
   border-radius: 37.5px;
+}
+
+.posts-username-time {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-time {
+  color: #878787;
 }
