@@ -13,6 +13,8 @@ const {
   getLoggedinUser,
 } = require("../controller/user");
 
+const { forgotPassword } = require("../controller/email");
+
 router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
 router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
@@ -27,5 +29,8 @@ router.post(
 router.delete("/deletePost/:postId", authMiddleware, deletePost);
 
 router.post("/followUser", authMiddleware, followUser);
+
+// Forgot email routes
+router.post("/forgotPassword", forgotPassword);
 
 module.exports = router;

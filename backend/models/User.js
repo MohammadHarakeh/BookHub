@@ -55,6 +55,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   profile: {
     bio: {
       type: String,
