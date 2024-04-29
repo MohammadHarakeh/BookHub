@@ -1,0 +1,51 @@
+.forgotpassword_card {
+  box-shadow: 0 0 10px rgba(156, 157, 213, 0.5);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+}
+
+.forgotpassword_input input {
+  margin: 2rem 0rem;
+  width: 100%;
+}
+
+.forgotpassword_input {
+  width: 75%;
+}
+
+.forgotpassword_switcher {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 2rem;
+  width: 75%;
+}
+
+.forgotpassword_switcher button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  align-items: center;
+}
+
+.forgotpassword_switcher button:hover {
+  background-color: #2d691c;
+}
+
+.forgotpassword_switcher a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  align-items: center;
+}
+
+.forgotpassword_switcher a:hover {
+  background-color: #2d691c;
+}

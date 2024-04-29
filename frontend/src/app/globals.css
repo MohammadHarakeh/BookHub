@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+.general-input {
+  font-size: 20px;
+  padding: 0.5rem;
+  background-color: #2d2e3e;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  margin: 0.5rem 0rem;
+}
+
 .home-wrapper {
   background-color: #000116;
   height: 100%;

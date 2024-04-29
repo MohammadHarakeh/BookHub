@@ -9,6 +9,7 @@ import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -111,7 +112,7 @@ const Login: React.FC = () => {
           ></input>
 
           <div className={styles.forgot_password}>
-            <p>Forgot password?</p>
+            <Link href="/forgotPassword">Forgot password?</Link>
           </div>
 
           <div className={styles.button_container}>
