@@ -1,0 +1,28 @@
+.homepage-left {
+  background-color: #0e0f32;
+  height: 100%;
+  width: 20%;
+  color: #fff;
+  padding-left: 4rem;
+  padding-right: 2rem;
+}
+
+.homepage-left-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.5rem;
+  padding-top: 1rem;
+  width: 100%;
+}
+
+.homepage-left-stories p {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  background-color: #3e3f5b;
+  margin: 1rem 0rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+}

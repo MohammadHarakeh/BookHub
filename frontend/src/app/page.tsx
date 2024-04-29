@@ -3,7 +3,6 @@ import "./globals.css";
 import "./page.css";
 import Header from "../app/component/header/page";
 import Footer from "../app/component/footer/page";
-import { FaPlus } from "react-icons/fa";
 import profileImage from "../../public/images/profileImage.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,6 +11,7 @@ import { send } from "process";
 import { sendRequest } from "./tools/apiRequest";
 import { requestMethods } from "./tools/apiRequestMethods";
 import defaultImage from "../../public/images/defaultImage.png";
+import HomeLeft from "../app/component/homeLeft/page";
 
 export default function Home() {
   const [content, setContent] = useState<string>("");
@@ -90,21 +90,7 @@ export default function Home() {
       />
       <Header />
       <div className="homepage-wrapper">
-        <div className="homepage-left">
-          <div className="homepage-left-title">
-            <p>Collaboration</p>
-            <button className="general-button">
-              <FaPlus /> New
-            </button>
-          </div>
-
-          <div className="homepage-left-stories">
-            <p>Story name</p>
-            <p>Story name</p>
-            <p>Story name</p>
-            <p>Story name</p>
-          </div>
-        </div>
+        <HomeLeft />
 
         <div className="homepage-middle">
           <div className="homepage-middle-upload-container">

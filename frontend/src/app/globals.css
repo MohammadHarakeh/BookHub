@@ -9,3 +9,20 @@
   height: 100%;
   width: 100%;
 }
+
+.general-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  background-color: #65b450;
+  outline: none;
+  border: none;
+  font-size: 20px;
+  border-radius: 5px;
+  height: 2.5rem;
+  padding: 0rem 0.75rem;
+  color: #fff;
+  font-weight: 500;
+}

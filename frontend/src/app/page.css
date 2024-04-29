@@ -3,52 +3,6 @@
   margin: 1rem 0rem;
 }
 
-.homepage-left {
-  background-color: #0e0f32;
-  height: 100%;
-  width: 20%;
-  color: #fff;
-  padding-left: 4rem;
-  padding-right: 2rem;
-}
-
-.homepage-left-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 2rem;
-  font-size: 1.5rem;
-  padding-top: 1rem;
-  width: 100%;
-}
-
-.general-button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  cursor: pointer;
-  background-color: #65b450;
-  outline: none;
-  border: none;
-  font-size: 20px;
-  border-radius: 5px;
-  height: 2.5rem;
-  padding: 0rem 0.75rem;
-  color: #fff;
-  font-weight: 500;
-}
-
-.homepage-left-stories p {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  background-color: #3e3f5b;
-  margin: 1rem 0rem;
-  padding: 0.5rem;
-  border-radius: 10px;
-}
-
 .homepage-middle {
   width: 50%;
 }
