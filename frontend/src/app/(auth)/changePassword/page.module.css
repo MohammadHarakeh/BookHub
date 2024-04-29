@@ -1,0 +1,10 @@
+.changepassword_card {
+  box-shadow: 0 0 10px rgba(156, 157, 213, 0.5);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+}

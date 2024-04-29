@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -8,13 +9,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendPasswordResetEmail = async (to, token) => {
+const sendPasswordResetEmail = async (to, username, token) => {
   const mailOptions = {
     from: process.env.GOOGLE_EMAIL,
     to,
     subject: "Password Reset Request",
-    text: `You have requested to reset your password. Click the link below to reset your password:\n\nhttp://localhost3000/reset-password?token=${token}`,
-    html: `<p>You have requested to reset your password. Click the link below to reset your password:</p><p><a href="http://localhost3000/reset-password?token=${token}">Reset Password</a></p>`,
+    text: `Dear ${username},\n\nSomeone has requested to reset your password. If this wasn't you, please change your password immediately. If this was you, click the link below to reset your password:\n\nhttp://localhost3000/reset-password?token=${token}\n\nBest Regards,\nBookHub Support`,
+    html: `<p>Dear ${username},</p><p>Someone has requested to reset your password. If this wasn't you, please change your password immediately. If this was you, click the link below to reset your password:</p><p><a href="http://localhost3000/reset-password?token=${token}">Reset Password</a></p><p>Best Regards,<br>BookHub Support</p>`,
   };
 
   try {

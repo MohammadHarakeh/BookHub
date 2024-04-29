@@ -17,7 +17,7 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000;
     await user.save();
 
-    await sendPasswordResetEmail(email, token);
+    await sendPasswordResetEmail(email, user.username, token);
 
     return res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
