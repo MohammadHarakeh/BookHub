@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./page.module.css";
 import "../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { ToastContainer, toast } from "react-toastify";
 
 const ChangePassword = () => {
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const handleChangePassword = async () => {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
   return (
     <div className="register-container">
       <ToastContainer

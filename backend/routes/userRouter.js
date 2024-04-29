@@ -13,7 +13,7 @@ const {
   getLoggedinUser,
 } = require("../controller/user");
 
-const { forgotPassword } = require("../controller/email");
+const { forgotPassword, resetPassword } = require("../controller/email");
 
 router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
 router.post("/updateProfile", authMiddleware, updateProfile);
@@ -32,5 +32,6 @@ router.post("/followUser", authMiddleware, followUser);
 
 // Forgot email routes
 router.post("/forgotPassword", forgotPassword);
+router.post("/resetPassword", resetPassword);
 
 module.exports = router;
