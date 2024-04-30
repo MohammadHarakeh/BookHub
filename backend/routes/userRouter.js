@@ -5,20 +5,23 @@ const multerMiddleware = require("../middleware/multerMiddleware");
 
 const {
   updateProfile,
-  createPost,
-  getAllPosts,
-  deletePost,
   googleLogin,
   followUser,
   getLoggedinUser,
-  toggleLike,
 } = require("../controller/user");
-
-const { forgotPassword, resetPassword } = require("../controller/email");
 
 router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
 router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
+router.post("/followUser", authMiddleware, followUser);
+
+const {
+  createPost,
+  getAllPosts,
+  deletePost,
+  toggleLike,
+  addComment,
+} = require("../controller/post");
 
 router.get("/getAllPosts", getAllPosts);
 router.post(
@@ -28,13 +31,12 @@ router.post(
   createPost
 );
 router.delete("/deletePost/:postId", authMiddleware, deletePost);
+router.post("/toggleLike/:postId", authMiddleware, toggleLike);
+router.post("/addComment/:postId", authMiddleware, addComment);
 
-router.post("/followUser", authMiddleware, followUser);
+const { forgotPassword, resetPassword } = require("../controller/email");
 
-// Forgot email routes
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
-
-router.post("/toggleLike/:postId", authMiddleware, toggleLike);
 
 module.exports = router;
