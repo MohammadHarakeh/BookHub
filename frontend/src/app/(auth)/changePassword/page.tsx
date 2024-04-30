@@ -7,25 +7,28 @@ import { sendRequest } from "@/app/tools/apiRequest";
 import { requestMethods } from "@/app/tools/apiRequestMethods";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useEmailContext } from "@/context/emailContext";
+import { useRouter } from "next/navigation";
 
 const ChangePassword = () => {
-  const [pin, setPin] = useState<number>();
+  const [pin, setPin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const { email, setEmail } = useEmailContext();
+
+  const router = useRouter();
 
   const handleChangePassword = async () => {
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-
-    const body = {
-      pin: pin,
-      newPassword: password,
-    };
-
     try {
+      const body = {
+        email: email,
+        pin: pin,
+        newPassword: password,
+      };
+
       const response = await sendRequest(
         requestMethods.POST,
         `/user/resetPassword`,
@@ -34,11 +37,15 @@ const ChangePassword = () => {
 
       if (response.status === 200) {
         toast.success("Password reset successful");
+        setPin("");
+        setPassword("");
+        setConfirmPassword("");
+        setEmail("");
+        router.push("/login");
       } else {
         toast.error("An error occurred");
       }
     } catch (error) {
-      console.error(error);
       toast.error("An error occurred");
     }
   };
@@ -68,8 +75,8 @@ const ChangePassword = () => {
             placeholder="PIN"
             type="text"
             className="general-input"
-            value={pin || ""}
-            onChange={(e) => setPin(parseInt(e.target.value))}
+            value={pin}
+            onChange={(e) => setPin(e.target.value)}
           />
 
           <input
