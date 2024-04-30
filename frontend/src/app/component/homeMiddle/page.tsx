@@ -14,6 +14,7 @@ const HomeLeft = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
   const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string>("");
 
   const createPost = async () => {
     try {
@@ -78,12 +79,33 @@ const HomeLeft = () => {
           "User ProfileImage: ",
           response.data.user.profile.profile_picture
         );
+        console.log(response.data.user);
+        setUserId(response.data.user._id);
       } else {
         setUserProfileImage(null);
       }
     } catch (error) {
       console.error("Error fetching user profile image", error);
       setUserProfileImage(null);
+    }
+  };
+
+  const togglePostLike = async (postId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/toggleLike/${postId}`
+      );
+
+      if (response.status === 200) {
+        getAllPosts();
+      } else {
+        console.error("Failed to toggle like");
+        toast.error("Failed to toggle like");
+      }
+    } catch (error) {
+      console.error("Failed to toggle like", error);
+      toast.error("Failed to toggle like");
     }
   };
 
@@ -181,7 +203,16 @@ const HomeLeft = () => {
             <div className="homepage-middle-like-comment">
               <div className="like-section">
                 <p>20</p>
-                <AiOutlineLike />
+                <AiOutlineLike
+                  onClick={() => {
+                    togglePostLike(post._id);
+                  }}
+                />
+                {post.likes.includes(userId) ? (
+                  <AiFillLike />
+                ) : (
+                  <AiOutlineLike />
+                )}
               </div>
 
               <div className="comment-section">
