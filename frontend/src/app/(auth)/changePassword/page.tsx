@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import "../shared.css";
 import { ToastContainer, toast } from "react-toastify";
 import { sendRequest } from "@/app/tools/apiRequest";
 import { requestMethods } from "@/app/tools/apiRequestMethods";
 import mainLogo from "../../../../public/images/mainLogo.png";
+import { useEmailContext } from "@/context/emailContext";
 
 const ChangePassword = () => {
   const [pin, setPin] = useState<number>();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const { email, setEmail } = useEmailContext();
 
   const handleChangePassword = async () => {
     if (password !== confirmPassword) {
@@ -40,6 +42,10 @@ const ChangePassword = () => {
       toast.error("An error occurred");
     }
   };
+
+  useEffect(() => {
+    console.log("Email:", email);
+  }, []);
 
   return (
     <div className="register-container">
