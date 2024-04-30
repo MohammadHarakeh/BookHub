@@ -9,13 +9,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendPasswordResetEmail = async (to, username, token) => {
+const sendPasswordResetEmail = async (to, username, pin) => {
   const mailOptions = {
     from: process.env.GOOGLE_EMAIL,
     to,
     subject: "Password Reset Request",
-    text: `Dear ${username},\n\nSomeone has requested to reset your password. If this wasn't you, please change your password immediately. If this was you, click the link below to reset your password:\n\nhttp://localhost3000/reset-password?token=${token}\n\nBest Regards,\nBookHub Support`,
-    html: `<p>Dear ${username},</p><p>Someone has requested to reset your password. If this wasn't you, please change your password immediately. If this was you, click the link below to reset your password:</p><p><a href="http://localhost3000/reset-password?token=${token}">Reset Password</a></p><p>Best Regards,<br>BookHub Support</p>`,
+    text: `Dear ${username},\n\nSomeone has requested to reset your password. If this wasn't you, please change your password immediately. If this was you, use the following PIN to reset your password: ${pin}\n\nBest Regards,\nBookHub Support`,
+    html: `<p>Dear ${username},</p><p>Someone has requested to reset your password. If this wasn't you, please change your password immediately. If this was you, use the following PIN to reset your password: <strong>${pin}</strong></p><p>Best Regards,<br>BookHub Support</p>`,
   };
 
   try {
