@@ -5,6 +5,8 @@ import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import defaultImage from "../../../../public/images/defaultImage.png";
 import "./page.css";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { FaRegComment } from "react-icons/fa";
 
 const HomeLeft = () => {
   const [content, setContent] = useState<string>("");
@@ -175,6 +177,18 @@ const HomeLeft = () => {
                 alt="Post Image"
               />
             )}
+
+            <div className="homepage-middle-like-comment">
+              <div className="like-section">
+                <p>20</p>
+                <AiOutlineLike />
+              </div>
+
+              <div className="comment-section">
+                <p>20</p>
+                <FaRegComment />
+              </div>
+            </div>
           </div>
         ))}
       </div>

@@ -112,3 +112,18 @@
 .file-input-label:hover {
   background-color: #2d691c;
 }
+
+.homepage-middle-like-comment {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  font-size: 2rem;
+  margin: 1rem 0rem;
+}
+
+.like-section,
+.comment-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

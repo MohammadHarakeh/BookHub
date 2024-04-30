@@ -11,6 +11,7 @@ const {
   googleLogin,
   followUser,
   getLoggedinUser,
+  toggleLike,
 } = require("../controller/user");
 
 const { forgotPassword, resetPassword } = require("../controller/email");
@@ -33,5 +34,7 @@ router.post("/followUser", authMiddleware, followUser);
 // Forgot email routes
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
+
+router.post("/toggleLike/:postId", authMiddleware, toggleLike);
 
 module.exports = router;

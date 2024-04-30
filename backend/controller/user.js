@@ -235,7 +235,37 @@ const followUser = async (req, res) => {
     }
   } catch (error) {
     console.error("Error following/unfollowing user:", error);
-    res.status(500).json({ message: "Failedto follow user", error });
+    res.status(500).json({ message: "Failed to follow user", error });
+  }
+};
+
+const toggleLike = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const postId = req.params.postId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const postIndex = user.posts.findIndex((post) => post._id.equals(postId));
+    if (postIndex === -1) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const liked = user.posts[postIndex].likes.includes(userId);
+    if (liked) {
+      user.posts[postIndex].likes.pull(userId);
+    } else {
+      user.posts[postIndex].likes.push(userId);
+    }
+
+    await user.save();
+    res.status(200).json({ message: "Like toggled successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -247,4 +277,5 @@ module.exports = {
   googleLogin,
   followUser,
   getLoggedinUser,
+  toggleLike,
 };
