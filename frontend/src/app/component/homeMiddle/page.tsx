@@ -201,18 +201,16 @@ const HomeLeft = () => {
             )}
 
             <div className="homepage-middle-like-comment">
-              <div className="like-section">
-                <p>20</p>
-                <AiOutlineLike
-                  onClick={() => {
-                    togglePostLike(post._id);
-                  }}
-                />
+              <div
+                className="like-section"
+                onClick={() => togglePostLike(post._id)}
+              >
                 {post.likes.includes(userId) ? (
                   <AiFillLike />
                 ) : (
                   <AiOutlineLike />
                 )}
+                <p>{post.likes.length}</p>
               </div>
 
               <div className="comment-section">
