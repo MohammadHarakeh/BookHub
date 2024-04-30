@@ -88,4 +88,8 @@ const userSchema = new mongoose.Schema({
   followers: [followSchema],
 });
 
+userSchema.virtual("isPasswordRequired").get(function () {
+  return !this.resetPasswordPIN && !this.resetPasswordPINExpires;
+});
+
 module.exports = mongoose.model("User", userSchema);

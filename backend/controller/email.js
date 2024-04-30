@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const { sendPasswordResetEmail } = require("../utils/email");
+const bcrypt = require("bcrypt");
 
 const generatePIN = () => {
   return Math.floor(10000000 + Math.random() * 90000000);
@@ -9,6 +10,8 @@ const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
+    User.schema.path("password").required(false);
+
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -21,6 +24,7 @@ const forgotPassword = async (req, res) => {
 
     user.resetPasswordPIN = pin;
     user.resetPasswordPINExpires = expiryDate;
+
     await user.save();
 
     await sendPasswordResetEmail(email, user.username, pin);
@@ -29,6 +33,8 @@ const forgotPassword = async (req, res) => {
   } catch (error) {
     console.error("Error in forgotPassword:", error);
     return res.status(500).json({ message: "Internal server error" });
+  } finally {
+    User.schema.path("password").required(true);
   }
 };
 
@@ -36,6 +42,8 @@ const resetPassword = async (req, res) => {
   const { email, pin, newPassword } = req.body;
 
   try {
+    User.schema.path("password").required(false);
+
     const user = await User.findOne({ email });
 
     if (
@@ -46,7 +54,12 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired PIN" });
     }
 
-    user.password = newPassword;
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
 
     user.resetPasswordPIN = undefined;
     user.resetPasswordPINExpires = undefined;
@@ -57,6 +70,8 @@ const resetPassword = async (req, res) => {
   } catch (error) {
     console.error("Error resetting password: ", error);
     return res.status(500).json({ message: "Internal server error" });
+  } finally {
+    User.schema.path("password").required(true);
   }
 };
 

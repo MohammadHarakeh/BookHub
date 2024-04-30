@@ -1,17 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import styles from "./page.module.css";
 import "../shared.css";
-import mainLogo from "../../../../public/images/mainLogo.png";
 import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
+import { sendRequest } from "@/app/tools/apiRequest";
+import { requestMethods } from "@/app/tools/apiRequestMethods";
+import mainLogo from "../../../../public/images/mainLogo.png";
 
 const ChangePassword = () => {
+  const [pin, setPin] = useState<number>();
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const router = useRouter();
-  const { token } = router.query; // Extract the token from the URL
 
   const handleChangePassword = async () => {
     if (password !== confirmPassword) {
@@ -19,17 +18,26 @@ const ChangePassword = () => {
       return;
     }
 
+    const body = {
+      pin: pin,
+      newPassword: password,
+    };
+
     try {
-      // Send a request to your backend to change the password
-      const response = await axios.post("/api/reset-password", {
-        token,
-        newPassword: password,
-      });
-      toast.success(response.data.message);
-      // Redirect the user to a success page or login page
-      router.push("/login");
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/resetPassword`,
+        body
+      );
+
+      if (response.status === 200) {
+        toast.success("Password reset successful");
+      } else {
+        toast.error("An error occurred");
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("An error occurred");
     }
   };
 
@@ -51,12 +59,21 @@ const ChangePassword = () => {
 
         <div>
           <input
+            placeholder="PIN"
+            type="number"
+            className="general-input"
+            value={pin || ""}
+            onChange={(e) => setPin(parseInt(e.target.value))}
+          />
+
+          <input
             placeholder="Password"
             type="password"
             className="general-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
           <input
             placeholder="Confirm Password"
             type="password"
@@ -64,6 +81,7 @@ const ChangePassword = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+
           <button onClick={handleChangePassword}>Change Password</button>
         </div>
       </div>
