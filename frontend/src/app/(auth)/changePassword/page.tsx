@@ -60,7 +60,7 @@ const ChangePassword = () => {
         <div>
           <input
             placeholder="PIN"
-            type="number"
+            type="text"
             className="general-input"
             value={pin || ""}
             onChange={(e) => setPin(parseInt(e.target.value))}

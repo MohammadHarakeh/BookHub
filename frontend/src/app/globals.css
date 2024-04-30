@@ -1,7 +1,14 @@
+@font-face {
+  font-family: "Popins";
+  src: url("./fonts/Poppins-Regular.otf") format("woff2"),
+    url("./fonts/Poppins-Regular.otf") format("woff");
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Popins", sans-serif;
 }
 
 .general-input {
