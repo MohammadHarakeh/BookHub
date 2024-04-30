@@ -54,10 +54,6 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired PIN" });
     }
 
-    if (!newPassword) {
-      return res.status(400).json({ message: "New password is required" });
-    }
-
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
 
