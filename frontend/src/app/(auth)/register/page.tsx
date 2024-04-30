@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 import "./../shared.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
 import { useRouter } from "next/navigation";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -97,7 +98,7 @@ const Register: React.FC = () => {
 
           {step === 1 && (
             <button className={styles.continue_btn} onClick={handleContinue}>
-              Continue
+              <FaLongArrowAltRight />
             </button>
           )}
         </div>
@@ -113,7 +114,7 @@ const Register: React.FC = () => {
             />
             {step === 2 && (
               <button className={styles.continue_btn} onClick={handleContinue}>
-                Continue
+                <FaLongArrowAltRight />
               </button>
             )}
           </div>

@@ -27,8 +27,8 @@
   flex: 1;
   font-size: 1.5rem;
   border: none;
-  border-radius: 1rem;
-  padding: 0.5rem;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
   background-color: #3e3f5b;
   color: #fff;
 }
@@ -39,6 +39,11 @@
   opacity: 0;
   right: 0;
   top: 0;
+}
+
+.upload-image-btn-wrapper {
+  display: flex;
+  gap: 1rem;
 }
 
 .imagePreview {
@@ -70,8 +75,8 @@
 }
 
 .posts img {
-  width: 20rem;
-  height: 20rem;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   margin-bottom: 0.5rem;
 }
@@ -96,6 +101,7 @@
 
 .post-time {
   color: #878787;
+  font-size: 1rem !important;
 }
 
 .post-content {

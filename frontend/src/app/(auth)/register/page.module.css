@@ -1,4 +1,7 @@
 .continue_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   background-color: #65b450;
   outline: none;

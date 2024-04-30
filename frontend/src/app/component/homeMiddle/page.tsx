@@ -116,18 +116,20 @@ const HomeLeft = () => {
             }}
             className="homepage-input-text"
           />
-          <div className="upload-image-container">
-            <label
-              htmlFor="fileInput"
-              className="file-input-label general-button"
-            >
-              Choose File
-            </label>
-            <input id="fileInput" type="file" onChange={handleImageChange} />
+          <div className="upload-image-btn-wrapper">
+            <div className="upload-image-container">
+              <label
+                htmlFor="fileInput"
+                className="file-input-label general-button"
+              >
+                Choose File
+              </label>
+              <input id="fileInput" type="file" onChange={handleImageChange} />
+            </div>
+            <button className="general-button" onClick={createPost}>
+              Upload
+            </button>
           </div>
-          <button className="general-button" onClick={createPost}>
-            upload
-          </button>
         </div>
         <div className="imagePreview">
           {imagePreview && <img src={imagePreview} alt="Selected Image" />}

@@ -27,10 +27,10 @@ const ForgotPassword = () => {
         </div>
 
         <div className={styles.forgotpassword_switcher}>
-          <button className="general-button">Contiue</button>
           <Link href="/login" className="general-button">
             Back
           </Link>
+          <button className="general-button">Contiue</button>
         </div>
       </div>
     </div>

@@ -66,6 +66,7 @@
   display: flex;
   justify-content: flex-start;
   width: 75%;
+  margin-bottom: 0.5rem;
 }
 .forgot_password a {
   color: #36ff00;

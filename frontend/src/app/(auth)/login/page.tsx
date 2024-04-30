@@ -91,7 +91,7 @@ const Login: React.FC = () => {
 
       <div className={styles.register_card}>
         <div className="register-title">
-          <h1>Login</h1>
+          <h1 className={styles.register_title}>Login</h1>
         </div>
         <div className={styles.input_btn_container}>
           <input
@@ -133,7 +133,7 @@ const Login: React.FC = () => {
         <div className="switch-paragraph">
           <p>
             Don't have an account?
-            <span onClick={switchToRegister}> Signup</span>
+            <span onClick={switchToRegister}> Sign Up</span>
           </p>
         </div>
       </div>
