@@ -8,11 +8,10 @@ import mainLogo from "../../../../public/images/mainLogo.png";
 import Link from "next/link";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState<string>("");
-
   const router = useRouter();
 
   const forgotPassword = async () => {
@@ -29,7 +28,10 @@ const ForgotPassword = () => {
 
       if (response.status === 200) {
         setEmail("");
-        router.push("/changePassword");
+        router.push({
+          pathname: "/changePassword",
+          query: { email: email },
+        });
         toast.success("Email has been sent");
       } else {
         toast.error("Failed to send email");
@@ -60,6 +62,7 @@ const ForgotPassword = () => {
           <input
             className="general-input"
             placeholder="Email"
+            value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -71,7 +74,7 @@ const ForgotPassword = () => {
             Back
           </Link>
           <button className="general-button" onClick={forgotPassword}>
-            Contiue
+            Continue
           </button>
         </div>
       </div>

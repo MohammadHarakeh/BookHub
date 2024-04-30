@@ -53,11 +53,11 @@ const ChangePassword = () => {
       </div>
 
       <div className={styles.changepassword_card}>
-        <div>
+        <div className={styles.changepassword_title}>
           <h1>Enter a new password</h1>
         </div>
 
-        <div>
+        <div className={styles.changepassword_wrapper}>
           <input
             placeholder="PIN"
             type="text"
@@ -82,7 +82,9 @@ const ChangePassword = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          <button onClick={handleChangePassword}>Change Password</button>
+          <button onClick={handleChangePassword} className="general-button">
+            Change Password
+          </button>
         </div>
       </div>
     </div>
