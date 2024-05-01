@@ -115,7 +115,7 @@ const HomeLeft = () => {
   const addComment = async (postId: string) => {
     try {
       const body = {
-        comment: comment,
+        content: comment,
       };
 
       const response = await sendRequest(

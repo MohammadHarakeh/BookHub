@@ -123,21 +123,27 @@ const addComment = async (req, res) => {
   try {
     const userId = req.user.id;
     const postId = req.params.postId;
-    const { comment } = req.body;
+    const { content } = req.body;
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const postOwner = await User.findOne({ "posts._id": postId });
+    if (!postOwner) {
+      return res.status(404).json({ message: "Post owner not found" });
     }
 
-    const post = user.posts.id(postId);
+    const post = postOwner.posts.id(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    post.comments.push({ userId, comment, createdAt: new Date() });
+    const userMakingComment = await User.findById(userId);
+    if (!userMakingComment) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const username = userMakingComment.username;
 
-    await user.save();
+    post.comments.push({ userId, username, content, createdAt: new Date() });
+
+    await postOwner.save();
 
     res.status(201).json({ message: "Comment added successfully" });
   } catch (error) {
