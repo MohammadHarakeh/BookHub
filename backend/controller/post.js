@@ -94,21 +94,21 @@ const toggleLike = async (req, res) => {
     const userId = req.user.id;
     const postId = req.params.postId;
 
-    const user = await User.findById(userId);
+    const user = await User.findOne({ "posts._id": postId });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const postIndex = user.posts.findIndex((post) => post._id.equals(postId));
-    if (postIndex === -1) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    const liked = user.posts[postIndex].likes.includes(userId);
+    const post = user.posts.find((post) => post._id.equals(postId));
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const liked = post.likes.includes(userId);
     if (liked) {
-      user.posts[postIndex].likes.pull(userId);
+      post.likes.pull(userId);
     } else {
-      user.posts[postIndex].likes.push(userId);
+      post.likes.push(userId);
     }
 
     await user.save();

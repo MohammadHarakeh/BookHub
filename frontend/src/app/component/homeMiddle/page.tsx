@@ -267,7 +267,7 @@ const HomeLeft = () => {
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   ></textarea>
-                  <button>Submit</button>
+                  <button onClick={() => addComment(post._id)}>Submit</button>
                   <button onClick={toggleCommentSection}>Back</button>
                 </div>
               </div>
