@@ -18,6 +18,7 @@ const HomeLeft = () => {
   const [userId, setUserId] = useState<string>("");
   const [toggleComments, setToggleComments] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
+  const [currentPostId, setCurrentPostId] = useState<string>("");
 
   const createPost = async () => {
     try {
@@ -112,7 +113,7 @@ const HomeLeft = () => {
     }
   };
 
-  const addComment = async (postId: string) => {
+  const addComment = async () => {
     try {
       const body = {
         content: comment,
@@ -120,7 +121,7 @@ const HomeLeft = () => {
 
       const response = await sendRequest(
         requestMethods.POST,
-        `/user/addComment/${postId}`,
+        `/user/addComment/${currentPostId}`,
         body
       );
 
@@ -139,8 +140,11 @@ const HomeLeft = () => {
     }
   };
 
-  const toggleCommentSection = () => {
+  const toggleCommentSection = (postId: string) => {
+    console.log("Clicked on comment section for post ID:", postId);
+    setCurrentPostId(postId);
     setToggleComments(!toggleComments);
+    setComment("");
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -254,7 +258,10 @@ const HomeLeft = () => {
                 <p>{post.likes.length}</p>
               </div>
 
-              <div className="comment-section" onClick={toggleCommentSection}>
+              <div
+                className="comment-section"
+                onClick={() => toggleCommentSection(post._id)}
+              >
                 <p>20</p>
                 <FaRegComment />
               </div>
@@ -267,8 +274,10 @@ const HomeLeft = () => {
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   ></textarea>
-                  <button onClick={() => addComment(post._id)}>Submit</button>
-                  <button onClick={toggleCommentSection}>Back</button>
+                  <button onClick={() => addComment()}>Submit</button>
+                  <button onClick={() => toggleCommentSection(currentPostId)}>
+                    Back
+                  </button>
                 </div>
               </div>
             )}
