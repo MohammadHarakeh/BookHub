@@ -123,7 +123,7 @@ const addComment = async (req, res) => {
   try {
     const userId = req.user.id;
     const postId = req.params.postId;
-    const { content } = req.body;
+    const { comment } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -135,7 +135,7 @@ const addComment = async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    post.comments.push({ userId, content, createdAt: new Date() });
+    post.comments.push({ userId, comment, createdAt: new Date() });
 
     await user.save();
 

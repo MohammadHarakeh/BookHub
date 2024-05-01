@@ -5,6 +5,7 @@ import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import defaultImage from "../../../../public/images/defaultImage.png";
 import "./page.css";
+import "../../globals.css";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 
@@ -15,6 +16,8 @@ const HomeLeft = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>("");
+  const [toggleComments, setToggleComments] = useState<boolean>(false);
+  const [comment, setComment] = useState<string>("");
 
   const createPost = async () => {
     try {
@@ -109,6 +112,37 @@ const HomeLeft = () => {
     }
   };
 
+  const addComment = async (postId: string) => {
+    try {
+      const body = {
+        comment: comment,
+      };
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/addComment/${postId}`,
+        body
+      );
+
+      if (response.status === 201) {
+        setComment("");
+        getAllPosts();
+        toast.success("Comment added successfully");
+        console.log("Comment added successfully");
+      } else {
+        console.log("Failed to add comment.");
+        toast.error("Failed to add comment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating comment", error);
+      toast.error("Error creating comment");
+    }
+  };
+
+  const toggleCommentSection = () => {
+    setToggleComments(!toggleComments);
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
@@ -123,8 +157,15 @@ const HomeLeft = () => {
     getAllPosts();
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = toggleComments ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [toggleComments]);
+
   return (
-    <div className="homepage-middle">
+    <div className={`homepage-middle ${toggleComments ? "blurred" : ""}`}>
       <div className="homepage-middle-upload-container">
         <div className="homepage-middle-upload">
           {userProfileImage ? (
@@ -213,11 +254,24 @@ const HomeLeft = () => {
                 <p>{post.likes.length}</p>
               </div>
 
-              <div className="comment-section">
+              <div className="comment-section" onClick={toggleCommentSection}>
                 <p>20</p>
                 <FaRegComment />
               </div>
             </div>
+            {toggleComments && (
+              <div className="blurred-modal">
+                <div className="blurred">
+                  <textarea
+                    placeholder="Write a comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  ></textarea>
+                  <button>Submit</button>
+                  <button onClick={toggleCommentSection}>Back</button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
