@@ -30,7 +30,7 @@
   flex-direction: column;
   align-items: flex-start;
   border-radius: 10px;
-  width: 25%;
+  width: 450px;
 }
 
 .register-card input {
@@ -45,10 +45,11 @@
 
 .input-btn-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  width: auto;
   margin-top: 0.25rem;
+  margin-left: 19%;
 }
 
 .switch-paragraph {
