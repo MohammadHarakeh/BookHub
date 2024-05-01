@@ -270,14 +270,25 @@ const HomeLeft = () => {
               <div className="blurred-modal">
                 <div className="blurred">
                   <textarea
+                    className="blurred-comment homepage-input-text"
                     placeholder="Write a comment..."
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   ></textarea>
-                  <button onClick={() => addComment()}>Submit</button>
-                  <button onClick={() => toggleCommentSection(currentPostId)}>
-                    Back
-                  </button>
+                  <div className="blurred-buttons">
+                    <button
+                      className="general-button"
+                      onClick={() => addComment()}
+                    >
+                      Submit
+                    </button>
+                    <button
+                      className="general-button"
+                      onClick={() => toggleCommentSection(currentPostId)}
+                    >
+                      Back
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
