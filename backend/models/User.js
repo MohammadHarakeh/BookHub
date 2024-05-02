@@ -47,6 +47,34 @@ const followSchema = new mongoose.Schema({
   },
 });
 
+const repositorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  styles: {
+    fontStyle: String,
+    fontSize: String,
+    fontColor: String,
+    fontWeight: String,
+    textDecoration: String,
+  },
+  visibility: {
+    type: String,
+    enum: ["public", "private"],
+    required: true,
+  },
+  starred: Boolean,
+});
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -93,6 +121,7 @@ const userSchema = new mongoose.Schema({
   },
   posts: [postSchema],
   followers: [followSchema],
+  repositories: [repositorySchema],
 });
 
 userSchema.virtual("isPasswordRequired").get(function () {
