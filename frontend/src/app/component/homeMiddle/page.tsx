@@ -169,7 +169,7 @@ const HomeLeft = () => {
   }, [toggleComments]);
 
   return (
-    <div className={`homepage-middle ${toggleComments ? "blurred" : ""}`}>
+    <div className={`homepage-middle`}>
       <div className="homepage-middle-upload-container">
         <div className="homepage-middle-upload">
           {userProfileImage ? (
@@ -269,25 +269,39 @@ const HomeLeft = () => {
             {toggleComments && (
               <div className="blurred-modal">
                 <div className="blurred">
-                  <textarea
-                    className="blurred-comment homepage-input-text"
-                    placeholder="Write a comment..."
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  ></textarea>
-                  <div className="blurred-buttons">
-                    <button
-                      className="general-button"
-                      onClick={() => addComment()}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="general-button"
-                      onClick={() => toggleCommentSection(currentPostId)}
-                    >
-                      Back
-                    </button>
+                  <div className="blurred-comment-wrapper">
+                    {userProfileImage ? (
+                      <img
+                        src={userProfileImage}
+                        className="user-profile-small"
+                      />
+                    ) : (
+                      <img
+                        src={defaultImage.src}
+                        className="user-profile-small"
+                      />
+                    )}
+                    <textarea
+                      className="blurred-comment homepage-input-text"
+                      placeholder="Write a comment..."
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+
+                    <div className="blurred-buttons">
+                      <button
+                        className="general-button"
+                        onClick={() => addComment()}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        className="general-button"
+                        onClick={() => toggleCommentSection(currentPostId)}
+                      >
+                        Back
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

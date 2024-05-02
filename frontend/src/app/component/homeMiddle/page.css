@@ -19,9 +19,9 @@
 }
 
 .user-profile-small {
-  width: 75px;
-  height: 75px;
-  border-radius: 37.5px;
+  width: 5rem !important;
+  height: 5rem !important;
+  border-radius: 2.5rem !important;
 }
 
 .homepage-input-text {
@@ -138,4 +138,17 @@
   background-color: #2d2e3e;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+
+.blurred-comment-wrapper {
+  display: flex;
+
+  gap: 1rem;
+}
+
+.blurred-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
