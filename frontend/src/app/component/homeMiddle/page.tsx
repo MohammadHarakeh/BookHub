@@ -59,6 +59,15 @@ const HomeLeft = () => {
       if (response.status === 200) {
         console.log("Fetched posts successfully", response.data);
         setPosts(response.data);
+
+        if (toggleComments && currentPostId) {
+          const updatedPost = response.data.find(
+            (post: any) => post._id === currentPostId
+          );
+          if (updatedPost) {
+            setCurrentPostComments(updatedPost.comments);
+          }
+        }
       } else {
         console.error("Failed to fetch posts");
       }
@@ -135,7 +144,6 @@ const HomeLeft = () => {
         setComment("");
         getAllPosts();
         toast.success("Comment added successfully");
-        getAllPosts();
       } else {
         console.error("Failed to add comment.");
         toast.error("Failed to add comment. Please try again.");
