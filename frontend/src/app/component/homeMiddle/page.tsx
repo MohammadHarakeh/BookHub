@@ -10,7 +10,8 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 
 const HomeLeft = () => {
-  const [content, setContent] = useState<string>("");
+  // State variables
+  const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
@@ -19,33 +20,28 @@ const HomeLeft = () => {
   const [toggleComments, setToggleComments] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
   const [currentPostId, setCurrentPostId] = useState<string>("");
+  const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
 
   const createPost = async () => {
     try {
       const formData = new FormData();
       formData.append("content", content);
-
       if (image) {
         formData.append("image", image);
       }
-
       const response = await sendRequest(
         requestMethods.POST,
         "/user/createPost",
         formData
       );
-
       if (response.status === 201) {
         setContent("");
         setImage(null);
         setImagePreview(null);
-        console.log("Post uploaded successfully");
         toast.success("Post uploaded successfully");
-        console.log(image);
-        console.log(content);
         getAllPosts();
       } else {
-        console.log("Failed to upload post");
+        console.error("Failed to upload post");
         toast.error("Failed to upload post");
       }
     } catch (error) {
@@ -79,11 +75,6 @@ const HomeLeft = () => {
       );
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
-        console.log(
-          "User ProfileImage: ",
-          response.data.user.profile.profile_picture
-        );
-        console.log(response.data.user);
         setUserId(response.data.user._id);
       } else {
         setUserProfileImage(null);
@@ -100,7 +91,6 @@ const HomeLeft = () => {
         requestMethods.POST,
         `/user/toggleLike/${postId}`
       );
-
       if (response.status === 200) {
         getAllPosts();
       } else {
@@ -118,20 +108,17 @@ const HomeLeft = () => {
       const body = {
         content: comment,
       };
-
       const response = await sendRequest(
         requestMethods.POST,
         `/user/addComment/${currentPostId}`,
         body
       );
-
       if (response.status === 201) {
         setComment("");
         getAllPosts();
         toast.success("Comment added successfully");
-        console.log("Comment added successfully");
       } else {
-        console.log("Failed to add comment.");
+        console.error("Failed to add comment.");
         toast.error("Failed to add comment. Please try again.");
       }
     } catch (error) {
@@ -140,11 +127,15 @@ const HomeLeft = () => {
     }
   };
 
-  const toggleCommentSection = (postId: string) => {
-    console.log("Clicked on comment section for post ID:", postId);
+  const toggleCommentSection = async (postId: string) => {
     setCurrentPostId(postId);
     setToggleComments(!toggleComments);
     setComment("");
+
+    const post = posts.find((post) => post._id === postId);
+    if (post) {
+      setCurrentPostComments(post.comments);
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -262,11 +253,11 @@ const HomeLeft = () => {
                 className="comment-section"
                 onClick={() => toggleCommentSection(post._id)}
               >
-                <p>20</p>
+                <p>{post.comments.length}</p>
                 <FaRegComment />
               </div>
             </div>
-            {toggleComments && (
+            {toggleComments && currentPostId === post._id && (
               <div className="blurred-modal">
                 <div className="blurred">
                   <div className="blurred-comment-wrapper">
@@ -302,6 +293,14 @@ const HomeLeft = () => {
                         Back
                       </button>
                     </div>
+                  </div>
+
+                  <div className="blurred-all-comments">
+                    {currentPostComments.map((comment) => (
+                      <div key={comment._id} className="comment">
+                        <p>{comment.content}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
