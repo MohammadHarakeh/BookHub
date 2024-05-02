@@ -119,6 +119,49 @@ const toggleLike = async (req, res) => {
   }
 };
 
+const toggleCommentLike = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { commentId } = req.params;
+
+    const user = await User.findOne({ "posts.comments._id": commentId });
+    if (!user) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    const post = user.posts.find((post) => {
+      const comment = post.comments.find((comment) =>
+        comment._id.equals(commentId)
+      );
+      return comment;
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const comment = post.comments.find((comment) =>
+      comment._id.equals(commentId)
+    );
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    const liked = comment.likes.includes(userId);
+    if (liked) {
+      comment.likes.pull(userId);
+    } else {
+      comment.likes.push(userId);
+    }
+
+    await user.save();
+    res.status(200).json({ message: "Comment like toggled successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const addComment = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -158,4 +201,5 @@ module.exports = {
   deletePost,
   toggleLike,
   addComment,
+  toggleCommentLike,
 };

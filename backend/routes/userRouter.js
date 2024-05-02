@@ -21,6 +21,7 @@ const {
   deletePost,
   toggleLike,
   addComment,
+  toggleCommentLike,
 } = require("../controller/post");
 
 router.get("/getAllPosts", getAllPosts);
@@ -32,6 +33,11 @@ router.post(
 );
 router.delete("/deletePost/:postId", authMiddleware, deletePost);
 router.post("/toggleLike/:postId", authMiddleware, toggleLike);
+router.post(
+  "/toggleCommentLike/:postId/:commentId",
+  authMiddleware,
+  toggleCommentLike
+);
 router.post("/addComment/:postId", authMiddleware, addComment);
 
 const { forgotPassword, resetPassword } = require("../controller/email");
