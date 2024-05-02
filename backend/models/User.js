@@ -47,6 +47,17 @@ const followSchema = new mongoose.Schema({
   },
 });
 
+const versionSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const repositorySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -73,6 +84,7 @@ const repositorySchema = new mongoose.Schema({
     required: true,
   },
   starred: Boolean,
+  versions: [versionSchema],
 });
 
 const userSchema = new mongoose.Schema({
