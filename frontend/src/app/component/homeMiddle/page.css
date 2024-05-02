@@ -158,3 +158,41 @@
   align-items: center;
   gap: 1rem;
 }
+
+.blurred-all-comments {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0rem;
+  gap: 1rem;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-profilepicture {
+  display: flex;
+  margin: 1rem 0rem;
+}
+
+.test {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comment-time {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 1rem;
+}
+
+.comment-content {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  color: #eeeeee;
+}

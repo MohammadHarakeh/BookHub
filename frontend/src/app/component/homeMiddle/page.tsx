@@ -297,8 +297,41 @@ const HomeLeft = () => {
 
                   <div className="blurred-all-comments">
                     {currentPostComments.map((comment) => (
-                      <div key={comment._id} className="comment">
-                        <p>{comment.content}</p>
+                      <div key={comment._id} className="comments">
+                        <div className="comment-profilepicture">
+                          {userProfileImage ? (
+                            <img
+                              src={userProfileImage}
+                              className="user-profile-small"
+                            />
+                          ) : (
+                            <img
+                              src={defaultImage.src}
+                              className="user-profile-small"
+                            />
+                          )}
+                          <div className="comment-time">
+                            <div className="test">
+                              <p>
+                                <b>{comment.username}</b>
+                              </p>
+                              <p className="post-time">
+                                {new Date(comment.createdAt).toLocaleTimeString(
+                                  "en-US",
+                                  {
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    second: "numeric",
+                                    hour12: true,
+                                  }
+                                )}
+                              </p>
+                            </div>
+                            <div className="comment-content">
+                              <p>{comment.content}</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
