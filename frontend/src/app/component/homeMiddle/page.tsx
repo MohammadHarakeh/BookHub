@@ -103,6 +103,24 @@ const HomeLeft = () => {
     }
   };
 
+  const toggleCommentLike = async (postId: string, commentId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/toggleCommentLike/${postId}/${commentId}`
+      );
+      if (response.status === 200) {
+        getAllPosts();
+      } else {
+        console.error("Failed to toggle comment like");
+        toast.error("Failed to toggle comment like");
+      }
+    } catch (error) {
+      console.error("Failed to toggle comment like", error);
+      toast.error("Failed to toggle comment like");
+    }
+  };
+
   const addComment = async () => {
     try {
       const body = {
@@ -117,6 +135,7 @@ const HomeLeft = () => {
         setComment("");
         getAllPosts();
         toast.success("Comment added successfully");
+        getAllPosts();
       } else {
         console.error("Failed to add comment.");
         toast.error("Failed to add comment. Please try again.");
@@ -329,6 +348,19 @@ const HomeLeft = () => {
                             </div>
                             <div className="comment-content">
                               <p>{comment.content}</p>
+                            </div>
+                            <div
+                              className="like-section"
+                              onClick={() =>
+                                toggleCommentLike(post._id, comment._id)
+                              }
+                            >
+                              {comment.likes.includes(userId) ? (
+                                <AiFillLike />
+                              ) : (
+                                <AiOutlineLike />
+                              )}
+                              <p>{comment.likes.length}</p>
                             </div>
                           </div>
                         </div>
