@@ -5,8 +5,6 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (req.route.path === "/updateProfile") {
       cb(null, "profilePictures/");
-    } else if (req.route.path === "/uploadRepositoryContent") {
-      cb(null, "repositoryContent/");
     } else {
       cb(null, "uploadPosts/");
     }
@@ -19,7 +17,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({
+const uploadImage = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: function (req, file, cb) {
@@ -31,8 +29,7 @@ const upload = multer({
   },
 });
 
-const postUpload = upload.single("image");
-const profilePictureUpload = upload.single("image");
-const repositoryContentUpload = upload.single("file");
+const postUpload = uploadImage.single("image");
+const profilePictureUpload = uploadImage.single("image");
 
-module.exports = { postUpload, profilePictureUpload, repositoryContentUpload };
+module.exports = { postUpload, profilePictureUpload };

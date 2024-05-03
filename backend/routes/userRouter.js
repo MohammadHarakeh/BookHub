@@ -54,7 +54,6 @@ router.post("/createRepository", authMiddleware, createRepository);
 router.post(
   "/uploadRepositoryContent/:repositoryId",
   authMiddleware,
-  multerMiddleware.repositoryContentUpload,
   uploadRepositoryContent
 );
 

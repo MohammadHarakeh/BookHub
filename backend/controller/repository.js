@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const fs = require("fs").promises;
 
 const createRepository = async (req, res) => {
   try {
@@ -65,6 +66,11 @@ const uploadRepositoryContent = async (req, res) => {
     repository.versions.push(newVersion);
 
     await user.save();
+
+    const filePath = `repositoryContent/${
+      req.params.repositoryId
+    }-${Date.now()}.txt`;
+    await fs.writeFile(filePath, content);
 
     res.status(200).json({ message: "Content uploaded successfully" });
   } catch (error) {
