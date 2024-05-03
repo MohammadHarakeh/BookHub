@@ -48,6 +48,7 @@ router.post("/resetPassword", resetPassword);
 const {
   createRepository,
   uploadRepositoryContent,
+  getVersionsDifference,
 } = require("../controller/repository");
 
 router.post("/createRepository", authMiddleware, createRepository);
@@ -55,6 +56,25 @@ router.post(
   "/uploadRepositoryContent/:repositoryId",
   authMiddleware,
   uploadRepositoryContent
+);
+router.get(
+  "/versionDifference/:repositoryId",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const repositoryId = req.params.repositoryId;
+
+      await getVersionsDifference(userId, repositoryId);
+
+      res
+        .status(200)
+        .json({ message: "Versions difference printed successfully" });
+    } catch (error) {
+      console.error("Error printing versions difference:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
 );
 
 module.exports = router;

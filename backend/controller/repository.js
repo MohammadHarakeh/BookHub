@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const fs = require("fs").promises;
+const diff = require("diff");
 
 const createRepository = async (req, res) => {
   try {
@@ -79,4 +80,53 @@ const uploadRepositoryContent = async (req, res) => {
   }
 };
 
-module.exports = { createRepository, uploadRepositoryContent };
+const getVersionsDifference = async (userId, repositoryId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const repository = user.repositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+
+    if (!repository) {
+      throw new Error("Repository not found");
+    }
+
+    const versions = repository.versions.slice(-2);
+
+    if (versions.length < 2) {
+      throw new Error("Less than two versions found for the repository");
+    }
+
+    const previousContent = versions[0].content;
+    const latestContent = versions[1].content;
+
+    printDifference(previousContent, latestContent);
+  } catch (error) {
+    console.error("Error getting versions difference:", error.message);
+  }
+};
+
+function printDifference(previousContent, latestContent) {
+  const differences = diff.diffChars(previousContent, latestContent);
+  differences.forEach((part) => {
+    const color = part.added
+      ? "\x1b[32m"
+      : part.removed
+      ? "\x1b[31m"
+      : "\x1b[0m";
+    process.stdout.write(color + part.value);
+  });
+  process.stdout.write("\x1b[0m");
+  process.stdout.write("\n");
+}
+
+module.exports = {
+  createRepository,
+  uploadRepositoryContent,
+  getVersionsDifference,
+};
