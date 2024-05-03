@@ -49,6 +49,7 @@ const {
   createRepository,
   uploadRepositoryContent,
   getVersionsDifference,
+  compareAnyVersion,
 } = require("../controller/repository");
 
 router.post("/createRepository", authMiddleware, createRepository);
@@ -72,6 +73,24 @@ router.get(
         .json({ message: "Versions difference printed successfully" });
     } catch (error) {
       console.error("Error printing versions difference:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+router.get(
+  "/versionDifference/:repositoryId/:versionId",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const { repositoryId, versionId } = req.params;
+
+      const userId = req.user._id;
+
+      await compareAnyVersion(userId, repositoryId, versionId);
+
+      res.status(200).json({ message: "Comparison done successfully" });
+    } catch (error) {
+      console.error("Error comparing versions:", error.message);
       res.status(500).json({ error: "Internal server error" });
     }
   }

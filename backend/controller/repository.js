@@ -111,6 +111,53 @@ const getVersionsDifference = async (userId, repositoryId) => {
   }
 };
 
+const compareAnyVersion = async (userId, repositoryId, versionIdToCompare) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const repository = user.repositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+
+    if (!repository) {
+      throw new Error("Repository not found");
+    }
+
+    const latestVersion = repository.versions[repository.versions.length - 1];
+
+    if (!latestVersion) {
+      throw new Error("No versions found for the repository");
+    }
+
+    let versionToCompare;
+    if (versionIdToCompare) {
+      versionToCompare = repository.versions.find(
+        (version) => version._id.toString() === versionIdToCompare
+      );
+
+      if (!versionToCompare) {
+        throw new Error("Version to compare not found");
+      }
+    } else {
+      versionToCompare = repository.versions[repository.versions.length - 2];
+      if (!versionToCompare) {
+        throw new Error("No previous version found for comparison");
+      }
+    }
+
+    const previousContent = versionToCompare.content;
+    const latestContent = latestVersion.content;
+
+    printDifference(previousContent, latestContent);
+  } catch (error) {
+    console.error("Error getting versions difference:", error.message);
+  }
+};
+
 function printDifference(previousContent, latestContent) {
   const differences = diff.diffChars(previousContent, latestContent);
   differences.forEach((part) => {
@@ -129,4 +176,5 @@ module.exports = {
   createRepository,
   uploadRepositoryContent,
   getVersionsDifference,
+  compareAnyVersion,
 };
