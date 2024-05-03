@@ -10,18 +10,19 @@ const bcrypt = require("bcryptjs");
 
 async function googleLogin(req, res) {
   try {
-    const { name, email } = req.body;
+    const { name, email, picture } = req.body; // Assuming picture is also sent from frontend
 
     let user = await User.findOne({ email });
 
     if (!user) {
-      const randomPassword = Math.random().toString(36).slice(-8);
-      const hashedPassword = await bcrypt.hash(randomPassword, 10);
-
+      // Create a new user
       user = new User({
         username: name,
         email,
-        password: hashedPassword,
+        // Optionally, save the profile picture
+        profile: {
+          profile_picture: picture, // Assuming picture is the URL of the profile picture
+        },
       });
 
       await user.save();
@@ -29,8 +30,11 @@ async function googleLogin(req, res) {
       user.username = name;
       await user.save();
     }
+    user.isGoogleLogin = true;
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY);
+
+    await user.save();
 
     res.json({ token });
   } catch (err) {

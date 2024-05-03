@@ -29,13 +29,17 @@ const Login: React.FC = () => {
             },
           }
         );
-        console.log("normal response:", res);
+        console.log("normal response:", res.data);
 
         const backendResponse = await axios.post(
           "http://localhost:3001/user/googleLogin",
           res.data
         );
-        console.log("backend response:", backendResponse);
+        console.log("backend response:", backendResponse.data);
+        localStorage.setItem(
+          "token",
+          JSON.stringify(backendResponse.data.token)
+        );
         router.push("/");
       } catch (err) {
         console.error(err);

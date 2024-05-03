@@ -100,7 +100,9 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: function () {
+      return !this.isPasswordRequired && !this.isGoogleLogin;
+    },
   },
   resetPasswordPIN: String,
   resetPasswordPINExpires: Date,
@@ -137,7 +139,11 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.virtual("isPasswordRequired").get(function () {
-  return !this.resetPasswordPIN && !this.resetPasswordPINExpires;
+  return (
+    !this.resetPasswordPIN &&
+    !this.resetPasswordPINExpires &&
+    !this.isGoogleLogin
+  );
 });
 
 module.exports = mongoose.model("User", userSchema);

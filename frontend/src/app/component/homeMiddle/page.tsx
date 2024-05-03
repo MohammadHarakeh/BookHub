@@ -85,6 +85,8 @@ const HomeLeft = () => {
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
+        console.log("Data", response.data);
+        console.log("pciture", response.data.user.profile.profile_picture);
       } else {
         setUserProfileImage(null);
       }
@@ -226,7 +228,7 @@ const HomeLeft = () => {
         {posts.map((post) => (
           <div key={post._id} className="posts">
             <div className="posts-info">
-              {post.image ? (
+              {/* {post.image ? (
                 post.image.includes("profilePictures\\") ? (
                   <img
                     src={`http://localhost:3001/${
@@ -239,7 +241,14 @@ const HomeLeft = () => {
                 )
               ) : (
                 <img src={defaultImage.src} alt="Default Image" />
+              )} */}
+
+              {post.profile_picture ? (
+                <img src={post.profile_picture} alt="Profile Picture" />
+              ) : (
+                <img src={defaultImage.src} alt="Default Image" />
               )}
+
               <div className="posts-username-time">
                 <p>{post.username}</p>
                 <p className="post-time">
