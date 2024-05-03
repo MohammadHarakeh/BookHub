@@ -35,4 +35,4 @@ const postUpload = upload.single("image");
 const profilePictureUpload = upload.single("image");
 const repositoryContentUpload = upload.single("file");
 
-module.exports = { postUpload, profilePictureUpload };
+module.exports = { postUpload, profilePictureUpload, repositoryContentUpload };

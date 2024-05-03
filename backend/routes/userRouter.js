@@ -45,4 +45,17 @@ const { forgotPassword, resetPassword } = require("../controller/email");
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
 
+const {
+  createRepository,
+  uploadRepositoryContent,
+} = require("../controller/repository");
+
+router.post("/createRepository", authMiddleware, createRepository);
+router.post(
+  "/uploadRepositoryContent/:repositoryId",
+  authMiddleware,
+  multerMiddleware.repositoryContentUpload,
+  uploadRepositoryContent
+);
+
 module.exports = router;
