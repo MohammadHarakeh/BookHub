@@ -66,6 +66,7 @@ const HomeLeft = () => {
           );
           if (updatedPost) {
             setCurrentPostComments(updatedPost.comments);
+            console.log(updatedPost.comments);
           }
         }
       } else {
@@ -85,8 +86,6 @@ const HomeLeft = () => {
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
-        console.log("Data", response.data);
-        console.log("pciture", response.data.user.profile.profile_picture);
       } else {
         setUserProfileImage(null);
       }
@@ -335,19 +334,21 @@ const HomeLeft = () => {
                     {currentPostComments.map((comment) => (
                       <div key={comment._id} className="comments">
                         <div className="comment-profilepicture">
-                          {userProfileImage ? (
+                          {comment.profile_picture ? (
                             <img
-                              src={userProfileImage}
+                              src={comment.profile_picture}
+                              alt="Profile Picture"
                               className="user-profile-small"
                             />
                           ) : (
                             <img
-                              src={defaultImage.src}
                               className="user-profile-small"
+                              src={defaultImage.src}
+                              alt="Default Image"
                             />
                           )}
-                          <div className="comment-time">
-                            <div className="test">
+                          <div className="comment-time-wrapper">
+                            <div className="comment-time">
                               <p>
                                 <b>{comment.username}</b>
                               </p>

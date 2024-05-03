@@ -182,9 +182,18 @@ const addComment = async (req, res) => {
     if (!userMakingComment) {
       return res.status(404).json({ message: "User not found" });
     }
-    const username = userMakingComment.username;
+    const {
+      username,
+      profile: { profile_picture },
+    } = userMakingComment;
 
-    post.comments.push({ userId, username, content, createdAt: new Date() });
+    post.comments.push({
+      userId,
+      username,
+      profile_picture,
+      content,
+      createdAt: new Date(),
+    });
 
     await postOwner.save();
 

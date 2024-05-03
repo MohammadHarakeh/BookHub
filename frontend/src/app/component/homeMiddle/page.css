@@ -193,13 +193,13 @@
   margin: 1rem 0rem;
 }
 
-.test {
+.comment-time {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.comment-time {
+.comment-time-wrapper {
   display: flex;
   align-items: start;
   flex-direction: column;
