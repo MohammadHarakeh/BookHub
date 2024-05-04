@@ -15,40 +15,68 @@ interface UserData {
 
 const HomeRight: React.FC = () => {
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
-
-  const getAllUsers = async () => {
-    try {
-      const response = await sendRequest(
-        requestMethods.GET,
-        `/user/getAllUsers`
-      );
-
-      if (response.status === 200) {
-        console.log("Fetched all users successfully:", response.data.users);
-        setAllUsers(response.data.users);
-      } else {
-        console.error("Failed to fetch all users");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [visibleUsers, setVisibleUsers] = useState<UserData[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMoreUsers, setHasMoreUsers] = useState(true);
 
   useEffect(() => {
-    getAllUsers();
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const response = await sendRequest(
+          requestMethods.GET,
+          `/user/getAllUsers`
+        );
+
+        if (response.status === 200) {
+          const newUsers = response.data.users;
+
+          if (newUsers.length === 0) {
+            setHasMoreUsers(false);
+            return;
+          }
+
+          setAllUsers(newUsers);
+          setVisibleUsers(newUsers.slice(0, 2));
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
   }, []);
+
+  const handleShowMore = () => {
+    const nextIndex = visibleUsers.length + 2;
+    setVisibleUsers(allUsers.slice(0, nextIndex));
+    if (nextIndex >= allUsers.length) {
+      setHasMoreUsers(false);
+    }
+  };
 
   return (
     <div className="homepage-right">
       <div className="right-title">Suggested Users</div>
       <div className="right-container">
-        {allUsers.map((user) => (
+        {visibleUsers.map((user) => (
           <div key={user._id} className="right-content">
-            <img src={user.profile.profile_picture}></img>
+            <img src={user.profile.profile_picture} alt={user.username} />
             <p>{user.username}</p>
             <button className="general-button">Follow</button>
           </div>
         ))}
+        {loading && <p>Loading...</p>}
+        {!loading && hasMoreUsers && (
+          <button className="show-more-button" onClick={handleShowMore}>
+            Show More
+          </button>
+        )}
+        {!loading && !hasMoreUsers && <p>No more users to show</p>}
       </div>
     </div>
   );
