@@ -12,7 +12,7 @@ const {
 } = require("../controller/user");
 
 router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
-router.get("/getAllUsers", getAllUsers);
+router.get("/getAllUsers", authMiddleware, getAllUsers);
 router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
 router.post("/followUser", authMiddleware, followUser);
