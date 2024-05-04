@@ -12,11 +12,13 @@ import axios from "axios";
 import Link from "next/link";
 
 import { useGoogleLogin } from "@react-oauth/google";
+import { useEmailContext } from "@/context/emailContext";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
+  const { userLoggedIn, setUserLoggedIn } = useEmailContext();
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
@@ -67,6 +69,7 @@ const Login: React.FC = () => {
         setEmail("");
         setPassword("");
         toast.success("Logged in successfully");
+        setUserLoggedIn(true);
         router.push("/");
       } else {
         console.error("Failed to login:", response.status);

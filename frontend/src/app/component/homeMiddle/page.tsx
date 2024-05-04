@@ -8,6 +8,7 @@ import "./page.css";
 import "../../globals.css";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import { useEmailContext } from "@/context/emailContext";
 
 const HomeLeft = () => {
   // State variables
@@ -21,7 +22,7 @@ const HomeLeft = () => {
   const [comment, setComment] = useState<string>("");
   const [currentPostId, setCurrentPostId] = useState<string>("");
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const { userLoggedIn, setUserLoggedIn } = useEmailContext();
 
   const createPost = async () => {
     try {
@@ -48,6 +49,14 @@ const HomeLeft = () => {
     } catch (error) {
       console.error("Failed to upload post", error);
       toast.error("Failed to upload post");
+    }
+  };
+
+  const handleCreatePost = () => {
+    if (userLoggedIn) {
+      createPost();
+    } else {
+      alert("Please login");
     }
   };
 
@@ -113,6 +122,13 @@ const HomeLeft = () => {
       toast.error("Failed to toggle like");
     }
   };
+  const handleLike = (post: any) => {
+    if (userLoggedIn) {
+      togglePostLike(post._id);
+    } else {
+      alert("Please login");
+    }
+  };
 
   const toggleCommentLike = async (postId: string, commentId: string) => {
     try {
@@ -129,6 +145,13 @@ const HomeLeft = () => {
     } catch (error) {
       console.error("Failed to toggle comment like", error);
       toast.error("Failed to toggle comment like");
+    }
+  };
+  const handleCommentLike = (postId: any, commentId: any) => {
+    if (userLoggedIn) {
+      toggleCommentLike(postId._id, commentId._id);
+    } else {
+      alert("Please login");
     }
   };
 
@@ -153,6 +176,14 @@ const HomeLeft = () => {
     } catch (error) {
       console.error("Error creating comment", error);
       toast.error("Error creating comment");
+    }
+  };
+
+  const handleAddComment = () => {
+    if (userLoggedIn) {
+      addComment();
+    } else {
+      alert("Please login");
     }
   };
 
@@ -215,7 +246,7 @@ const HomeLeft = () => {
               </label>
               <input id="fileInput" type="file" onChange={handleImageChange} />
             </div>
-            <button className="general-button" onClick={createPost}>
+            <button className="general-button" onClick={handleCreatePost}>
               Upload
             </button>
           </div>
@@ -273,10 +304,7 @@ const HomeLeft = () => {
             )}
 
             <div className="homepage-middle-like-comment">
-              <div
-                className="like-section"
-                onClick={() => togglePostLike(post._id)}
-              >
+              <div className="like-section" onClick={() => handleLike(post)}>
                 {post.likes.includes(userId) ? (
                   <AiFillLike />
                 ) : (
@@ -318,7 +346,7 @@ const HomeLeft = () => {
                     <div className="blurred-buttons">
                       <button
                         className="general-button"
-                        onClick={() => addComment()}
+                        onClick={() => handleAddComment()}
                       >
                         Submit
                       </button>
@@ -371,7 +399,7 @@ const HomeLeft = () => {
                             <div
                               className="like-section"
                               onClick={() =>
-                                toggleCommentLike(post._id, comment._id)
+                                handleCommentLike(post._id, comment._id)
                               }
                             >
                               {comment.likes.includes(userId) ? (
