@@ -4,6 +4,7 @@ import "./page.css";
 import "../../globals.css";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
+import defaultImage from "../../../../public/images/defaultImage.png";
 
 interface UserData {
   _id: string;
@@ -65,7 +66,12 @@ const HomeRight: React.FC = () => {
       <div className="right-container">
         {visibleUsers.map((user) => (
           <div key={user._id} className="right-content">
-            <img src={user.profile.profile_picture} alt={user.username} />
+            {user.profile.profile_picture ? (
+              <img src={user.profile.profile_picture} alt={user.username} />
+            ) : (
+              <img src={defaultImage.src} alt="Default"></img>
+            )}
+
             <p>{user.username}</p>
             <button className="general-button">Follow</button>
           </div>
