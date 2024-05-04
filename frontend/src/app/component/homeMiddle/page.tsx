@@ -21,6 +21,7 @@ const HomeLeft = () => {
   const [comment, setComment] = useState<string>("");
   const [currentPostId, setCurrentPostId] = useState<string>("");
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   const createPost = async () => {
     try {
