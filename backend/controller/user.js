@@ -64,6 +64,16 @@ const getLoggedinUser = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, `username profile.profile_picture`);
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error("Error fetching users");
+    res.status(500).json({ message: "Failed to fetch users", error });
+  }
+};
+
 const updateProfile = async (req, res) => {
   try {
     multerMiddleware(req, res, async (err) => {
@@ -153,4 +163,5 @@ module.exports = {
   googleLogin,
   followUser,
   getLoggedinUser,
+  getAllUsers,
 };

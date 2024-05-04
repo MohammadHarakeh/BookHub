@@ -11,7 +11,6 @@ import { FaRegComment } from "react-icons/fa";
 import { useEmailContext } from "@/context/emailContext";
 
 const HomeLeft = () => {
-  // State variables
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
