@@ -210,6 +210,13 @@ const HomeLeft = () => {
   useEffect(() => {
     getLoggedinUser();
     getAllPosts();
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUserLoggedIn(true);
+    } else {
+      setUserLoggedIn(false);
+    }
   }, []);
 
   useEffect(() => {
