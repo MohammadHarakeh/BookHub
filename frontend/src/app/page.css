@@ -1,4 +1,11 @@
 .homepage-wrapper {
   display: flex;
   margin: 1rem 0rem;
+  background-color: #000116;
+}
+
+.home-wrapper {
+  background-color: #000116;
+  width: 100%;
+  height: 100%;
 }

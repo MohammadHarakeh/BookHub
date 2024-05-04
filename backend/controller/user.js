@@ -3,25 +3,19 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const multerMiddleware = require("../middleware/multerMiddleware");
 const multer = require("multer");
-const { OAuth2Client } = require("google-auth-library");
-
-const client = new OAuth2Client(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
-const bcrypt = require("bcryptjs");
 
 async function googleLogin(req, res) {
   try {
-    const { name, email, picture } = req.body; // Assuming picture is also sent from frontend
+    const { name, email, picture } = req.body;
 
     let user = await User.findOne({ email });
 
     if (!user) {
-      // Create a new user
       user = new User({
         username: name,
         email,
-        // Optionally, save the profile picture
         profile: {
-          profile_picture: picture, // Assuming picture is the URL of the profile picture
+          profile_picture: picture,
         },
       });
 

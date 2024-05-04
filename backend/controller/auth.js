@@ -11,7 +11,7 @@ const register = async (req, res) => {
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Registration failed" });
+    res.status(500).json({ error: "Registration failed", error });
   }
 };
 
@@ -19,7 +19,7 @@ const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
     const user = await User.findOne({
-      $or: [{ email: identifier }, { username: identifier }],
+      $or: [{ email: identifier }],
     });
 
     if (!user) {
