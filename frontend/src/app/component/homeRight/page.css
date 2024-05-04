@@ -4,11 +4,34 @@
   align-items: center;
   flex-direction: column;
   color: #fff;
-  background-color: red;
+  background-color: #0e0f32;
   width: 20%;
   height: 100%;
 }
 
 .right-title {
   font-size: 1.5rem;
+}
+
+.right-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.right-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  padding: 0.5rem;
+  background-color: red;
+}
+
+.right-content img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
 }

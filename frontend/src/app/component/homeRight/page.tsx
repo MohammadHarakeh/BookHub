@@ -41,11 +41,12 @@ const HomeRight: React.FC = () => {
   return (
     <div className="homepage-right">
       <div className="right-title">Suggested Users</div>
-      <div className="right-content">
+      <div className="right-container">
         {allUsers.map((user) => (
-          <div key={user._id}>
-            <p>{user.username}</p>
+          <div key={user._id} className="right-content">
             <img src={user.profile.profile_picture}></img>
+            <p>{user.username}</p>
+            <button className="general-button">Follow</button>
           </div>
         ))}
       </div>
