@@ -1,14 +1,18 @@
+"use client";
 import React from "react";
 import { FaPlus } from "react-icons/fa";
 import "./page.css";
+import { useRouter } from "next/navigation";
 
 const HomeLeft: React.FC = () => {
+  const router = useRouter();
+
   return (
     <div className="homepage-left">
       <div className="homepage-left-title">
         <p>Collaboration</p>
         <button className="general-button">
-          <FaPlus /> New
+          <FaPlus onClick={() => router.push("/createRepo")} /> New
         </button>
       </div>
 
