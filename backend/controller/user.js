@@ -69,8 +69,21 @@ const getAllUsers = async (req, res) => {
     const loggedInUserId = req.user._id;
     const users = await User.find(
       { _id: { $ne: loggedInUserId } },
-      `username profile.profile_picture`
-    );
+      `username profile.profile_picture followers`
+    ).lean();
+
+    for (let user of users) {
+      if (Array.isArray(user.followers)) {
+        const isFollowing = user.followers.some(
+          (follower) =>
+            follower.followeeId.toString() === loggedInUserId.toString()
+        );
+        user.following = isFollowing;
+      } else {
+        user.following = false;
+      }
+    }
+
     res.status(200).json({ users });
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -128,7 +141,7 @@ const updateProfile = async (req, res) => {
 
 const followUser = async (req, res) => {
   try {
-    const { followeeId } = req.body;
+    const followeeId = req.params.followeeId;
     const followerId = req.user._id;
 
     const followee = await User.findById(followeeId);

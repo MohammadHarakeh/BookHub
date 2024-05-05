@@ -15,7 +15,7 @@ router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
 router.get("/getAllUsers", authMiddleware, getAllUsers);
 router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
-router.post("/followUser", authMiddleware, followUser);
+router.post("/followUser/:followeeId", authMiddleware, followUser);
 
 const {
   createPost,

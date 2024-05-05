@@ -5,6 +5,7 @@ import "../../globals.css";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import defaultImage from "../../../../public/images/defaultImage.png";
+import { ToastContainer, toast } from "react-toastify";
 
 interface UserData {
   _id: string;
@@ -19,38 +20,55 @@ const HomeRight: React.FC = () => {
   const [visibleUsers, setVisibleUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMoreUsers, setHasMoreUsers] = useState(true);
+  const [followStatus, setFollowStatus] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const response = await sendRequest(
-          requestMethods.GET,
-          `/user/getAllUsers`
-        );
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getAllUsers`
+      );
 
-        if (response.status === 200) {
-          const newUsers = response.data.users;
+      if (response.status === 200) {
+        const newUsers = response.data.users;
+        console.log(response.data.users);
 
-          if (newUsers.length === 0) {
-            setHasMoreUsers(false);
-            return;
-          }
-
-          setAllUsers(newUsers);
-          setVisibleUsers(newUsers.slice(0, 2));
-        } else {
-          console.error("Failed to fetch users");
+        if (newUsers.length === 0) {
+          setHasMoreUsers(false);
+          return;
         }
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchUsers();
-  }, []);
+        setAllUsers(newUsers);
+        setVisibleUsers(newUsers.slice(0, 2));
+      } else {
+        console.error("Failed to fetch users");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleFollow = async (followeeId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/followUser/${followeeId}`
+      );
+
+      if (response.status === 200) {
+        console.log("Followed/Unfollowed user successfully");
+      } else {
+        console.log("Failed to toggle follow");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleShowMore = () => {
     const nextIndex = visibleUsers.length + 2;
@@ -59,6 +77,10 @@ const HomeRight: React.FC = () => {
       setHasMoreUsers(false);
     }
   };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <div className="homepage-right">
@@ -73,12 +95,22 @@ const HomeRight: React.FC = () => {
             )}
 
             <p>{user.username}</p>
-            <button className="general-button">Follow</button>
+            <button
+              className="general-button"
+              onClick={() => {
+                toggleFollow(user._id);
+              }}
+            >
+              Follow
+            </button>
           </div>
         ))}
         {loading && <p>Loading...</p>}
         {!loading && hasMoreUsers && (
-          <button className="show-more-button" onClick={handleShowMore}>
+          <button
+            className="show-more-button, general-button"
+            onClick={handleShowMore}
+          >
             Show More
           </button>
         )}
