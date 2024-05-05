@@ -21,9 +21,6 @@ const HomeRight: React.FC = () => {
   const [visibleUsers, setVisibleUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMoreUsers, setHasMoreUsers] = useState(true);
-  const [followStatus, setFollowStatus] = useState<{ [key: string]: boolean }>(
-    {}
-  );
 
   const fetchUsers = async () => {
     try {
@@ -42,8 +39,12 @@ const HomeRight: React.FC = () => {
           return;
         }
 
-        setAllUsers(newUsers);
-        setVisibleUsers(newUsers.slice(0, 2));
+        const shuffledUsers = newUsers.sort(() => Math.random() - 0.5);
+
+        const sixRandomUsers = shuffledUsers.slice(0, 6);
+
+        setAllUsers(sixRandomUsers);
+        setVisibleUsers(sixRandomUsers.slice(0, 3));
       } else {
         console.error("Failed to fetch users");
       }
@@ -63,7 +64,14 @@ const HomeRight: React.FC = () => {
 
       if (response.status === 200) {
         console.log("Followed/Unfollowed user successfully");
-        fetchUsers();
+
+        setVisibleUsers((prevVisibleUsers) =>
+          prevVisibleUsers.map((user) =>
+            user._id === followeeId
+              ? { ...user, following: !user.following }
+              : user
+          )
+        );
       } else {
         console.log("Failed to toggle follow");
       }
