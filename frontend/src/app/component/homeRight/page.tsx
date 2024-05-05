@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 interface UserData {
   _id: string;
   username: string;
+  following: boolean;
   profile: {
     profile_picture: string;
   };
@@ -62,6 +63,7 @@ const HomeRight: React.FC = () => {
 
       if (response.status === 200) {
         console.log("Followed/Unfollowed user successfully");
+        fetchUsers();
       } else {
         console.log("Failed to toggle follow");
       }
@@ -95,13 +97,14 @@ const HomeRight: React.FC = () => {
             )}
 
             <p>{user.username}</p>
+
             <button
               className="general-button"
               onClick={() => {
                 toggleFollow(user._id);
               }}
             >
-              Follow
+              {user.following ? "Unfollow" : "Follow"}
             </button>
           </div>
         ))}
