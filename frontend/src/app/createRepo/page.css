@@ -14,16 +14,18 @@
 }
 
 .name-description-wrapper {
+  margin: 1rem 0rem;
   display: flex;
   width: 75%;
+  font-size: 1.5rem;
 }
 
 .story-title {
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #65b450;
   width: 100%;
   padding: 1rem 0rem;
+  font-size: 2rem;
 }
 
 .story-owner,
@@ -32,8 +34,47 @@
   flex-direction: column;
 }
 
-.test {
+.story-seperator {
   padding-top: 2.5rem;
   font-size: 1.5rem;
   margin: 0rem 1rem;
+}
+
+.story-description {
+  width: 75%;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+hr {
+  width: 100%;
+  border-color: #65b450;
+}
+
+.description-input {
+  width: 75%;
+}
+.story-visablility {
+  display: flex;
+  flex-direction: column;
+}
+
+.story-public,
+.story-private {
+  display: flex;
+  align-items: center;
+  font-size: 1.75rem;
+  gap: 1rem;
+  margin: 1rem 0rem;
+}
+
+input[type="radio"] {
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.public-info,
+.private-info {
+  font-size: 1rem;
+  color: #878787;
 }
