@@ -7,8 +7,6 @@ interface ContextValue {
   setEmail: Dispatch<SetStateAction<string>>;
   userLoggedIn: boolean;
   setUserLoggedIn: Dispatch<SetStateAction<boolean>>;
-  loggedinUser: any;
-  setLoggedinUser: Dispatch<SetStateAction<any>>;
 }
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
@@ -16,7 +14,6 @@ const EmailContext = createContext<ContextValue | undefined>(undefined);
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [email, setEmail] = useState<string>("");
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
-  const [loggedinUser, setLoggedinUser] = useState<any>();
 
   return (
     <EmailContext.Provider
@@ -25,8 +22,6 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         setEmail,
         userLoggedIn,
         setUserLoggedIn,
-        loggedinUser,
-        setLoggedinUser,
       }}
     >
       {children}

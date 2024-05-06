@@ -11,8 +11,11 @@ const HomeLeft: React.FC = () => {
     <div className="homepage-left">
       <div className="homepage-left-title">
         <p>Collaboration</p>
-        <button className="general-button">
-          <FaPlus onClick={() => router.push("/createRepo")} /> New
+        <button
+          onClick={() => router.push("/createRepo")}
+          className="general-button"
+        >
+          <FaPlus /> New
         </button>
       </div>
 

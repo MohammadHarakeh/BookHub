@@ -29,7 +29,6 @@ const CreateRepo = () => {
         "/user/getLoggedinUser"
       );
       if (response.status === 200) {
-        console.log(response.data.user);
         setLoggedUser(response.data.user);
       }
     } catch (error) {

@@ -22,7 +22,6 @@ const HomeLeft = () => {
   const [currentPostId, setCurrentPostId] = useState<string>("");
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
   const { userLoggedIn, setUserLoggedIn } = useEmailContext();
-  const { loggedinUser, setLoggedinUser } = useEmailContext();
 
   const createPost = async () => {
     try {
@@ -96,8 +95,7 @@ const HomeLeft = () => {
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
-        setLoggedinUser(response.data.user);
-        console.log(response.data.user);
+        console.log("userId: ", response.data.user._id);
       } else {
         setUserProfileImage(null);
       }
@@ -151,7 +149,7 @@ const HomeLeft = () => {
   };
   const handleCommentLike = (postId: any, commentId: any) => {
     if (userLoggedIn) {
-      toggleCommentLike(postId._id, commentId._id);
+      toggleCommentLike(postId, commentId);
     } else {
       alert("Please login");
     }
@@ -210,7 +208,7 @@ const HomeLeft = () => {
   };
 
   useEffect(() => {
-    // getLoggedinUser();
+    getLoggedinUser();
     getAllPosts();
 
     const token = localStorage.getItem("token");
@@ -220,14 +218,6 @@ const HomeLeft = () => {
       setUserLoggedIn(false);
     }
   }, []);
-
-  useEffect(() => {
-    if (!loggedinUser) {
-      getLoggedinUser();
-    } else {
-      console.log("Loggedin User:", loggedinUser);
-    }
-  }, [loggedinUser]);
 
   useEffect(() => {
     document.body.style.overflow = toggleComments ? "hidden" : "auto";
