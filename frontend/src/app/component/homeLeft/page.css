@@ -26,3 +26,8 @@
   padding: 0.5rem;
   border-radius: 10px;
 }
+
+.user-stories p:hover {
+  cursor: pointer;
+  background-color: #5d5f97;
+}

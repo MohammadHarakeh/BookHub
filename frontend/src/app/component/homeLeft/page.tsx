@@ -63,13 +63,15 @@ const HomeLeft: React.FC = () => {
         {userInfo.user &&
           userInfo.user.repositories &&
           userInfo.user.repositories.length > 0 && (
-            <>
+            <div className="user-stories">
               {userInfo.user.repositories.map(
                 (repo: Repository, index: number) => (
-                  <p key={index}>{repo.name}</p>
+                  <p key={index} onClick={() => console.log(repo._id)}>
+                    {repo.name}
+                  </p>
                 )
               )}
-            </>
+            </div>
           )}
       </div>
     </div>
