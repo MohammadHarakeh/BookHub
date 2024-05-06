@@ -6,10 +6,9 @@ import Header from "../component/header/page";
 import Footer from "../component/footer/page";
 import { FaBook, FaLock } from "react-icons/fa";
 import { IoIosInformationCircle } from "react-icons/io";
-import { useEmailContext } from "@/context/emailContext";
 import { sendRequest } from "../tools/apiRequest";
 import { requestMethods } from "../tools/apiRequestMethods";
-import { send } from "process";
+import defaultImage from "../../../public/images/defaultImage.png";
 
 interface User {
   username: string;
@@ -137,8 +136,12 @@ const CreateRepo = () => {
         <hr />
 
         <div className="image-upload">
-          <div className="preview-broder">
-            {imagePreview && <img src={imagePreview} alt="Preview" />}
+          <div className="preview-border">
+            {imagePreview ? (
+              <img src={imagePreview} alt="Preview" />
+            ) : (
+              <img src={defaultImage.src} alt="Default" />
+            )}
           </div>
 
           <label htmlFor="image" className="file-label general-button">
