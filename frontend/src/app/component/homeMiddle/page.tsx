@@ -22,6 +22,7 @@ const HomeLeft = () => {
   const [currentPostId, setCurrentPostId] = useState<string>("");
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
   const { userLoggedIn, setUserLoggedIn } = useEmailContext();
+  const { loggedinUser, setLoggedinUser } = useEmailContext();
 
   const createPost = async () => {
     try {
@@ -95,6 +96,8 @@ const HomeLeft = () => {
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
+        setLoggedinUser(response.data.user);
+        console.log(response.data.user);
       } else {
         setUserProfileImage(null);
       }
@@ -207,7 +210,7 @@ const HomeLeft = () => {
   };
 
   useEffect(() => {
-    getLoggedinUser();
+    // getLoggedinUser();
     getAllPosts();
 
     const token = localStorage.getItem("token");
@@ -217,6 +220,14 @@ const HomeLeft = () => {
       setUserLoggedIn(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (!loggedinUser) {
+      getLoggedinUser();
+    } else {
+      console.log("Loggedin User:", loggedinUser);
+    }
+  }, [loggedinUser]);
 
   useEffect(() => {
     document.body.style.overflow = toggleComments ? "hidden" : "auto";
