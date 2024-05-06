@@ -8,7 +8,7 @@ interface ContextValue {
   userLoggedIn: boolean;
   setUserLoggedIn: Dispatch<SetStateAction<boolean>>;
   userInfo: any;
-  setUserInfo: Dispatch<SetStateAction<undefined>>;
+  setUserInfo: Dispatch<SetStateAction<any>>;
 }
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
@@ -16,7 +16,7 @@ const EmailContext = createContext<ContextValue | undefined>(undefined);
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [email, setEmail] = useState<string>("");
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<undefined>();
+  const [userInfo, setUserInfo] = useState<any>({});
 
   return (
     <EmailContext.Provider

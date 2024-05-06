@@ -1,11 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./page.css";
 import { useRouter } from "next/navigation";
+import { useEmailContext } from "@/context/emailContext";
 
 const HomeLeft: React.FC = () => {
   const router = useRouter();
+  const { userInfo } = useEmailContext();
+
+  useEffect(() => {
+    if (Object.keys(userInfo).length === 0 && userInfo.constructor === Object) {
+    } else {
+      console.log(userInfo.user);
+    }
+  }, [userInfo]);
 
   return (
     <div className="homepage-left">

@@ -22,6 +22,7 @@ const HomeLeft = () => {
   const [currentPostId, setCurrentPostId] = useState<string>("");
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
   const { userLoggedIn, setUserLoggedIn } = useEmailContext();
+  const { setUserInfo } = useEmailContext();
 
   const createPost = async () => {
     try {
@@ -95,7 +96,7 @@ const HomeLeft = () => {
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
-        console.log("userId: ", response.data);
+        setUserInfo(response.data);
       } else {
         setUserProfileImage(null);
       }
