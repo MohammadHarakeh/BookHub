@@ -11,7 +11,7 @@
   margin: auto;
   border-radius: 10px;
   background-color: #0e0f32;
-  height: 80vh;
+  height: auto;
   margin-bottom: 2%;
 }
 
@@ -101,9 +101,32 @@ input[type="radio"] {
   justify-content: flex-end;
 }
 
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 75%;
+  margin-bottom: 1rem;
+}
+
+.image-upload img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 5rem;
+}
+
+.preview-broder {
+  margin-top: 1rem;
+  height: 10rem;
+  width: 10rem;
+  border-radius: 5rem;
+}
+
 .file-label {
-  display: inline-block;
+  display: flex;
+  width: auto;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 .file-input {

@@ -99,20 +99,6 @@ const CreateRepo = () => {
         </div>
         <hr />
 
-        <div className="image-upload">
-          <label htmlFor="image" className="file-label">
-            Upload Image
-          </label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            className="file-input"
-            onChange={handleImageChange}
-          />
-          {imagePreview && <img src={imagePreview} alt="Preview" />}
-        </div>
-
         <div className="name-description-wrapper">
           <div className="story-owner">
             <p>Owner</p>
@@ -146,6 +132,26 @@ const CreateRepo = () => {
               setDescription(e.target.value);
             }}
           ></input>
+        </div>
+
+        <hr />
+
+        <div className="image-upload">
+          <div className="preview-broder">
+            {imagePreview && <img src={imagePreview} alt="Preview" />}
+          </div>
+
+          <label htmlFor="image" className="file-label general-button">
+            Upload Image
+          </label>
+
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            className="file-input"
+            onChange={handleImageChange}
+          />
         </div>
         <hr />
 
