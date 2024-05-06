@@ -100,3 +100,12 @@ input[type="radio"] {
   width: 75%;
   justify-content: flex-end;
 }
+
+.file-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.file-input {
+  display: none;
+}

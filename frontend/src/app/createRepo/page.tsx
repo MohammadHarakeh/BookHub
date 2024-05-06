@@ -21,6 +21,8 @@ const CreateRepo = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [visibility, setVisibility] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const getLoggedinUser = async () => {
     try {
@@ -38,16 +40,16 @@ const CreateRepo = () => {
 
   const addRepo = async () => {
     try {
-      const body = {
-        name: name,
-        description: description,
-        visibility: visibility,
-      };
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("visibility", visibility);
+      formData.append("image", image || "");
 
       const response = await sendRequest(
         requestMethods.POST,
         `user/createRepository`,
-        body
+        formData
       );
 
       if (response.status === 201) {
@@ -56,11 +58,22 @@ const CreateRepo = () => {
         setName("");
         setVisibility("public");
         setIsPublic(true);
+        setImage(null);
+        setImagePreview(null);
       } else {
         ("Failed to create repo");
       }
     } catch (error) {
       console.error("Error creating repo", error);
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImage(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
     }
   };
 
@@ -85,6 +98,20 @@ const CreateRepo = () => {
           <p>Create a new story</p>
         </div>
         <hr />
+
+        <div className="image-upload">
+          <label htmlFor="image" className="file-label">
+            Upload Image
+          </label>
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            className="file-input"
+            onChange={handleImageChange}
+          />
+          {imagePreview && <img src={imagePreview} alt="Preview" />}
+        </div>
 
         <div className="name-description-wrapper">
           <div className="story-owner">
