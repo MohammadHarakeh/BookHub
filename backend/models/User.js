@@ -71,6 +71,10 @@ const repositorySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  repo_picture: {
+    type: String,
+    default: "",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -12,6 +12,7 @@ const EditRepo = () => {
         <p>Story Name</p>
         <p>public</p>
       </div>
+      <hr />
       <Footer />
     </div>
   );

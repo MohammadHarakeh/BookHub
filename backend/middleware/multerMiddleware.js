@@ -5,6 +5,8 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (req.route.path === "/updateProfile") {
       cb(null, "profilePictures/");
+    } else if (req.route.path === "/uploadRepoPicture") {
+      cb(null, "repoPictures/");
     } else {
       cb(null, "uploadPosts/");
     }
@@ -31,5 +33,6 @@ const uploadImage = multer({
 
 const postUpload = uploadImage.single("image");
 const profilePictureUpload = uploadImage.single("image");
+const repoPictureUpload = uploadImage.single("image");
 
-module.exports = { postUpload, profilePictureUpload };
+module.exports = { postUpload, profilePictureUpload, repoPictureUpload };
