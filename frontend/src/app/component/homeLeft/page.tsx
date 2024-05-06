@@ -28,7 +28,6 @@ interface UserProfile {
   followers: any[];
   posts: any[];
   repositories: Repository[];
-  __v: number;
 }
 
 interface UserInfo {
