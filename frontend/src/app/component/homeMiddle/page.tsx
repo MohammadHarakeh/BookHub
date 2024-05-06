@@ -95,7 +95,7 @@ const HomeLeft = () => {
       if (response.status === 200) {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
-        console.log("userId: ", response.data.user._id);
+        console.log("userId: ", response.data);
       } else {
         setUserProfileImage(null);
       }
