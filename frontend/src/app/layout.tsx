@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <GoogleOAuthProvider clientId={clientId}>
         <body className={inter.className}>
-          <Provider>{children} </Provider>
+          <Provider>{children}</Provider>
         </body>
       </GoogleOAuthProvider>
     </html>
