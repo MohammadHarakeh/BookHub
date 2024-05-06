@@ -326,8 +326,8 @@ const HomeLeft = () => {
                 className="comment-section"
                 onClick={() => toggleCommentSection(post._id)}
               >
-                <p>{post.comments.length}</p>
                 <FaRegComment />
+                <p>{post.comments.length}</p>
               </div>
             </div>
             {toggleComments && currentPostId === post._id && (
