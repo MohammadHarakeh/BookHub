@@ -6,6 +6,11 @@ const createRepository = async (req, res) => {
   try {
     const { name, description, visibility } = req.body;
 
+    let repo_picture = "";
+    if (req.file) {
+      repo_picture = req.file.path;
+    }
+
     const user = await User.findById(req.user._id);
 
     if (!user) {
@@ -18,6 +23,7 @@ const createRepository = async (req, res) => {
       visibility,
       owner: req.user._id,
       content: [],
+      repo_picture,
     };
 
     user.repositories.push(repository);

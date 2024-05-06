@@ -54,7 +54,12 @@ const {
   compareAnyVersion,
 } = require("../controller/repository");
 
-router.post("/createRepository", authMiddleware, createRepository);
+router.post(
+  "/createRepository",
+  authMiddleware,
+  multerMiddleware.repoPictureUpload,
+  createRepository
+);
 router.post(
   "/uploadRepositoryContent/:repositoryId",
   authMiddleware,
