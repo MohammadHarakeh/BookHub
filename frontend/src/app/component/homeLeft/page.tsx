@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./page.css";
 import { useRouter } from "next/navigation";
@@ -38,6 +38,11 @@ interface UserInfo {
 const HomeLeft: React.FC = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext();
+  const [displayedRepositories, setDisplayedRepositories] = useState(3);
+
+  const handleShowMore = () => {
+    setDisplayedRepositories((prev) => prev + 3);
+  };
 
   useEffect(() => {
     if (userInfo.length === 0) {
@@ -63,12 +68,19 @@ const HomeLeft: React.FC = () => {
           userInfo.user.repositories &&
           userInfo.user.repositories.length > 0 && (
             <div className="user-stories">
-              {userInfo.user.repositories.map(
-                (repo: Repository, index: number) => (
+              {userInfo.user.repositories
+                .slice(0, displayedRepositories)
+                .map((repo: Repository, index: number) => (
                   <p key={index} onClick={() => console.log(repo._id)}>
                     {repo.name}
                   </p>
-                )
+                ))}
+              {userInfo.user.repositories.length > displayedRepositories && (
+                <div className="story-left-button">
+                  <button onClick={handleShowMore} className="general-button">
+                    Show More
+                  </button>
+                </div>
               )}
             </div>
           )}

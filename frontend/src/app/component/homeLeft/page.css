@@ -28,6 +28,18 @@
   border-radius: 10px;
 }
 
+.story-left-button {
+  display: flex;
+  justify-content: center;
+}
+
+.user-stories button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .user-stories p:hover {
   cursor: pointer;
   background-color: #5d5f97;
