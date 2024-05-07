@@ -132,4 +132,35 @@ const inviteToRepository = async (req, res) => {
   }
 };
 
-module.exports = { forgotPassword, resetPassword, inviteToRepository };
+const getInvitingUserProfile = async (req, res) => {
+  try {
+    const invitingUserId = req.params.invitingUserId;
+
+    if (!invitingUserId) {
+      return res.status(400).json({ message: "Inviting user ID is missing" });
+    }
+
+    const invitingUser = await User.findById(invitingUserId);
+
+    if (!invitingUser) {
+      return res.status(404).json({ message: "Inviting user not found" });
+    }
+
+    const profile = {
+      username: invitingUser.username,
+      profile_picture: invitingUser.profile.profile_picture,
+    };
+
+    return res.status(200).json(profile);
+  } catch (error) {
+    console.error("Error retrieving inviting user's profile:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = {
+  forgotPassword,
+  resetPassword,
+  inviteToRepository,
+  getInvitingUserProfile,
+};
