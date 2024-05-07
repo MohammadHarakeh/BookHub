@@ -75,10 +75,14 @@ const resetPassword = async (req, res) => {
 };
 
 const inviteToRepository = async (req, res) => {
-  const { userId, email } = req.body;
+  const { email } = req.body;
 
   try {
     const invitingUser = req.user;
+
+    if (!invitingUser) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
 
     const userToInvite = await User.findOne({ email });
     if (!userToInvite) {
@@ -87,6 +91,14 @@ const inviteToRepository = async (req, res) => {
 
     if (userToInvite._id.equals(invitingUser._id)) {
       return res.status(400).json({ message: "You cannot invite yourself" });
+    }
+
+    if (!Array.isArray(invitingUser.invitedUsers)) {
+      invitingUser.invitedUsers = [];
+    }
+
+    if (!Array.isArray(userToInvite.repositories)) {
+      userToInvite.repositories = [];
     }
 
     if (
