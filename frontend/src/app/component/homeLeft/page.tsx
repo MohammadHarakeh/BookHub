@@ -4,6 +4,8 @@ import { FaPlus } from "react-icons/fa";
 import "./page.css";
 import { useRouter } from "next/navigation";
 import { useEmailContext } from "@/context/emailContext";
+import { requestMethods } from "../../tools/apiRequestMethods";
+import { sendRequest } from "../../tools/apiRequest";
 
 interface Repository {
   name: string;
@@ -38,7 +40,25 @@ interface UserInfo {
 const HomeLeft: React.FC = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext();
+  const { repoInfo, setRepoInfo } = useEmailContext();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
+
+  const clickedRepoInfo = async (repositoryId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getRepository/${repositoryId}`
+      );
+
+      if (response.status === 200) {
+        setRepoInfo(response.data);
+      } else {
+        console.log("Failed to get repo data");
+      }
+    } catch (error) {
+      console.log("Error getting repo data", error);
+    }
+  };
 
   const handleShowMore = () => {
     setDisplayedRepositories((prev) => prev + 3);
@@ -50,6 +70,10 @@ const HomeLeft: React.FC = () => {
     }
     console.log(userInfo.user);
   }, [userInfo]);
+
+  useEffect(() => {
+    console.log("repo info", repoInfo);
+  }, [repoInfo]);
 
   return (
     <div className="homepage-left">
@@ -71,7 +95,7 @@ const HomeLeft: React.FC = () => {
               {userInfo.user.repositories
                 .slice(0, displayedRepositories)
                 .map((repo: Repository, index: number) => (
-                  <p key={index} onClick={() => console.log(repo._id)}>
+                  <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
                     {repo.name}
                   </p>
                 ))}

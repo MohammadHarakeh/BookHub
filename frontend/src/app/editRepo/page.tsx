@@ -11,6 +11,7 @@ import defaultImage from "../../../public/images/defaultImage.png";
 const EditRepo = () => {
   const [loggedUserInfo, setLoggedUserInfo] = useState<any>();
   const { userInfo } = useEmailContext();
+  const { repoInfo, setRepoInfo } = useEmailContext();
 
   const getLoggedinUser = async () => {
     try {
@@ -36,6 +37,12 @@ const EditRepo = () => {
     console.log(userInfo);
   }, [userInfo]);
 
+  useEffect(() => {
+    if (repoInfo) {
+      console.log("repo info: ", repoInfo);
+    }
+  }, [repoInfo]);
+
   return (
     <div className="edit-repo-wrapper">
       <Header />
@@ -44,6 +51,7 @@ const EditRepo = () => {
           <img src={defaultImage.src}></img>
 
           <p className="story-name">Story Name</p>
+          {/* <p>{repoInfo ? repoInfo.name : "Loading..."}</p> */}
           <p className="general-input story-visibility-status">public</p>
         </div>
         <p>{loggedUserInfo?.user?.username ?? "Loading..."}</p>
