@@ -49,3 +49,13 @@
   margin: 1rem auto;
   width: 75%;
 }
+
+.story-collaborators {
+  border: 1px solid #42ff00;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+}
+
+.story-collaborators p {
+  color: #42ff00;
+}

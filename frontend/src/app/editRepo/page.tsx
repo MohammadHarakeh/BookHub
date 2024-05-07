@@ -56,7 +56,9 @@ const EditRepo = () => {
         </div>
         <p>{loggedUserInfo?.user?.username ?? "Loading..."}</p>
         {/* <p>{userInfo?.user?.username ?? "Loading..."}</p> */}
-        <div className="story-collaborators">Collaborators</div>
+        <div className="story-collaborators">
+          <p>Collaborators</p>
+        </div>
       </div>
       <hr />
 
