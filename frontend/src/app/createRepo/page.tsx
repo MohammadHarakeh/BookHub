@@ -9,6 +9,7 @@ import { IoIosInformationCircle } from "react-icons/io";
 import { sendRequest } from "../tools/apiRequest";
 import { requestMethods } from "../tools/apiRequestMethods";
 import defaultImage from "../../../public/images/defaultImage.png";
+import { useEmailContext } from "@/context/emailContext";
 
 interface User {
   username: string;
@@ -22,6 +23,7 @@ const CreateRepo = () => {
   const [visibility, setVisibility] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const { userInfo, setUserInfo } = useEmailContext();
 
   const getLoggedinUser = async () => {
     try {
@@ -89,6 +91,10 @@ const CreateRepo = () => {
   useEffect(() => {
     getLoggedinUser();
   }, []);
+
+  useEffect(() => {
+    userInfo;
+  }, [userInfo]);
   return (
     <div className="repo-wrapper">
       <Header />

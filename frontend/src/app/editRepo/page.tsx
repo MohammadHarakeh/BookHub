@@ -9,7 +9,7 @@ import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
 
 const EditRepo = () => {
-  const [loggedUserInfo, setLoggedUserInfo] = useState<any | undefined>();
+  const [loggedUserInfo, setLoggedUserInfo] = useState<any>();
   const { userInfo } = useEmailContext();
 
   const getLoggedinUser = async () => {
@@ -46,7 +46,8 @@ const EditRepo = () => {
           <p className="story-name">Story Name</p>
           <p className="general-input story-visibility-status">public</p>
         </div>
-        {/* <p>{loggedUserInfo?.user?.username ?? "Loading..."}</p> */}
+        <p>{loggedUserInfo?.user?.username ?? "Loading..."}</p>
+        {/* <p>{userInfo?.user?.username ?? "Loading..."}</p> */}
         <div className="story-collaborators">Collaborators</div>
       </div>
       <hr />
