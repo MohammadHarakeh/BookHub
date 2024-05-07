@@ -91,6 +91,18 @@ const repositorySchema = new mongoose.Schema({
     enum: ["public", "private"],
     required: true,
   },
+  pendingInvitations: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      invitationToken: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   invitedUsers: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -158,9 +158,42 @@ const getInvitingUserProfile = async (req, res) => {
   }
 };
 
+const acceptRepositoryInvitation = async (req, res) => {
+  const { repositoryId } = req.params;
+  const user = req.user; // Assuming user is authenticated
+
+  try {
+    // Find the repository by ID
+    const repository = await Repository.findById(repositoryId);
+
+    if (!repository) {
+      return res.status(404).json({ message: "Repository not found" });
+    }
+
+    // Check if the user is invited to the repository
+    if (!repository.invitedUsers.includes(user._id)) {
+      return res
+        .status(403)
+        .json({ message: "You are not invited to this repository" });
+    }
+
+    // Add the user to the repository's invitedUsers array
+    repository.invitedUsers.push(user._id);
+    await repository.save();
+
+    return res
+      .status(200)
+      .json({ message: "Invitation accepted successfully" });
+  } catch (error) {
+    console.error("Error accepting repository invitation:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   forgotPassword,
   resetPassword,
   inviteToRepository,
   getInvitingUserProfile,
+  acceptRepositoryInvitation,
 };
