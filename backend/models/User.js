@@ -91,6 +91,12 @@ const repositorySchema = new mongoose.Schema({
     enum: ["public", "private"],
     required: true,
   },
+  invitedUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   starred: Boolean,
   versions: [versionSchema],
 });

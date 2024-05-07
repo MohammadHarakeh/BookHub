@@ -26,4 +26,25 @@ const sendPasswordResetEmail = async (to, username, pin) => {
   }
 };
 
-module.exports = { sendPasswordResetEmail };
+const sendRepositoryInvitationEmail = async (
+  to,
+  repositoryName,
+  invitingUsername
+) => {
+  const mailOptions = {
+    from: process.env.GOOGLE_EMAIL,
+    to,
+    subject: "Invitation to join a repository",
+    text: `Dear ${to},\n\nYou have been invited by ${invitingUsername} to join the repository "${repositoryName}". Click on the link to accept the invitation.\n\nBest Regards,\nBookHub Team`,
+    html: `<p>Dear ${to},</p><p>You have been invited by ${invitingUsername} to join the repository "<strong>${repositoryName}</strong>". Click <a href="#">here</a> to accept the invitation.</p><p>Best Regards,<br>BookHub Team</p>`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Repository invitation email sent");
+  } catch (error) {
+    console.error("Error sending repository invitation email: ", error);
+  }
+};
+
+module.exports = { sendPasswordResetEmail, sendRepositoryInvitationEmail };

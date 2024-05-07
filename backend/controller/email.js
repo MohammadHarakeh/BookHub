@@ -1,5 +1,8 @@
 const User = require("../models/User");
-const { sendPasswordResetEmail } = require("../utils/email");
+const {
+  sendPasswordResetEmail,
+  sendRepositoryInvitationEmail,
+} = require("../utils/email");
 const bcrypt = require("bcrypt");
 
 const generatePIN = () => {
@@ -71,4 +74,4 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { forgotPassword, resetPassword };
+module.exports = { forgotPassword, resetPassword, inviteToRepository };
