@@ -28,6 +28,12 @@ const createRepository = async (req, res) => {
 
     user.repositories.push(repository);
 
+    if (!repository.invitedUsers || !Array.isArray(repository.invitedUsers)) {
+      repository.invitedUsers = [];
+    }
+
+    repository.invitedUsers.push(req.user._id);
+
     await user.save();
 
     res

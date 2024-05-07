@@ -74,4 +74,45 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const inviteToRepository = async (req, res) => {
+  const { userId, email } = req.body;
+
+  try {
+    const invitingUser = req.user;
+
+    const userToInvite = await User.findOne({ email });
+    if (!userToInvite) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (userToInvite._id.equals(invitingUser._id)) {
+      return res.status(400).json({ message: "You cannot invite yourself" });
+    }
+
+    if (
+      invitingUser.invitedUsers.includes(userToInvite._id) ||
+      invitingUser.repositories.some((repo) =>
+        repo.invitedUsers.includes(userToInvite._id)
+      ) ||
+      userToInvite.repositories.some((repo) =>
+        repo.invitedUsers.includes(invitingUser._id)
+      )
+    ) {
+      return res
+        .status(400)
+        .json({ message: "User already invited or a member" });
+    }
+
+    invitingUser.invitedUsers.push(userToInvite._id);
+    await invitingUser.save();
+
+    await sendRepositoryInvitationEmail(email, invitingUser.username);
+
+    return res.status(200).json({ message: "Invitation sent successfully" });
+  } catch (error) {
+    console.error("Error inviting user to repository:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = { forgotPassword, resetPassword, inviteToRepository };

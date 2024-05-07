@@ -42,10 +42,15 @@ router.post(
 );
 router.post("/addComment/:postId", authMiddleware, addComment);
 
-const { forgotPassword, resetPassword } = require("../controller/email");
+const {
+  forgotPassword,
+  resetPassword,
+  inviteToRepository,
+} = require("../controller/email");
 
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
+router.post("/invite", authMiddleware, inviteToRepository);
 
 const {
   createRepository,
