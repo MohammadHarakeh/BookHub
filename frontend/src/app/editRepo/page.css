@@ -1,3 +1,27 @@
 .edit-repo-wrapper {
   color: #fff;
 }
+
+.story-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1.5rem;
+  margin: 1rem 0rem;
+}
+
+.story-info img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 3rem;
+}
+
+.story-name {
+  font-size: 2rem;
+}
+
+.story-visibility-status {
+  border-radius: 2rem !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 1rem;
+}
