@@ -59,6 +59,15 @@ const EditRepo = () => {
         <div className="story-collaborators">Collaborators</div>
       </div>
       <hr />
+
+      <div className="edit-repo-info">
+        <textarea></textarea>
+      </div>
+
+      <div className="edit-repo-button">
+        <button className="general-button">Commit</button>
+      </div>
+      <hr />
       <Footer />
     </div>
   );
