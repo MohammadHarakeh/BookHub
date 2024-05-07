@@ -74,6 +74,17 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const generateInvitationToken = () => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const length = 10;
+  let token = "";
+  for (let i = 0; i < length; i++) {
+    token += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return token;
+};
+
 const inviteToRepository = async (req, res) => {
   const { userId, email, repositoryName } = req.body;
 
@@ -93,36 +104,41 @@ const inviteToRepository = async (req, res) => {
       return res.status(400).json({ message: "You cannot invite yourself" });
     }
 
-    if (!Array.isArray(invitingUser.invitedUsers)) {
-      invitingUser.invitedUsers = [];
-    }
+    const repository = invitingUser.repositories.find(
+      (repo) => repo.name === repositoryName
+    );
 
-    if (!Array.isArray(userToInvite.repositories)) {
-      userToInvite.repositories = [];
+    if (!repository) {
+      return res.status(404).json({ message: "Repository not found" });
     }
 
     if (
-      invitingUser.invitedUsers.includes(userToInvite._id) ||
-      invitingUser.repositories.some((repo) =>
-        repo.invitedUsers.includes(userToInvite._id)
+      repository.pendingInvitations.some((invitation) =>
+        invitation.userId.equals(userToInvite._id)
       ) ||
-      userToInvite.repositories.some((repo) =>
-        repo.invitedUsers.includes(invitingUser._id)
-      )
+      repository.invitedUsers.includes(userToInvite._id)
     ) {
       return res
         .status(400)
         .json({ message: "User already invited or a member" });
     }
 
-    invitingUser.invitedUsers.push(userToInvite._id);
+    const invitationToken = generateInvitationToken();
+
+    repository.pendingInvitations.push({
+      userId: userToInvite._id,
+      invitationToken,
+    });
+
     await invitingUser.save();
+
     const invitingUsername = invitingUser.username;
 
     await sendRepositoryInvitationEmail(
       email,
       repositoryName,
-      invitingUsername
+      invitingUsername,
+      invitationToken
     );
 
     return res.status(200).json({ message: "Invitation sent successfully" });
@@ -163,21 +179,18 @@ const acceptRepositoryInvitation = async (req, res) => {
   const user = req.user; // Assuming user is authenticated
 
   try {
-    // Find the repository by ID
     const repository = await Repository.findById(repositoryId);
 
     if (!repository) {
       return res.status(404).json({ message: "Repository not found" });
     }
 
-    // Check if the user is invited to the repository
     if (!repository.invitedUsers.includes(user._id)) {
       return res
         .status(403)
         .json({ message: "You are not invited to this repository" });
     }
 
-    // Add the user to the repository's invitedUsers array
     repository.invitedUsers.push(user._id);
     await repository.save();
 
