@@ -75,7 +75,7 @@ const resetPassword = async (req, res) => {
 };
 
 const inviteToRepository = async (req, res) => {
-  const { email } = req.body;
+  const { userId, email, repositoryName } = req.body;
 
   try {
     const invitingUser = req.user;
@@ -117,8 +117,13 @@ const inviteToRepository = async (req, res) => {
 
     invitingUser.invitedUsers.push(userToInvite._id);
     await invitingUser.save();
+    const invitingUsername = invitingUser.username;
 
-    await sendRepositoryInvitationEmail(email, invitingUser.username);
+    await sendRepositoryInvitationEmail(
+      email,
+      repositoryName,
+      invitingUsername
+    );
 
     return res.status(200).json({ message: "Invitation sent successfully" });
   } catch (error) {
