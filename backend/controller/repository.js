@@ -39,6 +39,35 @@ const createRepository = async (req, res) => {
   }
 };
 
+const getRepository = async (req, res) => {
+  try {
+    const repositoryId = req.params.repositoryId;
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const repository = user.repositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found" });
+    }
+
+    const latestVersion = repository.versions[repository.versions.length - 1];
+
+    res
+      .status(200)
+      .json({ repository: repository, latestVersion: latestVersion });
+  } catch (error) {
+    console.error("Error fetching repository:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const uploadRepositoryContent = async (req, res) => {
   try {
     const { content } = req.body;
@@ -183,4 +212,5 @@ module.exports = {
   uploadRepositoryContent,
   getVersionsDifference,
   compareAnyVersion,
+  getRepository,
 };

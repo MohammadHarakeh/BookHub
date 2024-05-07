@@ -52,8 +52,10 @@ const {
   uploadRepositoryContent,
   getVersionsDifference,
   compareAnyVersion,
+  getRepository,
 } = require("../controller/repository");
 
+router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
 router.post(
   "/createRepository",
   authMiddleware,
