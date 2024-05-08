@@ -1,5 +1,87 @@
 const mongoose = require("mongoose");
 
+const invitationSchema = new mongoose.Schema({
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  recipient: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  repositoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Repository",
+    required: true,
+  },
+  invitationToken: {
+    type: String,
+    required: true,
+  },
+  expiresAt: {
+    type: Date,
+    required: true,
+  },
+});
+
+const versionSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const repositorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  repo_picture: {
+    type: String,
+    default: "",
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  styles: {
+    fontStyle: String,
+    fontSize: String,
+    fontColor: String,
+    fontWeight: String,
+    textDecoration: String,
+  },
+  visibility: {
+    type: String,
+    enum: ["public", "private"],
+    required: true,
+  },
+  invitedUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  collaborators: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  starred: Boolean,
+  versions: [versionSchema],
+});
+
 const postSchema = new mongoose.Schema({
   content: String,
   image: String,
@@ -51,72 +133,6 @@ const followSchema = new mongoose.Schema({
   },
 });
 
-const versionSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-const repositorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  repo_picture: {
-    type: String,
-    default: "",
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  styles: {
-    fontStyle: String,
-    fontSize: String,
-    fontColor: String,
-    fontWeight: String,
-    textDecoration: String,
-  },
-  visibility: {
-    type: String,
-    enum: ["public", "private"],
-    required: true,
-  },
-  pendingInvitations: [
-    {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      invitationToken: {
-        type: String,
-        required: true,
-      },
-      expiresAt: {
-        type: Date,
-        required: true,
-      },
-    },
-  ],
-  invitedUsers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  starred: Boolean,
-  versions: [versionSchema],
-});
-
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -135,22 +151,7 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordPIN: String,
   resetPasswordPINExpires: Date,
-  invitedFields: [
-    {
-      invitingUserId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      invitingRepoId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      invitationToken: String,
-      invitationTokenExpires: Date,
-      invitingUsername: String,
-      invitingProfilePicture: String,
-    },
-  ],
+
   profile: {
     bio: {
       type: String,
@@ -181,6 +182,7 @@ const userSchema = new mongoose.Schema({
   posts: [postSchema],
   followers: [followSchema],
   repositories: [repositorySchema],
+  invitations: [invitationSchema],
 });
 
 userSchema.virtual("isPasswordRequired").get(function () {

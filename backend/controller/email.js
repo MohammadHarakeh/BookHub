@@ -9,6 +9,19 @@ const generatePIN = () => {
   return Math.floor(10000000 + Math.random() * 90000000);
 };
 
+const generateInvitationToken = () => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const length = 10;
+  let token = "";
+  for (let i = 0; i < length; i++) {
+    token += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  const expirationTime = new Date();
+  expirationTime.setHours(expirationTime.getHours() + 24);
+  return { token, expiresAt: expirationTime };
+};
+
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -74,83 +87,39 @@ const resetPassword = async (req, res) => {
   }
 };
 
-const generateInvitationToken = () => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const length = 10;
-  let token = "";
-  for (let i = 0; i < length; i++) {
-    token += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  const expirationTime = new Date();
-  expirationTime.setHours(expirationTime.getHours() + 24);
-  return { token, expiresAt: expirationTime };
-};
-
 const inviteToRepository = async (req, res) => {
-  const { email, repositoryName, invitingRepoId } = req.body;
+  const { repositoryId, recipientEmail } = req.body;
 
   try {
-    const invitingUser = req.user;
+    const sender = req.user;
+    const recipient = await User.findOne({ email: recipientEmail });
 
-    if (!invitingUser) {
-      return res.status(401).json({ message: "User not authenticated" });
-    }
-
-    const userToInvite = await User.findOne({ email });
-    if (!userToInvite) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    if (userToInvite._id.equals(invitingUser._id)) {
-      return res.status(400).json({ message: "You cannot invite yourself" });
-    }
-
-    const repository = invitingUser.repositories.find(
-      (repo) => repo.name === repositoryName
-    );
-
-    if (!repository) {
-      return res.status(404).json({ message: "Repository not found" });
-    }
-
-    const existingInvitationIndex = userToInvite.invitedFields.findIndex(
-      (invitation) => invitation.invitingRepoId.equals(invitingRepoId)
-    );
-    if (existingInvitationIndex !== -1) {
-      userToInvite.invitedFields.splice(existingInvitationIndex, 1);
+    if (!recipient) {
+      return res.status(404).json({ message: "Recipient user not found" });
     }
 
     const { token, expiresAt } = generateInvitationToken();
 
-    repository.pendingInvitations.push({
-      userId: userToInvite._id,
+    const invitation = {
+      sender: sender._id,
+      recipient: recipient._id,
+      repositoryId,
       invitationToken: token,
-      expiresAt: expiresAt,
-    });
+      expiresAt,
+    };
 
-    await invitingUser.save();
-
-    const invitingUsername = invitingUser.username;
-    const invitingProfilePicture = invitingUser.profile.profile_picture;
+    sender.invitations.push(invitation);
+    recipient.invitations.push(invitation);
+    await sender.save();
+    await recipient.save();
 
     await sendRepositoryInvitationEmail(
-      email,
-      repositoryName,
-      invitingUsername,
-      token
+      sender.email,
+      sender.username,
+      recipientEmail,
+      token,
+      repositoryId
     );
-
-    userToInvite.invitedFields.push({
-      invitingUserId: invitingUser._id,
-      invitingRepoId: invitingRepoId,
-      invitingUsername: invitingUsername,
-      invitingProfilePicture: invitingProfilePicture,
-      invitationToken: token,
-      invitationTokenExpires: expiresAt,
-    });
-
-    await userToInvite.save();
 
     return res.status(200).json({ message: "Invitation sent successfully" });
   } catch (error) {
@@ -163,5 +132,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   inviteToRepository,
-  acceptRepositoryInvitation,
+  acceptInvitationToRepository,
 };

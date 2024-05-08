@@ -46,13 +46,17 @@ const {
   forgotPassword,
   resetPassword,
   inviteToRepository,
-  acceptRepositoryInvitation,
+  acceptInvitationToRepository,
 } = require("../controller/email");
 
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
-router.post("/invite", authMiddleware, inviteToRepository);
-router.post("/accept-invitation", authMiddleware, acceptRepositoryInvitation);
+router.post("/invite-to-repository", authMiddleware, inviteToRepository);
+router.post(
+  "/accept-invitation-to-repository",
+  authMiddleware,
+  acceptInvitationToRepository
+);
 
 const {
   createRepository,
