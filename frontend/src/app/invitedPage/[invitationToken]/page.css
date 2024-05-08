@@ -1,3 +1,23 @@
 .invited-wrapper {
   color: #fff;
 }
+
+.invite-card-wrapper {
+  height: 75vh;
+}
+
+.invite-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: 65%;
+  margin: auto;
+}
+
+.invite-card img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;
+}

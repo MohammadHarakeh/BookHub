@@ -5,12 +5,15 @@ import Header from "@/app/component/header/page";
 import Footer from "@/app/component/footer/page";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { sendRequest } from "../../tools/apiRequest";
+import defaultImage from "../../../../public/images/defaultImage.png";
 
 const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
   const [invitingUserId, setInvitingUserId] = useState();
   const [invitingUser, setInvitingUser] = useState();
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [invitationAccepted, setInvitationAccepted] = useState(false);
+  const [invitingUsername, setInvitingUsername] = useState<string>("");
+  const [invitingUserPicture, setInvitingUserPicture] = useState<string>("");
 
   const getLoggedinUser = async () => {
     try {
@@ -19,14 +22,16 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
         "/user/getLoggedinUser"
       );
       if (response.status === 200) {
-        setLoggedInUser(response.data);
-        console.log(response.data);
+        setLoggedInUser(response.data.user);
+        console.log(response.data.user);
         const invitedFields = response.data.user.invitedFields;
 
         invitedFields.forEach((invitation: any) => {
           if (invitation.invitingUserId) {
             console.log("Inviting User ID:", invitation.invitingUserId);
             setInvitingUserId(invitation.invitingUserId);
+            setInvitingUsername(invitation.invitingUsername);
+            setInvitingUserPicture(invitation.invitingProfilePicture);
           } else {
             console.log("Inviting User ID not found in this invitation.");
           }
@@ -53,8 +58,16 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
     <div className="invited-wrapper">
       <Header />
 
-      <div className="invite-card">
-        <h1>Invited Page for token {params.invitationToken}</h1>
+      <div className="invite-card-wrapper">
+        {/* <h1>Invited Page for token {params.invitationToken}</h1> */}
+        <div className="invite-card">
+          {invitingUserPicture !== "" ? (
+            <img src={invitingUserPicture} alt="User Picture" />
+          ) : (
+            <img src={defaultImage.src} alt="Default Profile" />
+          )}
+          <h1>{invitingUsername} has invited you to collaborate with them</h1>
+        </div>
       </div>
 
       <Footer />

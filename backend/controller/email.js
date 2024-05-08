@@ -145,7 +145,6 @@ const inviteToRepository = async (req, res) => {
       token
     );
 
-    // Set inviting user details inside invitedFields
     userToInvite.invitedFields = {
       invitingUserId: invitingUser._id,
       invitationToken: token,
