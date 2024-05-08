@@ -59,7 +59,6 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
       <Header />
 
       <div className="invite-card-wrapper">
-        {/* <h1>Invited Page for token {params.invitationToken}</h1> */}
         <div className="invite-card">
           {invitingUserPicture !== "" ? (
             <img src={invitingUserPicture} alt="User Picture" />

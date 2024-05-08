@@ -52,6 +52,8 @@ const HomeLeft: React.FC = () => {
 
       if (response.status === 200) {
         setRepoInfo(response.data.repository);
+        console.log(response.data.repository);
+        router.push("/editRepo");
       } else {
         console.log("Failed to get repo data");
       }

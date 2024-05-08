@@ -141,6 +141,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
+      invitingRepoId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
       invitationToken: String,
       invitationTokenExpires: Date,
       invitingUsername: String,

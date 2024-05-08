@@ -88,7 +88,7 @@ const generateInvitationToken = () => {
 };
 
 const inviteToRepository = async (req, res) => {
-  const { userId, email, repositoryName } = req.body;
+  const { email, repositoryName, invitingRepoId } = req.body;
 
   try {
     const invitingUser = req.user;
@@ -145,13 +145,14 @@ const inviteToRepository = async (req, res) => {
       token
     );
 
-    userToInvite.invitedFields = {
+    userToInvite.invitedFields.push({
       invitingUserId: invitingUser._id,
-      invitationToken: token,
-      invitationTokenExpires: expiresAt,
+      invitingRepoId: invitingRepoId,
       invitingUsername: invitingUsername,
       invitingProfilePicture: invitingProfilePicture,
-    };
+      invitationToken: token,
+      invitationTokenExpires: expiresAt,
+    });
 
     await userToInvite.save();
 
@@ -178,6 +179,15 @@ const acceptRepositoryInvitation = async (req, res) => {
         .status(403)
         .json({ message: "You are not invited to this repository" });
     }
+
+    user.invitedFields = user.invitedFields.filter(
+      (invitation) => !invitation.invitingRepoId.equals(repository._id)
+    );
+    await user.save();
+
+    repository.pendingInvitations = repository.pendingInvitations.filter(
+      (invitation) => !invitation.userId.equals(user._id)
+    );
 
     repository.invitedUsers.push(user._id);
     await repository.save();

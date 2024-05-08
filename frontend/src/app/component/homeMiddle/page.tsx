@@ -97,6 +97,7 @@ const HomeLeft = () => {
         setUserProfileImage(response.data.user.profile.profile_picture);
         setUserId(response.data.user._id);
         setUserInfo(response.data);
+        console.log(response.data);
       } else {
         setUserProfileImage(null);
       }
