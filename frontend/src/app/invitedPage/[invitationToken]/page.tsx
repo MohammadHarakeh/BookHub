@@ -66,7 +66,14 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
           ) : (
             <img src={defaultImage.src} alt="Default Profile" />
           )}
-          <h1>{invitingUsername} has invited you to collaborate with them</h1>
+          <p>{invitingUsername} has invited you to collaborate with them</p>
+
+          <div className="invite-card-buttons">
+            <button className="general-button invite-card-btn">Accept</button>
+            <button className="general-button decline-button invite-card-btn">
+              Decline
+            </button>
+          </div>
         </div>
       </div>
 

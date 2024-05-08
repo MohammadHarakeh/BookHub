@@ -3,6 +3,7 @@
 }
 
 .invite-card-wrapper {
+  display: flex;
   height: 75vh;
 }
 
@@ -11,13 +12,39 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: red;
-  width: 65%;
+  background-color: #0e0f32;
+  min-width: 50%;
+  padding: 2rem;
   margin: auto;
+  border-radius: 1rem;
 }
 
 .invite-card img {
   width: 8rem;
   height: 8rem;
   border-radius: 4rem;
+  margin-bottom: 1rem;
+}
+
+.invite-card p {
+  font-size: 1.75rem;
+}
+
+.invite-card-buttons {
+  display: flex;
+  margin: 2rem 0rem;
+  gap: 4rem;
+}
+
+.invite-card-btn {
+  font-size: 2rem;
+  padding: 1.5rem;
+}
+
+.decline-button {
+  background-color: red;
+}
+
+.decline-button:hover {
+  background-color: rgb(99, 0, 0);
 }
