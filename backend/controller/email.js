@@ -82,7 +82,9 @@ const generateInvitationToken = () => {
   for (let i = 0; i < length; i++) {
     token += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  return token;
+  const expirationTime = new Date();
+  expirationTime.setHours(expirationTime.getHours() + 24);
+  return { token, expiresAt: expirationTime };
 };
 
 const inviteToRepository = async (req, res) => {
@@ -123,11 +125,12 @@ const inviteToRepository = async (req, res) => {
         .json({ message: "User already invited or a member" });
     }
 
-    const invitationToken = generateInvitationToken();
+    const { token, expiresAt } = generateInvitationToken(); // Destructure token and expiresAt
 
     repository.pendingInvitations.push({
       userId: userToInvite._id,
-      invitationToken,
+      invitationToken: token,
+      expiresAt: expiresAt,
     });
 
     await invitingUser.save();
@@ -138,8 +141,12 @@ const inviteToRepository = async (req, res) => {
       email,
       repositoryName,
       invitingUsername,
-      invitationToken
+      token
     );
+
+    userToInvite.invitationToken = token;
+    userToInvite.invitationTokenExpires = expiresAt;
+    await userToInvite.save();
 
     return res.status(200).json({ message: "Invitation sent successfully" });
   } catch (error) {
@@ -176,7 +183,7 @@ const getInvitingUserProfile = async (req, res) => {
 
 const acceptRepositoryInvitation = async (req, res) => {
   const { repositoryId } = req.params;
-  const user = req.user; // Assuming user is authenticated
+  const user = req.user;
 
   try {
     const repository = await Repository.findById(repositoryId);
