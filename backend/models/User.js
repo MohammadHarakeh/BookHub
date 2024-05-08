@@ -143,6 +143,8 @@ const userSchema = new mongoose.Schema({
       },
       invitationToken: String,
       invitationTokenExpires: Date,
+      invitingUsername: String,
+      invitingProfilePicture: String,
     },
   ],
   profile: {

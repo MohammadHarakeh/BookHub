@@ -46,11 +46,9 @@ const {
   forgotPassword,
   resetPassword,
   inviteToRepository,
-  getInvitingUserProfile,
   acceptRepositoryInvitation,
 } = require("../controller/email");
 
-router.get("/invitingUserProfile/:invitingUserId", getInvitingUserProfile);
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
 router.post("/invite", authMiddleware, inviteToRepository);

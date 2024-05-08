@@ -7,6 +7,7 @@ import { requestMethods } from "../../tools/apiRequestMethods";
 import { sendRequest } from "../../tools/apiRequest";
 
 const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
+  const [invitingUserId, setInvitingUserId] = useState();
   const [invitingUser, setInvitingUser] = useState();
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [invitationAccepted, setInvitationAccepted] = useState(false);
@@ -19,6 +20,17 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
       );
       if (response.status === 200) {
         setLoggedInUser(response.data);
+        console.log(response.data);
+        const invitedFields = response.data.user.invitedFields;
+
+        invitedFields.forEach((invitation: any) => {
+          if (invitation.invitingUserId) {
+            console.log("Inviting User ID:", invitation.invitingUserId);
+            setInvitingUserId(invitation.invitingUserId);
+          } else {
+            console.log("Inviting User ID not found in this invitation.");
+          }
+        });
         if (
           response.data.invitationToken &&
           response.data.invitationTokenExpires > new Date()
@@ -33,42 +45,9 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
     }
   };
 
-  const getInvitingUserInfo = async (invitingUserId: string) => {
-    try {
-      const response = await sendRequest(
-        requestMethods.GET,
-        `/user/invitingUserProfile/${invitingUserId}`
-      );
-
-      if (response.status === 200) {
-        console.log(response.data);
-        setInvitingUser(response.data);
-      } else {
-        console.log("Failed to get inviting user");
-      }
-    } catch (error) {
-      console.error("Error getting user info", error);
-    }
-  };
-
   useEffect(() => {
     getLoggedinUser();
-
-    // Call getInvitingUserInfo with loggedInUser.invitingUserId as a dependency
-    if (loggedInUser) {
-      getInvitingUserInfo(loggedInUser.invitingUserId);
-    }
-  }, [loggedInUser]);
-
-  useEffect(() => {
-    if (loggedInUser) {
-      // Assuming loggedInUser has the invitingUserId property
-      const invitingUserId = loggedInUser.invitingUserId;
-      if (invitingUserId) {
-        getInvitingUserInfo(invitingUserId);
-      }
-    }
-  }, [loggedInUser]);
+  }, []);
 
   return (
     <div className="invited-wrapper">
