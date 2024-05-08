@@ -114,15 +114,11 @@ const inviteToRepository = async (req, res) => {
       return res.status(404).json({ message: "Repository not found" });
     }
 
-    if (
-      repository.pendingInvitations.some((invitation) =>
-        invitation.userId.equals(userToInvite._id)
-      ) ||
-      repository.invitedUsers.includes(userToInvite._id)
-    ) {
-      return res
-        .status(400)
-        .json({ message: "User already invited or a member" });
+    const existingInvitationIndex = userToInvite.invitedFields.findIndex(
+      (invitation) => invitation.invitingRepoId.equals(invitingRepoId)
+    );
+    if (existingInvitationIndex !== -1) {
+      userToInvite.invitedFields.splice(existingInvitationIndex, 1);
     }
 
     const { token, expiresAt } = generateInvitationToken();
@@ -159,44 +155,6 @@ const inviteToRepository = async (req, res) => {
     return res.status(200).json({ message: "Invitation sent successfully" });
   } catch (error) {
     console.error("Error inviting user to repository:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-const acceptRepositoryInvitation = async (req, res) => {
-  const { repositoryId } = req.params;
-  const user = req.user;
-
-  try {
-    const repository = await Repository.findById(repositoryId);
-
-    if (!repository) {
-      return res.status(404).json({ message: "Repository not found" });
-    }
-
-    if (!repository.invitedUsers.includes(user._id)) {
-      return res
-        .status(403)
-        .json({ message: "You are not invited to this repository" });
-    }
-
-    user.invitedFields = user.invitedFields.filter(
-      (invitation) => !invitation.invitingRepoId.equals(repository._id)
-    );
-    await user.save();
-
-    repository.pendingInvitations = repository.pendingInvitations.filter(
-      (invitation) => !invitation.userId.equals(user._id)
-    );
-
-    repository.invitedUsers.push(user._id);
-    await repository.save();
-
-    return res
-      .status(200)
-      .json({ message: "Invitation accepted successfully" });
-  } catch (error) {
-    console.error("Error accepting repository invitation:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

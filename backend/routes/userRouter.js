@@ -52,7 +52,7 @@ const {
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
 router.post("/invite", authMiddleware, inviteToRepository);
-router.post("/acceptInvitation/:repositoryId", acceptRepositoryInvitation);
+router.post("/accept-invitation", authMiddleware, acceptRepositoryInvitation);
 
 const {
   createRepository,

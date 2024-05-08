@@ -21,10 +21,6 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [userInfo, setUserInfo] = useState<any>({});
   const [repoInfo, setRepoInfo] = useState<any>();
 
-  useEffect(() => {
-    console.log("provider: ", repoInfo);
-  }, []);
-
   return (
     <EmailContext.Provider
       value={{

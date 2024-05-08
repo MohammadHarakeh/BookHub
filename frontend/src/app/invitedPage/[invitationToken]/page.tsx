@@ -14,6 +14,7 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
   const [invitationAccepted, setInvitationAccepted] = useState(false);
   const [invitingUsername, setInvitingUsername] = useState<string>("");
   const [invitingUserPicture, setInvitingUserPicture] = useState<string>("");
+  const [invitingUserRepoId, setInvitingUserRepoId] = useState<string>("");
 
   const getLoggedinUser = async () => {
     try {
@@ -32,16 +33,11 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
             setInvitingUserId(invitation.invitingUserId);
             setInvitingUsername(invitation.invitingUsername);
             setInvitingUserPicture(invitation.invitingProfilePicture);
+            setInvitingUserRepoId(invitation.invitingRepoId);
           } else {
             console.log("Inviting User ID not found in this invitation.");
           }
         });
-        if (
-          response.data.invitationToken &&
-          response.data.invitationTokenExpires > new Date()
-        ) {
-          setInvitationAccepted(true);
-        }
       } else {
         console.log("failed to get user");
       }
@@ -50,9 +46,31 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
     }
   };
 
+  const acceptInvitation = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/acceptInvitation/${invitingUserRepoId}`
+      );
+
+      if (response.status === 200) {
+        setInvitationAccepted(true);
+        console.log("Invitation accepted successfully");
+      } else {
+        console.log("Failed to accept invitation");
+      }
+    } catch (error) {
+      console.log("Error accepting invitation", error);
+    }
+  };
+
   useEffect(() => {
     getLoggedinUser();
   }, []);
+
+  useEffect(() => {
+    console.log("test: ", invitingUserRepoId);
+  }, [invitingUserRepoId]);
 
   return (
     <div className="invited-wrapper">
@@ -68,7 +86,12 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
           <p>{invitingUsername} has invited you to collaborate with them</p>
 
           <div className="invite-card-buttons">
-            <button className="general-button invite-card-btn">Accept</button>
+            <button
+              className="general-button invite-card-btn"
+              onClick={acceptInvitation}
+            >
+              Accept
+            </button>
             <button className="general-button decline-button invite-card-btn">
               Decline
             </button>
