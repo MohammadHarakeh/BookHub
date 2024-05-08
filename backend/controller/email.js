@@ -128,6 +128,49 @@ const inviteToRepository = async (req, res) => {
   }
 };
 
+const acceptInvitationToRepository = async (req, res) => {
+  const { invitationToken } = req.body;
+
+  try {
+    const user = req.user;
+
+    console.log("Invitation Token:", invitationToken);
+    console.log("User Invitations:", user.invitations);
+    console.log("User Object:", user);
+
+    const invitation = user.invitations.find(
+      (invite) => invite.invitationToken === invitationToken
+    );
+
+    if (!invitation) {
+      return res.status(404).json({ message: "Invitation not found" });
+    }
+
+    if (invitation.expiresAt < new Date()) {
+      return res.status(400).json({ message: "Invitation has expired" });
+    }
+
+    if (!user.collaborators) {
+      user.collaborators = [];
+    }
+
+    user.collaborators.push(invitation.repositoryId);
+    await user.save();
+
+    user.invitations = user.invitations.filter(
+      (invite) => invite._id.toString() !== invitation._id.toString()
+    );
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Invitation accepted successfully" });
+  } catch (error) {
+    console.error("Error accepting invitation:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   forgotPassword,
   resetPassword,
