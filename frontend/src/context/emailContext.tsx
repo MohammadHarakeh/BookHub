@@ -1,8 +1,8 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 
-interface ContextValue {
+type ContextValue = {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   userLoggedIn: boolean;
@@ -11,7 +11,7 @@ interface ContextValue {
   setUserInfo: Dispatch<SetStateAction<any>>;
   repoInfo: any;
   setRepoInfo: Dispatch<SetStateAction<any>>;
-}
+};
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
 
@@ -20,6 +20,10 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<any>({});
   const [repoInfo, setRepoInfo] = useState<any>();
+
+  useEffect(() => {
+    console.log("provider: ", repoInfo);
+  }, []);
 
   return (
     <EmailContext.Provider

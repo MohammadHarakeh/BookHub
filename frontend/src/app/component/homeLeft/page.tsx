@@ -51,7 +51,7 @@ const HomeLeft: React.FC = () => {
       );
 
       if (response.status === 200) {
-        setRepoInfo(response.data);
+        setRepoInfo(response.data.repository);
       } else {
         console.log("Failed to get repo data");
       }
@@ -64,16 +64,16 @@ const HomeLeft: React.FC = () => {
     setDisplayedRepositories((prev) => prev + 3);
   };
 
-  useEffect(() => {
-    if (userInfo.length === 0) {
-      return;
-    }
-    console.log(userInfo.user);
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo.length === 0) {
+  //     return;
+  //   }
+  //   console.log(userInfo.user);
+  // }, [userInfo]);
 
-  useEffect(() => {
-    console.log("repo info", repoInfo);
-  }, [repoInfo]);
+  // useEffect(() => {
+  //   console.log("repo info", repoInfo);
+  // }, [repoInfo]);
 
   return (
     <div className="homepage-left">

@@ -267,21 +267,6 @@ const HomeLeft = () => {
         {posts.map((post) => (
           <div key={post._id} className="posts">
             <div className="posts-info">
-              {/* {post.image ? (
-                post.image.includes("profilePictures\\") ? (
-                  <img
-                    src={`http://localhost:3001/${
-                      post.image.split("profilePictures\\")[1]
-                    }`}
-                    alt="Post Image"
-                  />
-                ) : (
-                  <img src={defaultImage.src} alt="Default Image" />
-                )
-              ) : (
-                <img src={defaultImage.src} alt="Default Image" />
-              )} */}
-
               {post.profile_picture ? (
                 <img src={post.profile_picture} alt="Profile Picture" />
               ) : (
