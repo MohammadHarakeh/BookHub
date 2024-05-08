@@ -135,8 +135,16 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordPIN: String,
   resetPasswordPINExpires: Date,
-  invitationToken: String,
-  invitationTokenExpires: Date,
+  invitedFields: [
+    {
+      invitingUserId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      invitationToken: String,
+      invitationTokenExpires: Date,
+    },
+  ],
   profile: {
     bio: {
       type: String,

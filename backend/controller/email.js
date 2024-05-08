@@ -125,7 +125,7 @@ const inviteToRepository = async (req, res) => {
         .json({ message: "User already invited or a member" });
     }
 
-    const { token, expiresAt } = generateInvitationToken(); // Destructure token and expiresAt
+    const { token, expiresAt } = generateInvitationToken();
 
     repository.pendingInvitations.push({
       userId: userToInvite._id,
@@ -144,8 +144,11 @@ const inviteToRepository = async (req, res) => {
       token
     );
 
-    userToInvite.invitationToken = token;
-    userToInvite.invitationTokenExpires = expiresAt;
+    userToInvite.invitedFields = {
+      invitingUserId: invitingUser._id,
+      invitationToken: token,
+      invitationTokenExpires: expiresAt,
+    };
     await userToInvite.save();
 
     return res.status(200).json({ message: "Invitation sent successfully" });
@@ -172,6 +175,7 @@ const getInvitingUserProfile = async (req, res) => {
     const profile = {
       username: invitingUser.username,
       profile_picture: invitingUser.profile.profile_picture,
+      pendingInvitations: invitingUser.repositories.pendingInvitations,
     };
 
     return res.status(200).json(profile);
