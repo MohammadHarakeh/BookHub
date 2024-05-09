@@ -213,51 +213,35 @@ function printDifference(previousContent, latestContent) {
   process.stdout.write("\n");
 }
 
-const synchronizeCollaboratorsRepositories = async (repositoryId) => {
+const synchronizeCollaboratorsRepositories = async (req, res) => {
   try {
-    // Find the user who owns the repository
-    const user = await User.findOne({ "repositories._id": repositoryId });
-    if (!user) {
-      throw new Error("User not found");
+    const user = await User.findById(req.user._id);
+    const loggedInUserCollaborators = user.collaboratingRepositories;
+    const otherUsers = await User.find({ _id: { $ne: req.user._id } });
+    const matchingCollaborators = [];
+    const otherUsersRepositories = [];
+
+    for (const otherUser of otherUsers) {
+      otherUsersRepositories.push(
+        ...otherUser.repositories.map((repo) => repo._id.toString()) // Convert ObjectId to string
+      );
     }
 
-    const repository = user.repositories.find(
-      (repo) => repo._id.toString() === repositoryId
-    );
-    if (!repository) {
-      throw new Error("Repository not found");
+    console.log("loggedInUserCollaborators:", loggedInUserCollaborators);
+    console.log("otherUsersRepositories:", otherUsersRepositories);
+
+    for (const collab of loggedInUserCollaborators) {
+      if (otherUsersRepositories.includes(collab.toString())) {
+        matchingCollaborators.push(collab);
+      }
     }
 
-    // Iterate through each collaborator
-    for (const collaborator of repository.collaborators) {
-      // Find the collaborator's user document
-      const collaboratorUser = await User.findById(collaborator.user);
-      if (!collaboratorUser) {
-        throw new Error("Collaborator user not found");
-      }
+    console.log("matchingCollaborators:", matchingCollaborators);
 
-      // Check if the user's collaboratingRepositories need synchronization with collaboratorUser
-      for (const repoId of user.collaboratingRepositories) {
-        if (!collaboratorUser.collaboratingRepositories.includes(repoId)) {
-          collaboratorUser.collaboratingRepositories.push(repoId);
-        }
-      }
-
-      // Check if the collaborator's collaboratingRepositories need synchronization with user
-      for (const repoId of collaboratorUser.collaboratingRepositories) {
-        if (!user.collaboratingRepositories.includes(repoId)) {
-          user.collaboratingRepositories.push(repoId);
-        }
-      }
-
-      await collaboratorUser.save();
-    }
-
-    await user.save();
-
-    console.log("Collaborators repositories synchronized successfully");
+    return res.status(200).json({ matchingCollaborators });
   } catch (error) {
     console.error("Error synchronizing collaborators repositories:", error);
+    throw error;
   }
 };
 
