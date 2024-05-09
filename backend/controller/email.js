@@ -172,19 +172,35 @@ const acceptInvitationToRepository = async (req, res) => {
       { _id: user._id, username: user.username },
     ];
 
+    // Ensure user.repositories is initialized as an array
+    if (!user.repositories) {
+      user.repositories = [];
+    }
     user.repositories.push(newRepository);
     await user.save();
 
     user.collaboratingRepositories.push(invitation.repositoryId);
     await user.save();
 
+    console.log("newRepo: ", newRepository.collaborators);
     sender.collaboratingRepositories.push(
       user.repositories[user.repositories.length - 1]._id
     );
+
+    sender.repositories.forEach((repo) => {
+      if (!repo.collaborators) {
+        repo.collaborators = [];
+      }
+      repo.collaborators.push(...newRepository.collaborators);
+    });
+
     await sender.save();
 
     user.invitations.splice(invitationIndex, 1);
     await user.save();
+
+    sender.invitations.splice(invitationIndex, 1);
+    await sender.save();
 
     return res
       .status(200)
@@ -193,17 +209,6 @@ const acceptInvitationToRepository = async (req, res) => {
     console.error("Error accepting invitation:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
-};
-
-module.exports = {
-  acceptInvitationToRepository,
-};
-
-module.exports = {
-  forgotPassword,
-  resetPassword,
-  inviteToRepository,
-  acceptInvitationToRepository,
 };
 
 module.exports = {

@@ -213,10 +213,59 @@ function printDifference(previousContent, latestContent) {
   process.stdout.write("\n");
 }
 
+const synchronizeCollaboratorsRepositories = async (repositoryId) => {
+  try {
+    // Find the user who owns the repository
+    const user = await User.findOne({ "repositories._id": repositoryId });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const repository = user.repositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+    if (!repository) {
+      throw new Error("Repository not found");
+    }
+
+    // Iterate through each collaborator
+    for (const collaborator of repository.collaborators) {
+      // Find the collaborator's user document
+      const collaboratorUser = await User.findById(collaborator.user);
+      if (!collaboratorUser) {
+        throw new Error("Collaborator user not found");
+      }
+
+      // Check if the user's collaboratingRepositories need synchronization with collaboratorUser
+      for (const repoId of user.collaboratingRepositories) {
+        if (!collaboratorUser.collaboratingRepositories.includes(repoId)) {
+          collaboratorUser.collaboratingRepositories.push(repoId);
+        }
+      }
+
+      // Check if the collaborator's collaboratingRepositories need synchronization with user
+      for (const repoId of collaboratorUser.collaboratingRepositories) {
+        if (!user.collaboratingRepositories.includes(repoId)) {
+          user.collaboratingRepositories.push(repoId);
+        }
+      }
+
+      await collaboratorUser.save();
+    }
+
+    await user.save();
+
+    console.log("Collaborators repositories synchronized successfully");
+  } catch (error) {
+    console.error("Error synchronizing collaborators repositories:", error);
+  }
+};
+
 module.exports = {
   createRepository,
   uploadRepositoryContent,
   getVersionsDifference,
   compareAnyVersion,
   getRepository,
+  synchronizeCollaboratorsRepositories,
 };

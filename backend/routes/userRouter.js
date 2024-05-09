@@ -64,6 +64,7 @@ const {
   getVersionsDifference,
   compareAnyVersion,
   getRepository,
+  synchronizeCollaboratorsRepositories,
 } = require("../controller/repository");
 
 router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
@@ -115,5 +116,18 @@ router.get(
     }
   }
 );
+router.post("/repositories/:repositoryId/synchronize", async (req, res) => {
+  const { repositoryId } = req.params;
+
+  try {
+    await synchronizeCollaboratorsRepositories(repositoryId);
+    return res.status(200).json({
+      message: "Collaborators repositories synchronized successfully",
+    });
+  } catch (error) {
+    console.error("Error synchronizing collaborators repositories:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 module.exports = router;
