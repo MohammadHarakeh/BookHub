@@ -10,8 +10,7 @@ import defaultImage from "../../../public/images/defaultImage.png";
 import { toast } from "react-toastify";
 
 const EditRepo = () => {
-  const [loggedUserInfo, setLoggedUserInfo] = useState<any>();
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>("");
   const { userInfo } = useEmailContext();
   const { repoInfo } = useEmailContext();
 
@@ -48,6 +47,9 @@ const EditRepo = () => {
     if (repoInfo) {
       console.log("repo info: ", repoInfo);
     }
+    if (repoInfo && repoInfo.versions && repoInfo.versions.length > 0) {
+      setContent(repoInfo.versions[repoInfo.versions.length - 1].content);
+    }
   }, [repoInfo]);
 
   return (
@@ -70,27 +72,23 @@ const EditRepo = () => {
             {repoInfo ? repoInfo.visibility : "Loading..."}
           </p>
         </div>
-        <p>{loggedUserInfo?.user?.username ?? "Loading..."}</p>
         <div className="story-collaborators">
           <p>Collaborators</p>
         </div>
       </div>
       <hr />
 
-      {repoInfo && repoInfo.versions && repoInfo.versions.length > 0 ? (
-        <div className="edit-repo-info">
-          <textarea
-            value={repoInfo.versions[repoInfo.versions.length - 1].content}
-          ></textarea>
-        </div>
-      ) : (
-        <div className="edit-repo-info">
-          <textarea></textarea>
-        </div>
-      )}
+      <div className="edit-repo-info">
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        ></textarea>
+      </div>
 
       <div className="edit-repo-button">
-        <button className="general-button">Commit</button>
+        <button className="general-button" onClick={commitRepo}>
+          Commit
+        </button>
       </div>
       <hr />
       <Footer />
