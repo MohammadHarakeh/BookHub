@@ -7,31 +7,38 @@ import { requestMethods } from "../tools/apiRequestMethods";
 import { sendRequest } from "../tools/apiRequest";
 import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
+import { toast } from "react-toastify";
 
 const EditRepo = () => {
   const [loggedUserInfo, setLoggedUserInfo] = useState<any>();
+  const [content, setContent] = useState<string>();
   const { userInfo } = useEmailContext();
-  const { repoInfo, setRepoInfo } = useEmailContext();
+  const { repoInfo } = useEmailContext();
 
-  const getLoggedinUser = async () => {
+  const commitRepo = async () => {
     try {
+      const body = {
+        content: content,
+      };
+
       const response = await sendRequest(
-        requestMethods.GET,
-        "/user/getLoggedinUser"
+        requestMethods.POST,
+        `/user/uploadRepositoryContent/${repoInfo._id}`,
+        body
       );
+
       if (response.status === 200) {
-        setLoggedUserInfo(response.data);
+        console.log("Commit added successfully");
+        toast.success("Commit added successfully");
       } else {
-        console.log("No info");
+        console.log("Failed to add commit");
+        toast.error("Failed to add commit");
       }
     } catch (error) {
-      console.error("Error fetching user profile image", error);
+      console.log("Error can't add commit", error);
+      toast.error("Error can't add commit");
     }
   };
-
-  useEffect(() => {
-    getLoggedinUser();
-  }, []);
 
   useEffect(() => {
     console.log(userInfo);
@@ -48,23 +55,39 @@ const EditRepo = () => {
       <Header />
       <div className="story-info">
         <div className="story-info">
-          <img src={defaultImage.src}></img>
+          {repoInfo &&
+          repoInfo.repo_picture !== undefined &&
+          repoInfo.repo_picture !== "" ? (
+            <img src={repoInfo.repo_picture}></img>
+          ) : (
+            <img src={defaultImage.src}></img>
+          )}
 
-          <p className="story-name">Story Name</p>
-          {/* <p>{repoInfo ? repoInfo.name : "Loading..."}</p> */}
-          <p className="general-input story-visibility-status">public</p>
+          <p className="story-name">
+            {repoInfo ? repoInfo.name : "Loading..."}
+          </p>
+          <p className="general-input story-visibility-status">
+            {repoInfo ? repoInfo.visibility : "Loading..."}
+          </p>
         </div>
         <p>{loggedUserInfo?.user?.username ?? "Loading..."}</p>
-        {/* <p>{userInfo?.user?.username ?? "Loading..."}</p> */}
         <div className="story-collaborators">
           <p>Collaborators</p>
         </div>
       </div>
       <hr />
 
-      <div className="edit-repo-info">
-        <textarea></textarea>
-      </div>
+      {repoInfo && repoInfo.versions && repoInfo.versions.length > 0 ? (
+        <div className="edit-repo-info">
+          <textarea
+            value={repoInfo.versions[repoInfo.versions.length - 1].content}
+          ></textarea>
+        </div>
+      ) : (
+        <div className="edit-repo-info">
+          <textarea></textarea>
+        </div>
+      )}
 
       <div className="edit-repo-button">
         <button className="general-button">Commit</button>
