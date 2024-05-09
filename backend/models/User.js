@@ -79,8 +79,11 @@ const repositorySchema = new mongoose.Schema({
   ],
   collaborators: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      username: String,
     },
   ],
   starred: Boolean,

@@ -135,7 +135,6 @@ const acceptInvitationToRepository = async (req, res) => {
   const user = req.user;
 
   try {
-    // Find the invitation
     const invitation = user.invitations.find(
       (invite) => invite.invitationToken === invitationToken
     );
@@ -144,12 +143,10 @@ const acceptInvitationToRepository = async (req, res) => {
       return res.status(404).json({ message: "Invitation not found" });
     }
 
-    // Check if the invitation has expired
     if (invitation.expiresAt < new Date()) {
       return res.status(400).json({ message: "Invitation has expired" });
     }
 
-    // Retrieve the sender's repository
     const sender = await User.findById(invitation.sender);
     if (!sender) {
       return res.status(404).json({ message: "Sender not found" });
@@ -162,7 +159,6 @@ const acceptInvitationToRepository = async (req, res) => {
       return res.status(404).json({ message: "Sender's repository not found" });
     }
 
-    // Duplicate the sender's repository for the invited user
     const newRepository = { ...senderRepo.toObject(), _id: undefined };
     newRepository.createdAt = new Date();
     newRepository.collaborators = [
@@ -170,11 +166,12 @@ const acceptInvitationToRepository = async (req, res) => {
       { _id: user._id, username: user.username },
     ];
 
-    // Add the duplicated repository to the invited user's repositories
     user.repositories.push(newRepository);
     await user.save();
 
-    // Remove the invitation from the user's invitations
+    senderRepo.collaborators.push({ _id: user._id, username: user.username });
+    await sender.save();
+
     user.invitations = user.invitations.filter(
       (invite) => invite._id.toString() !== invitation._id.toString()
     );
