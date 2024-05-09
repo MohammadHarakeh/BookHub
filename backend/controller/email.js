@@ -103,8 +103,10 @@ const inviteToRepository = async (req, res) => {
     const invitation = {
       sender: sender._id,
       senderName: sender.username,
-      senderProfilePicture: sender.profile.profile_picutre,
+      senderProfilePicture: sender.profile.profile_picture,
       recipient: recipient._id,
+      recipientName: recipient.username,
+      recipientProfilePicture: recipient.profile.profile_picture,
       repositoryId,
       invitationToken: token,
       expiresAt,
@@ -112,6 +114,7 @@ const inviteToRepository = async (req, res) => {
 
     sender.invitations.push(invitation);
     recipient.invitations.push(invitation);
+
     await sender.save();
     await recipient.save();
 
@@ -161,7 +164,8 @@ const acceptInvitationToRepository = async (req, res) => {
       return res.status(404).json({ message: "Sender's repository not found" });
     }
 
-    const newRepository = { ...senderRepo.toObject(), _id: undefined };
+    const newRepository = { ...senderRepo.toObject() };
+    delete newRepository._id; // Remove _id field
     newRepository.createdAt = new Date();
     newRepository.collaborators = [
       { _id: sender._id, username: sender.username },
@@ -171,16 +175,16 @@ const acceptInvitationToRepository = async (req, res) => {
     user.repositories.push(newRepository);
     await user.save();
 
-    user.invitations.splice(invitationIndex, 1);
+    user.collaboratingRepositories.push(invitation.repositoryId);
     await user.save();
 
-    sender.invitations.splice(
-      sender.invitations.findIndex(
-        (inv) => inv._id.toString() === invitation._id.toString()
-      ),
-      1
+    sender.collaboratingRepositories.push(
+      user.repositories[user.repositories.length - 1]._id
     );
     await sender.save();
+
+    user.invitations.splice(invitationIndex, 1);
+    await user.save();
 
     return res
       .status(200)
@@ -189,6 +193,17 @@ const acceptInvitationToRepository = async (req, res) => {
     console.error("Error accepting invitation:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
+};
+
+module.exports = {
+  acceptInvitationToRepository,
+};
+
+module.exports = {
+  forgotPassword,
+  resetPassword,
+  inviteToRepository,
+  acceptInvitationToRepository,
 };
 
 module.exports = {

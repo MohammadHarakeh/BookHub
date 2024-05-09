@@ -16,6 +16,11 @@ const invitationSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  recipientName: String,
+  recipientProfilePicture: {
+    type: String,
+    default: "",
+  },
   repositoryId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -191,6 +196,13 @@ const userSchema = new mongoose.Schema({
   followers: [followSchema],
   repositories: [repositorySchema],
   invitations: [invitationSchema],
+
+  collaboratingRepositories: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Repository",
+    },
+  ],
 });
 
 userSchema.virtual("isPasswordRequired").get(function () {
