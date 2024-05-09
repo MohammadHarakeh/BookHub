@@ -135,13 +135,15 @@ const acceptInvitationToRepository = async (req, res) => {
   const user = req.user;
 
   try {
-    const invitation = user.invitations.find(
+    const invitationIndex = user.invitations.findIndex(
       (invite) => invite.invitationToken === invitationToken
     );
 
-    if (!invitation) {
+    if (invitationIndex === -1) {
       return res.status(404).json({ message: "Invitation not found" });
     }
+
+    const invitation = user.invitations[invitationIndex];
 
     if (invitation.expiresAt < new Date()) {
       return res.status(400).json({ message: "Invitation has expired" });
@@ -169,13 +171,16 @@ const acceptInvitationToRepository = async (req, res) => {
     user.repositories.push(newRepository);
     await user.save();
 
-    senderRepo.collaborators.push({ _id: user._id, username: user.username });
-    await sender.save();
-
-    user.invitations = user.invitations.filter(
-      (invite) => invite._id.toString() !== invitation._id.toString()
-    );
+    user.invitations.splice(invitationIndex, 1);
     await user.save();
+
+    sender.invitations.splice(
+      sender.invitations.findIndex(
+        (inv) => inv._id.toString() === invitation._id.toString()
+      ),
+      1
+    );
+    await sender.save();
 
     return res
       .status(200)
