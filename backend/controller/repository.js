@@ -223,7 +223,7 @@ const synchronizeCollaboratorsRepositories = async (req, res) => {
 
     for (const otherUser of otherUsers) {
       otherUsersRepositories.push(
-        ...otherUser.repositories.map((repo) => repo._id.toString()) // Convert ObjectId to string
+        ...otherUser.repositories.map((repo) => repo._id.toString())
       );
     }
 

@@ -88,7 +88,16 @@ const repositorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      username: String,
+      senderUsername: String,
+      receiverUsername: String,
+      senderRepoId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      receiverRepoId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
     },
   ],
   starred: Boolean,
@@ -199,8 +208,14 @@ const userSchema = new mongoose.Schema({
 
   collaboratingRepositories: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Repository",
+      senderRepoId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Repository",
+      },
+      receiverRepoId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Repository",
+      },
     },
   ],
 });
