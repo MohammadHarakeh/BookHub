@@ -102,6 +102,8 @@ const inviteToRepository = async (req, res) => {
 
     const invitation = {
       sender: sender._id,
+      senderName: sender.username,
+      senderProfilePicture: sender.profile.profile_picutre,
       recipient: recipient._id,
       repositoryId,
       invitationToken: token,
@@ -130,14 +132,9 @@ const inviteToRepository = async (req, res) => {
 
 const acceptInvitationToRepository = async (req, res) => {
   const { invitationToken } = req.body;
+  const user = req.user;
 
   try {
-    const user = req.user;
-
-    console.log("Invitation Token:", invitationToken);
-    console.log("User Invitations:", user.invitations);
-    console.log("User Object:", user);
-
     const invitation = user.invitations.find(
       (invite) => invite.invitationToken === invitationToken
     );
@@ -150,11 +147,23 @@ const acceptInvitationToRepository = async (req, res) => {
       return res.status(400).json({ message: "Invitation has expired" });
     }
 
-    if (!user.collaborators) {
-      user.collaborators = [];
+    const sender = await User.findById(invitation.sender);
+    if (!sender) {
+      return res.status(404).json({ message: "Sender not found" });
     }
 
-    user.collaborators.push(invitation.repositoryId);
+    const senderRepo = sender.repositories.find(
+      (repo) => repo._id.toString() === invitation.repositoryId.toString()
+    );
+    if (!senderRepo) {
+      return res.status(404).json({ message: "Sender's repository not found" });
+    }
+
+    const newRepository = { ...senderRepo.toObject(), _id: undefined };
+    newRepository.createdAt = new Date();
+    newRepository.collaborators = [user._id];
+
+    user.repositories.push(newRepository);
     await user.save();
 
     user.invitations = user.invitations.filter(

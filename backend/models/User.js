@@ -6,6 +6,11 @@ const invitationSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  senderName: String,
+  senderProfilePicture: {
+    type: String,
+    default: "",
+  },
   recipient: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -13,7 +18,7 @@ const invitationSchema = new mongoose.Schema({
   },
   repositoryId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Repository",
+    ref: "User",
     required: true,
   },
   invitationToken: {
