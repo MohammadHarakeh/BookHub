@@ -72,7 +72,7 @@ const EditRepo = () => {
   };
 
   const handleInviteUserClick = () => {
-    setShowModal((prevShowModal) => !prevShowModal); // Toggle showModal state
+    setShowModal((prevShowModal) => !prevShowModal);
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const EditRepo = () => {
                 <div className="invite-title-section">
                   <img src={inviteImage.src}></img>
                 </div>
-                <p className="invite-title">Invite a user by email</p>
+                <p className="invite-title">Invite user by email</p>
 
                 <input
                   type="text"
@@ -111,9 +111,9 @@ const EditRepo = () => {
           {repoInfo &&
           repoInfo.repo_picture !== undefined &&
           repoInfo.repo_picture !== "" ? (
-            <img src={repoInfo.repo_picture}></img>
+            <img src={repoInfo.repo_picture} className="repo-image"></img>
           ) : (
-            <img src={defaultImage.src}></img>
+            <img src={defaultImage.src} className="repo-image"></img>
           )}
 
           <p className="story-name">
