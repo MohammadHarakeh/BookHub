@@ -19,6 +19,7 @@ const EditRepo = () => {
   const [content, setContent] = useState<string>("");
   const [selection, setSelection] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
+  const [recipientEmail, setRecipientEmail] = useState<string>("");
 
   const colorOptions = [
     "#ffffff", // White
@@ -57,6 +58,32 @@ const EditRepo = () => {
     }
   };
 
+  const inviteUser = async () => {
+    try {
+      // const body = {
+      //   recipientEmail = recipientEmail,
+      //   repositoryId = repoInfo._id,
+      // };
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/invite-to-repository`
+        // body
+      );
+
+      if (response.status === 200) {
+        console.log("Invited user successfully");
+        toast.success("Invited user successfully");
+      } else {
+        console.log("Failed to invite user");
+        toast.error("Failed to invite user");
+      }
+    } catch (error) {
+      console.error("Error can't invite user", error);
+      toast.error("Error can't invite user");
+    }
+  };
+
   const formatContentWithFormatting = (content: string, selection: any) => {
     if (!selection) return content;
 
@@ -78,6 +105,7 @@ const EditRepo = () => {
   useEffect(() => {
     if (repoInfo && repoInfo.versions && repoInfo.versions.length > 0) {
       setContent(repoInfo.versions[repoInfo.versions.length - 1].content);
+      console.log("repo info: ", repoInfo);
     }
   }, [repoInfo]);
 
