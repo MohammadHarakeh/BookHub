@@ -202,7 +202,7 @@ const compareAnyVersion = async (userId, repositoryId, versionIdToCompare) => {
 };
 
 function printDifference(previousContent, latestContent) {
-  const differences = diff.diffSentences(previousContent, latestContent);
+  const differences = diff.diffWords(previousContent, latestContent);
   differences.forEach((part) => {
     const color = part.added
       ? "\x1b[32m"
