@@ -7,6 +7,7 @@ import { requestMethods } from "../tools/apiRequestMethods";
 import { sendRequest } from "../tools/apiRequest";
 import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
+import inviteImage from "../../../public/images/invite.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
@@ -92,8 +93,17 @@ const EditRepo = () => {
           {showModal && (
             <div className="blurred-modal">
               <div className="blurred">
-                <input type="text" />
-                <button>Send Invite</button>
+                <div className="invite-title-section">
+                  <img src={inviteImage.src}></img>
+                </div>
+                <p className="invite-title">Invite a user by email</p>
+
+                <input
+                  type="text"
+                  placeholder="Email"
+                  className="general-input invite-input"
+                />
+                <button className="general-button">Send Invite</button>
               </div>
             </div>
           )}
