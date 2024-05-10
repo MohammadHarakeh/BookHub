@@ -8,6 +8,8 @@ import { sendRequest } from "../tools/apiRequest";
 import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const EditRepo = () => {
   const [content, setContent] = useState<string>("");
@@ -91,32 +93,16 @@ const EditRepo = () => {
       <hr />
 
       <div className="edit-repo-info">
-        <select
-          value={selectedColor}
-          onChange={(e) => setSelectedColor(e.target.value)}
-        >
-          {colorOptions.map((color, index) => (
-            <option key={index} value={color}>
-              {color}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={selectedFontStyle}
-          onChange={(e) => setSelectedFontStyle(e.target.value)}
-        >
-          {fontStyleOptions.map((style, index) => (
-            <option key={index} value={style}>
-              {style}
-            </option>
-          ))}
-        </select>
-        <textarea
+        <ReactQuill
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          style={{ color: selectedColor, fontStyle: selectedFontStyle }}
-        ></textarea>
+          onChange={setContent}
+          modules={{
+            toolbar: [
+              ["bold", "italic", "underline"],
+              [{ color: colorOptions }, { font: fontStyleOptions }],
+            ],
+          }}
+        />
       </div>
 
       <div className="edit-repo-button">
