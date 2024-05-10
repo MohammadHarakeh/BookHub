@@ -265,6 +265,11 @@ const HomeLeft = () => {
         </div>
       </div>
       <div className="homepage-middle-posts">
+        {posts.length === 0 && (
+          <div className="empty-posts">
+            <p>There are currently no posts. Be the first</p>
+          </div>
+        )}
         {posts.map((post) => (
           <div key={post._id} className="posts">
             <div className="posts-info">
