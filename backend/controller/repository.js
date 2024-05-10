@@ -247,6 +247,26 @@ const synchronizeCollaboratorsRepositories = async (req, res) => {
   }
 };
 
+const { OpenAI } = require("openai");
+
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
+
+const generateImage = async (req, res) => {
+  try {
+    const response = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: "a white siamese cat",
+      n: 1,
+      size: "1024x1024",
+    });
+    const imageUrl = response.data[0].url;
+    res.json({ imageUrl });
+  } catch (error) {
+    console.error("Error generating image:", error);
+    res.status(500).json({ error: "Failed to generate image" });
+  }
+};
+
 module.exports = {
   createRepository,
   uploadRepositoryContent,
@@ -254,4 +274,5 @@ module.exports = {
   compareAnyVersion,
   getRepository,
   synchronizeCollaboratorsRepositories,
+  generateImage,
 };

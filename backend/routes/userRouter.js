@@ -65,6 +65,7 @@ const {
   compareAnyVersion,
   getRepository,
   synchronizeCollaboratorsRepositories,
+  generateImage,
 } = require("../controller/repository");
 
 router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
@@ -121,5 +122,7 @@ router.post(
   authMiddleware,
   synchronizeCollaboratorsRepositories
 );
+
+router.post("/generateImage", generateImage);
 
 module.exports = router;
