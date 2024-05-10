@@ -26,13 +26,6 @@ const EditRepo = () => {
     "#4b0082", // Indigo
     "#9400d3", // Violet
   ];
-  // const fontOptions = [
-  //   "Arial",
-  //   "Times New Roman",
-  //   "Verdana",
-  //   "Georgia",
-  //   "Courier New",
-  // ];
 
   const commitRepo = async () => {
     try {
@@ -63,8 +56,10 @@ const EditRepo = () => {
   const formatContentWithFormatting = (content: string, selection: any) => {
     if (!selection) return content;
 
-    const { index, length } = selection;
-    const startTag = `<span style="color: ${selection.fontColor}; font-style: ${selection.fontStyle}; font-family: ${selection.fontFamily};">`;
+    const { index, length, fontColor, fontStyle, fontFamily } = selection;
+    if (!fontColor || !fontStyle || !fontFamily) return content;
+
+    const startTag = `<span style="color: ${fontColor}; font-style: ${fontStyle}; font-family: ${fontFamily};">`;
     const endTag = "</span>";
     const start = content.slice(0, index);
     const selectedText = content.slice(index, index + length);
