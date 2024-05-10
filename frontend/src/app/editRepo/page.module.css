@@ -78,7 +78,7 @@
 }
 
 .invite_input {
-  background-color: #fff;
+  background-color: #fff !important;
 }
 
 .invite_title {
@@ -127,4 +127,15 @@
   width: 100%;
   height: 20rem;
   border-radius: 1rem;
+}
+
+.close_btn_wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+
+.close_btn {
+  cursor: pointer;
 }

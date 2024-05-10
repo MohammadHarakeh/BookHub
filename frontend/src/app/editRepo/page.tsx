@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { IoMdClose } from "react-icons/io";
 
 const EditRepo = () => {
   const { userInfo } = useEmailContext();
@@ -122,6 +123,12 @@ const EditRepo = () => {
             {showModal && (
               <div className={styles.blurred_model}>
                 <div className={styles.blurred}>
+                  <div className={styles.close_btn_wrapper}>
+                    <IoMdClose
+                      className={styles.close_btn}
+                      onClick={handleInviteUserClick}
+                    />
+                  </div>
                   <div className={styles.invite_title_section}>
                     <img src={inviteImage.src}></img>
                   </div>
@@ -134,7 +141,7 @@ const EditRepo = () => {
                     onChange={(e) => {
                       setRecipientEmail(e.target.value);
                     }}
-                    className={`${`general-input`} ${`styles.invite_input`}`}
+                    className={`${`general-input`} ${styles.invite_input}`}
                   />
                   <button className="general-button" onClick={inviteUser}>
                     Send Invite
@@ -158,7 +165,7 @@ const EditRepo = () => {
               {repoInfo ? repoInfo.name : "Loading..."}
             </p>
             <p
-              className={`${`general-input`} ${`styles.story_visibility_status`}`}
+              className={`${`general-input`} ${styles.story_visibility_status}`}
             >
               {repoInfo ? repoInfo.visibility : "Loading..."}
             </p>
