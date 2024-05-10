@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "./page.css";
+import styles from "./page.module.css";
 import Header from "../component/header/page";
 import Footer from "../component/footer/page";
 import { requestMethods } from "../tools/apiRequestMethods";
@@ -110,21 +110,21 @@ const EditRepo = () => {
   }, [repoInfo]);
 
   return (
-    <div className="edit-repo-wrapper">
+    <div className={styles.edit_repo_wrapper}>
       <Header />
       <ToastContainer
         theme="dark"
         toastStyle={{ backgroundColor: "#0e0f32" }}
       />
-      <div className="story-info">
-        <div className="story-info">
+      <div className={styles.story_info}>
+        <div className={styles.story_info}>
           {showModal && (
-            <div className="blurred-modal">
-              <div className="blurred">
-                <div className="invite-title-section">
+            <div className={styles.blurred_model}>
+              <div className={styles.blurred}>
+                <div className={styles.invite_title_section}>
                   <img src={inviteImage.src}></img>
                 </div>
-                <p className="invite-title">Invite user by email</p>
+                <p className={styles.invite_title}>Invite user by email</p>
 
                 <input
                   type="text"
@@ -133,7 +133,7 @@ const EditRepo = () => {
                   onChange={(e) => {
                     setRecipientEmail(e.target.value);
                   }}
-                  className="general-input invite-input"
+                  className={`${`general-input`} ${`styles.invite_input`}`}
                 />
                 <button className="general-button" onClick={inviteUser}>
                   Send Invite
@@ -145,30 +145,35 @@ const EditRepo = () => {
           {repoInfo &&
           repoInfo.repo_picture !== undefined &&
           repoInfo.repo_picture !== "" ? (
-            <img src={repoInfo.repo_picture} className="repo-image"></img>
+            <img
+              src={repoInfo.repo_picture}
+              className={styles.repo_image}
+            ></img>
           ) : (
-            <img src={defaultImage.src} className="repo-image"></img>
+            <img src={defaultImage.src} className={styles.repo_image}></img>
           )}
 
-          <p className="story-name">
+          <p className={styles.story_name}>
             {repoInfo ? repoInfo.name : "Loading..."}
           </p>
-          <p className="general-input story-visibility-status">
+          <p
+            className={`${`general-input`} ${`styles.story_visibility_status`}`}
+          >
             {repoInfo ? repoInfo.visibility : "Loading..."}
           </p>
         </div>
-        <div className="collaborators-wrapper">
-          <div className="story-collaborators">
+        <div className={styles.collaborators_wrapper}>
+          <div className={styles.story_collaborators}>
             <p>Collaborators</p>
           </div>
-          <div className="story-collaborators">
+          <div className={styles.story_collaborators}>
             <p onClick={handleInviteUserClick}>Invite user</p>
           </div>
         </div>
       </div>
       <hr />
 
-      <div className="edit-repo-info">
+      <div className={styles.edit_repo_info}>
         <ReactQuill
           value={content}
           onChange={setContent}
@@ -184,7 +189,7 @@ const EditRepo = () => {
         />
       </div>
 
-      <div className="edit-repo-button">
+      <div className={styles.edit_repo_button}>
         <button className="general-button" onClick={commitRepo}>
           Commit
         </button>
