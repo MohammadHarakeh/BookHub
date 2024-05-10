@@ -16,8 +16,23 @@ const EditRepo = () => {
   const { repoInfo } = useEmailContext();
   const [content, setContent] = useState<string>("");
   const [selection, setSelection] = useState<any>(null);
-  const colorOptions = ["black", "red", "blue", "green"];
-  const fontStyleOptions = ["normal", "italic", "oblique"];
+  const colorOptions = [
+    "#ffffff", // White
+    "#ff0000", // Red
+    "#ff7f00", // Orange
+    "#ffff00", // Yellow
+    "#00ff00", // Green
+    "#0000ff", // Blue
+    "#4b0082", // Indigo
+    "#9400d3", // Violet
+  ];
+  const fontOptions = [
+    "Arial",
+    "Times New Roman",
+    "Verdana",
+    "Georgia",
+    "Courier New",
+  ];
 
   const commitRepo = async () => {
     try {
@@ -49,7 +64,7 @@ const EditRepo = () => {
     if (!selection) return content;
 
     const { index, length } = selection;
-    const startTag = `<span style="color: ${selection.fontColor}; font-style: ${selection.fontStyle};">`;
+    const startTag = `<span style="color: ${selection.fontColor}; font-style: ${selection.fontStyle}; font-family: ${selection.fontFamily};">`;
     const endTag = "</span>";
     const start = content.slice(0, index);
     const selectedText = content.slice(index, index + length);
@@ -96,9 +111,10 @@ const EditRepo = () => {
           onChangeSelection={setSelection}
           modules={{
             toolbar: [
-              ["bold", "italic", "underline"],
+              [{ font: fontOptions }],
+              [{ size: [] }],
               [{ color: colorOptions }],
-              [{ font: fontStyleOptions }],
+              ["bold", "italic", "underline"],
             ],
           }}
         />
