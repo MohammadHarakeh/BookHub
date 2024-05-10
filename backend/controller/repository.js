@@ -76,7 +76,7 @@ const getRepository = async (req, res) => {
 
 const uploadRepositoryContent = async (req, res) => {
   try {
-    const { content } = req.body;
+    const { content, fontColor, fontStyle } = req.body;
 
     if (!req.user) {
       return res.status(401).json({ error: "Unauthorized" });
@@ -102,6 +102,8 @@ const uploadRepositoryContent = async (req, res) => {
 
     const newVersion = {
       content,
+      fontColor,
+      fontStyle,
       createdAt: new Date(),
     };
 

@@ -41,6 +41,8 @@ const versionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  fontColor: String,
+  fontStyle: String,
   createdAt: {
     type: Date,
     default: Date.now,
@@ -64,12 +66,9 @@ const repositorySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  styles: {
-    fontStyle: String,
-    fontSize: String,
+  formatting: {
     fontColor: String,
-    fontWeight: String,
-    textDecoration: String,
+    fontStyle: String,
   },
   visibility: {
     type: String,

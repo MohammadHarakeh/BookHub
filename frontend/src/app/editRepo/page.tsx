@@ -12,18 +12,18 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const EditRepo = () => {
-  const [content, setContent] = useState<string>("");
-  const [selectedColor, setSelectedColor] = useState("black");
-  const [selectedFontStyle, setSelectedFontStyle] = useState("normal");
   const { userInfo } = useEmailContext();
   const { repoInfo } = useEmailContext();
+  const [content, setContent] = useState<string>("");
+  const [selection, setSelection] = useState<any>(null);
   const colorOptions = ["black", "red", "blue", "green"];
   const fontStyleOptions = ["normal", "italic", "oblique"];
 
   const commitRepo = async () => {
     try {
+      const formattedContent = formatContentWithFormatting(content, selection);
       const body = {
-        content: content,
+        content: formattedContent,
       };
 
       const response = await sendRequest(
@@ -45,22 +45,19 @@ const EditRepo = () => {
     }
   };
 
-  // const changeTextColor = (color: string) => {
-  //   setTextColor(color);
-  // };
+  const formatContentWithFormatting = (content: string, selection: any) => {
+    if (!selection) return content;
 
-  // const changeFontStyle = (style: string) => {
-  //   setFontStyle(style);
-  // };
+    const { index, length } = selection;
+    const startTag = `<span style="color: ${selection.fontColor}; font-style: ${selection.fontStyle};">`;
+    const endTag = "</span>";
+    const start = content.slice(0, index);
+    const selectedText = content.slice(index, index + length);
+    const end = content.slice(index + length);
+    return start + startTag + selectedText + endTag + end;
+  };
 
   useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
-
-  useEffect(() => {
-    if (repoInfo) {
-      console.log("repo info: ", repoInfo);
-    }
     if (repoInfo && repoInfo.versions && repoInfo.versions.length > 0) {
       setContent(repoInfo.versions[repoInfo.versions.length - 1].content);
     }
@@ -96,10 +93,12 @@ const EditRepo = () => {
         <ReactQuill
           value={content}
           onChange={setContent}
+          onChangeSelection={setSelection}
           modules={{
             toolbar: [
               ["bold", "italic", "underline"],
-              [{ color: colorOptions }, { font: fontStyleOptions }],
+              [{ color: colorOptions }],
+              [{ font: fontStyleOptions }],
             ],
           }}
         />
