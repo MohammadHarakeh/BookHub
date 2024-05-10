@@ -1,1 +1,0 @@
-<p><span style="color: red;">Hello synchronize</span> <span style="color: green;">this new repo</span></p>

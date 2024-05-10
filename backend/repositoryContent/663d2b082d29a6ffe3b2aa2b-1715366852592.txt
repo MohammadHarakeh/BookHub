@@ -1,1 +1,0 @@
-<p><span class=<span style="color: undefined; font-style: undefined; font-family: undefined;"></span>"ql-font-monospace">this is</span><span class="ql-font-monospace" style="color: rgb(255, 0, 0);"> a test </span></p>

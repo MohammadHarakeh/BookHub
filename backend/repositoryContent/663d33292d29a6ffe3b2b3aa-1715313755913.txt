@@ -1,1 +1,0 @@
-<p><span style="color: red;">Hello syn<span style="color: undefined; font-style: undefined;"></span>chronize</span> <span style="color: green;">this new repo </span><span style="color: blue;">trewrw</span></p>

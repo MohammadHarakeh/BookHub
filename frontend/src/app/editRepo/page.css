@@ -60,7 +60,15 @@
   width: 75%;
 }
 
+.collaborators-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
 .story-collaborators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #42ff00;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
@@ -68,4 +76,14 @@
 
 .story-collaborators p {
   color: #42ff00;
+  cursor: pointer;
+}
+
+.story-collaborators:hover {
+  background-color: #42ff00;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.story-collaborators:hover p {
+  color: black;
 }

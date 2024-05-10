@@ -7,7 +7,8 @@ import { requestMethods } from "../tools/apiRequestMethods";
 import { sendRequest } from "../tools/apiRequest";
 import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -76,6 +77,10 @@ const EditRepo = () => {
   return (
     <div className="edit-repo-wrapper">
       <Header />
+      <ToastContainer
+        theme="dark"
+        toastStyle={{ backgroundColor: "#0e0f32" }}
+      />
       <div className="story-info">
         <div className="story-info">
           {repoInfo &&
@@ -93,8 +98,13 @@ const EditRepo = () => {
             {repoInfo ? repoInfo.visibility : "Loading..."}
           </p>
         </div>
-        <div className="story-collaborators">
-          <p>Collaborators</p>
+        <div className="collaborators-wrapper">
+          <div className="story-collaborators">
+            <p>Collaborators</p>
+          </div>
+          <div className="story-collaborators">
+            <p>invite user</p>
+          </div>
         </div>
       </div>
       <hr />
