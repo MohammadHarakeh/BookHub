@@ -110,91 +110,92 @@ const EditRepo = () => {
   }, [repoInfo]);
 
   return (
-    <div className={styles.edit_repo_wrapper}>
+    <div>
       <Header />
-      <ToastContainer
-        theme="dark"
-        toastStyle={{ backgroundColor: "#0e0f32" }}
-      />
-      <div className={styles.story_info}>
-        <div className={styles.story_info}>
-          {showModal && (
-            <div className={styles.blurred_model}>
-              <div className={styles.blurred}>
-                <div className={styles.invite_title_section}>
-                  <img src={inviteImage.src}></img>
-                </div>
-                <p className={styles.invite_title}>Invite user by email</p>
-
-                <input
-                  type="text"
-                  placeholder="Email"
-                  value={recipientEmail}
-                  onChange={(e) => {
-                    setRecipientEmail(e.target.value);
-                  }}
-                  className={`${`general-input`} ${`styles.invite_input`}`}
-                />
-                <button className="general-button" onClick={inviteUser}>
-                  Send Invite
-                </button>
-              </div>
-            </div>
-          )}
-
-          {repoInfo &&
-          repoInfo.repo_picture !== undefined &&
-          repoInfo.repo_picture !== "" ? (
-            <img
-              src={repoInfo.repo_picture}
-              className={styles.repo_image}
-            ></img>
-          ) : (
-            <img src={defaultImage.src} className={styles.repo_image}></img>
-          )}
-
-          <p className={styles.story_name}>
-            {repoInfo ? repoInfo.name : "Loading..."}
-          </p>
-          <p
-            className={`${`general-input`} ${`styles.story_visibility_status`}`}
-          >
-            {repoInfo ? repoInfo.visibility : "Loading..."}
-          </p>
-        </div>
-        <div className={styles.collaborators_wrapper}>
-          <div className={styles.story_collaborators}>
-            <p>Collaborators</p>
-          </div>
-          <div className={styles.story_collaborators}>
-            <p onClick={handleInviteUserClick}>Invite user</p>
-          </div>
-        </div>
-      </div>
-      <hr />
-
-      <div className={styles.edit_repo_info}>
-        <ReactQuill
-          value={content}
-          onChange={setContent}
-          onChangeSelection={setSelection}
-          modules={{
-            toolbar: [
-              [{ font: [] }],
-              [{ size: [] }],
-              [{ color: colorOptions }],
-              ["bold", "italic", "underline"],
-            ],
-          }}
+      <div className={styles.edit_repo_wrapper}>
+        <ToastContainer
+          theme="dark"
+          toastStyle={{ backgroundColor: "#0e0f32" }}
         />
-      </div>
+        <div className={styles.story_info}>
+          <div className={styles.story_info}>
+            {showModal && (
+              <div className={styles.blurred_model}>
+                <div className={styles.blurred}>
+                  <div className={styles.invite_title_section}>
+                    <img src={inviteImage.src}></img>
+                  </div>
+                  <p className={styles.invite_title}>Invite user by email</p>
 
-      <div className={styles.edit_repo_button}>
-        <button className="general-button" onClick={commitRepo}>
-          Commit
-        </button>
-      </div>
+                  <input
+                    type="text"
+                    placeholder="Email"
+                    value={recipientEmail}
+                    onChange={(e) => {
+                      setRecipientEmail(e.target.value);
+                    }}
+                    className={`${`general-input`} ${`styles.invite_input`}`}
+                  />
+                  <button className="general-button" onClick={inviteUser}>
+                    Send Invite
+                  </button>
+                </div>
+              </div>
+            )}
 
+            {repoInfo &&
+            repoInfo.repo_picture !== undefined &&
+            repoInfo.repo_picture !== "" ? (
+              <img
+                src={repoInfo.repo_picture}
+                className={styles.repo_image}
+              ></img>
+            ) : (
+              <img src={defaultImage.src} className={styles.repo_image}></img>
+            )}
+
+            <p className={styles.story_name}>
+              {repoInfo ? repoInfo.name : "Loading..."}
+            </p>
+            <p
+              className={`${`general-input`} ${`styles.story_visibility_status`}`}
+            >
+              {repoInfo ? repoInfo.visibility : "Loading..."}
+            </p>
+          </div>
+          <div className={styles.collaborators_wrapper}>
+            <div className={styles.story_collaborators}>
+              <p>Collaborators</p>
+            </div>
+            <div className={styles.story_collaborators}>
+              <p onClick={handleInviteUserClick}>Invite user</p>
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        <div className={styles.edit_repo_info}>
+          <ReactQuill
+            value={content}
+            onChange={setContent}
+            onChangeSelection={setSelection}
+            modules={{
+              toolbar: [
+                [{ font: [] }],
+                [{ size: [] }],
+                [{ color: colorOptions }],
+                ["bold", "italic", "underline"],
+              ],
+            }}
+          />
+        </div>
+
+        <div className={styles.edit_repo_button}>
+          <button className="general-button" onClick={commitRepo}>
+            Commit
+          </button>
+        </div>
+      </div>
       <hr />
       <Footer />
     </div>
