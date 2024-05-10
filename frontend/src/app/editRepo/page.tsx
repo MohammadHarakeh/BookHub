@@ -11,10 +11,12 @@ import { toast } from "react-toastify";
 
 const EditRepo = () => {
   const [content, setContent] = useState<string>("");
-  const [textColor, setTextColor] = useState<string>("black");
-  const [fontStyle, setFontStyle] = useState<string>("normal");
+  const [selectedColor, setSelectedColor] = useState("black");
+  const [selectedFontStyle, setSelectedFontStyle] = useState("normal");
   const { userInfo } = useEmailContext();
   const { repoInfo } = useEmailContext();
+  const colorOptions = ["black", "red", "blue", "green"];
+  const fontStyleOptions = ["normal", "italic", "oblique"];
 
   const commitRepo = async () => {
     try {
@@ -41,13 +43,13 @@ const EditRepo = () => {
     }
   };
 
-  const changeTextColor = (color: string) => {
-    setTextColor(color);
-  };
+  // const changeTextColor = (color: string) => {
+  //   setTextColor(color);
+  // };
 
-  const changeFontStyle = (style: string) => {
-    setFontStyle(style);
-  };
+  // const changeFontStyle = (style: string) => {
+  //   setFontStyle(style);
+  // };
 
   useEffect(() => {
     console.log(userInfo);
@@ -89,10 +91,31 @@ const EditRepo = () => {
       <hr />
 
       <div className="edit-repo-info">
+        <select
+          value={selectedColor}
+          onChange={(e) => setSelectedColor(e.target.value)}
+        >
+          {colorOptions.map((color, index) => (
+            <option key={index} value={color}>
+              {color}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={selectedFontStyle}
+          onChange={(e) => setSelectedFontStyle(e.target.value)}
+        >
+          {fontStyleOptions.map((style, index) => (
+            <option key={index} value={style}>
+              {style}
+            </option>
+          ))}
+        </select>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          style={{ color: textColor, fontStyle: fontStyle }}
+          style={{ color: selectedColor, fontStyle: selectedFontStyle }}
         ></textarea>
       </div>
 
