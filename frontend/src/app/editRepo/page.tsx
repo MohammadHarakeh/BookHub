@@ -60,15 +60,15 @@ const EditRepo = () => {
 
   const inviteUser = async () => {
     try {
-      // const body = {
-      //   recipientEmail = recipientEmail,
-      //   repositoryId = repoInfo._id,
-      // };
+      const body = {
+        recipientEmail: recipientEmail,
+        repositoryId: repoInfo._id,
+      };
 
       const response = await sendRequest(
         requestMethods.POST,
-        `/user/invite-to-repository`
-        // body
+        `/user/invite-to-repository`,
+        body
       );
 
       if (response.status === 200) {
@@ -129,9 +129,15 @@ const EditRepo = () => {
                 <input
                   type="text"
                   placeholder="Email"
+                  value={recipientEmail}
+                  onChange={(e) => {
+                    setRecipientEmail(e.target.value);
+                  }}
                   className="general-input invite-input"
                 />
-                <button className="general-button">Send Invite</button>
+                <button className="general-button" onClick={inviteUser}>
+                  Send Invite
+                </button>
               </div>
             </div>
           )}
