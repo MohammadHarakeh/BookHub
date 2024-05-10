@@ -66,6 +66,12 @@ const HomeLeft: React.FC = () => {
     setDisplayedRepositories((prev) => prev + 3);
   };
 
+  useEffect(() => {
+    if (userInfo && userInfo.user && userInfo.user.repositories) {
+      console.log("Number of repositories:", userInfo.user.repositories.length);
+    }
+  }, [userInfo]);
+
   return (
     <div className="homepage-left">
       <div className="homepage-left-title">
@@ -79,6 +85,13 @@ const HomeLeft: React.FC = () => {
       </div>
 
       <div className="homepage-left-stories">
+        {userInfo &&
+          userInfo.user &&
+          userInfo.user.repositories.length === 0 && (
+            <div className="empty-repo">
+              <p>You currently have no repositories.</p>
+            </div>
+          )}
         {userInfo.user &&
           userInfo.user.repositories &&
           userInfo.user.repositories.length > 0 && (
@@ -90,6 +103,7 @@ const HomeLeft: React.FC = () => {
                     {repo.name}
                   </p>
                 ))}
+
               {userInfo.user.repositories.length > displayedRepositories && (
                 <div className="story-left-button">
                   <button onClick={handleShowMore} className="general-button">
