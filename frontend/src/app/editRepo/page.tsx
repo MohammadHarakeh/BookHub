@@ -17,6 +17,8 @@ const EditRepo = () => {
   const { repoInfo } = useEmailContext();
   const [content, setContent] = useState<string>("");
   const [selection, setSelection] = useState<any>(null);
+  const [showModal, setShowModal] = useState(false);
+
   const colorOptions = [
     "#ffffff", // White
     "#ff0000", // Red
@@ -68,6 +70,10 @@ const EditRepo = () => {
     return start + startTag + selectedText + endTag + end;
   };
 
+  const handleInviteUserClick = () => {
+    setShowModal((prevShowModal) => !prevShowModal); // Toggle showModal state
+  };
+
   useEffect(() => {
     if (repoInfo && repoInfo.versions && repoInfo.versions.length > 0) {
       setContent(repoInfo.versions[repoInfo.versions.length - 1].content);
@@ -83,6 +89,15 @@ const EditRepo = () => {
       />
       <div className="story-info">
         <div className="story-info">
+          {showModal && (
+            <div className="blurred-modal">
+              <div className="blurred">
+                <input type="text" />
+                <button>Send Invite</button>
+              </div>
+            </div>
+          )}
+
           {repoInfo &&
           repoInfo.repo_picture !== undefined &&
           repoInfo.repo_picture !== "" ? (
@@ -103,7 +118,7 @@ const EditRepo = () => {
             <p>Collaborators</p>
           </div>
           <div className="story-collaborators">
-            <p>invite user</p>
+            <p onClick={handleInviteUserClick}>Invite user</p>
           </div>
         </div>
       </div>
@@ -130,6 +145,7 @@ const EditRepo = () => {
           Commit
         </button>
       </div>
+
       <hr />
       <Footer />
     </div>
