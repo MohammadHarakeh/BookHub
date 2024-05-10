@@ -26,13 +26,13 @@ const EditRepo = () => {
     "#4b0082", // Indigo
     "#9400d3", // Violet
   ];
-  const fontOptions = [
-    "Arial",
-    "Times New Roman",
-    "Verdana",
-    "Georgia",
-    "Courier New",
-  ];
+  // const fontOptions = [
+  //   "Arial",
+  //   "Times New Roman",
+  //   "Verdana",
+  //   "Georgia",
+  //   "Courier New",
+  // ];
 
   const commitRepo = async () => {
     try {
@@ -111,7 +111,7 @@ const EditRepo = () => {
           onChangeSelection={setSelection}
           modules={{
             toolbar: [
-              [{ font: fontOptions }],
+              [{ font: [] }],
               [{ size: [] }],
               [{ color: colorOptions }],
               ["bold", "italic", "underline"],
