@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 
 const EditRepo = () => {
   const [content, setContent] = useState<string>("");
+  const [textColor, setTextColor] = useState<string>("black");
+  const [fontStyle, setFontStyle] = useState<string>("normal");
   const { userInfo } = useEmailContext();
   const { repoInfo } = useEmailContext();
 
@@ -37,6 +39,14 @@ const EditRepo = () => {
       console.log("Error can't add commit", error);
       toast.error("Error can't add commit");
     }
+  };
+
+  const changeTextColor = (color: string) => {
+    setTextColor(color);
+  };
+
+  const changeFontStyle = (style: string) => {
+    setFontStyle(style);
   };
 
   useEffect(() => {
@@ -82,6 +92,7 @@ const EditRepo = () => {
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          style={{ color: textColor, fontStyle: fontStyle }}
         ></textarea>
       </div>
 
