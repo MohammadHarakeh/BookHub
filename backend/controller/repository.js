@@ -1,6 +1,9 @@
 const User = require("../models/User");
 const fs = require("fs").promises;
 const diff = require("diff");
+const { OpenAI } = require("openai");
+
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 const createRepository = async (req, res) => {
   try {
@@ -215,41 +218,22 @@ function printDifference(previousContent, latestContent) {
   process.stdout.write("\n");
 }
 
-// const synchronizeCollaboratorsRepositories = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.user._id);
-//     const loggedInUserCollaborators = user.collaboratingRepositories;
-//     const otherUsers = await User.find({ _id: { $ne: req.user._id } });
-//     const matchingCollaborators = [];
-//     const otherUsersRepositories = [];
+const synchronizeCollaboratingRepositoryInfo = async (req, res) => {
+  try {
+    const repositoryId = req.body.repositoryId;
+    const content = req.body.content;
 
-//     for (const otherUser of otherUsers) {
-//       otherUsersRepositories.push(
-//         ...otherUser.repositories.map((repo) => repo._id.toString())
-//       );
-//     }
-
-//     console.log("loggedInUserCollaborators:", loggedInUserCollaborators);
-//     console.log("otherUsersRepositories:", otherUsersRepositories);
-
-//     for (const collab of loggedInUserCollaborators) {
-//       if (otherUsersRepositories.includes(collab.toString())) {
-//         matchingCollaborators.push(collab);
-//       }
-//     }
-
-//     console.log("matchingCollaborators:", matchingCollaborators);
-
-//     return res.status(200).json({ matchingCollaborators });
-//   } catch (error) {
-//     console.error("Error synchronizing collaborators repositories:", error);
-//     throw error;
-//   }
-// };
-
-const { OpenAI } = require("openai");
-
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
+    const mainUser = await User.findOne({ "repositories._id": repositoryId });
+    if (!mainUser) {
+      return res.status(404).json({
+        error: "Main user not found for the collaborating repository",
+      });
+    }
+  } catch (error) {
+    console.error("Error adding new version to the repository:", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 const generateImage = async (req, res) => {
   try {
@@ -273,6 +257,6 @@ module.exports = {
   getVersionsDifference,
   compareAnyVersion,
   getRepository,
-  // synchronizeCollaboratorsRepositories,
+  synchronizeCollaboratingRepositoryInfo,
   generateImage,
 };

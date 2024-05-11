@@ -70,7 +70,7 @@ const {
   getVersionsDifference,
   compareAnyVersion,
   getRepository,
-  // synchronizeCollaboratorsRepositories,
+  synchronizeCollaboratingRepositoryInfo,
   generateImage,
 } = require("../controller/repository");
 
@@ -123,11 +123,12 @@ router.get(
     }
   }
 );
-// router.post(
-//   "/repositories",
-//   authMiddleware,
-//   synchronizeCollaboratorsRepositories
-// );
+
+router.post(
+  "/repositories",
+  authMiddleware,
+  synchronizeCollaboratingRepositoryInfo
+);
 
 router.post("/generateImage", generateImage);
 
