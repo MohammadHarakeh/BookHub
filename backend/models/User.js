@@ -207,14 +207,7 @@ const userSchema = new mongoose.Schema({
 
   collaboratingRepositories: [
     {
-      senderRepoId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Repository",
-      },
-      receiverRepoId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Repository",
-      },
+      sendRepoId: String,
     },
   ],
 });

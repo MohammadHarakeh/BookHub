@@ -1,0 +1,1 @@
+<p><span class="ql-font-serif">test</span></p><p>test</p><p><span class="ql-font-monospace ql-size-large" style="color: rgb(255, 255, 0);">test</span></p><p>test</p><p><span style="color: rgb(75, 0, 130);">test</span></p><p>test</p><p>test</p><p><strong class="ql-size-huge" style="color: rgb(255, 0, 0);"><em><u>reactQuill</u></em></strong></p>

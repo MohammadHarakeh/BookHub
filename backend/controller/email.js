@@ -164,59 +164,18 @@ const acceptInvitationToRepository = async (req, res) => {
       return res.status(404).json({ message: "Sender's repository not found" });
     }
 
-    const newRepository = { ...senderRepo.toObject() };
-    delete newRepository._id; // Remove _id field
-    newRepository.createdAt = new Date();
-
-    newRepository.collaborators = [
-      {
-        _id: sender._id,
-        senderUsername: sender.username,
-        senderRepoId: invitation.repositoryId,
-        receiverUsername: user.username,
-      },
-    ];
-
-    if (!user.repositories) {
-      user.repositories = [];
-    }
-    user.repositories.push(newRepository);
-    await user.save();
-
-    const receiverRepoId = user.repositories[user.repositories.length - 1]._id;
-
-    newRepository.collaborators.forEach((collaborator) => {
-      collaborator.receiverRepoId = receiverRepoId;
-    });
-
-    user.collaboratingRepositories.push({
-      receiverRepoId: receiverRepoId,
+    const collaborator = {
+      user: user._id,
+      senderUsername: sender.username,
+      receiverUsername: user.username,
       senderRepoId: invitation.repositoryId,
-    });
-    await user.save();
+    };
 
-    sender.collaboratingRepositories.push({
-      receiverRepoId: receiverRepoId,
-      senderRepoId: invitation.repositoryId,
-    });
+    senderRepo.collaborators.push(collaborator);
     await sender.save();
 
-    sender.repositories.forEach((repo) => {
-      if (!repo.collaborators) {
-        repo.collaborators = [];
-      }
-      const existingCollaborator = repo.collaborators.find(
-        (collab) => collab._id.toString() === sender._id.toString()
-      );
-      if (!existingCollaborator) {
-        repo.collaborators.push(newRepository.collaborators[0]);
-      }
-      repo.collaborators.forEach((collaborator) => {
-        if (collaborator._id.toString() === sender._id.toString()) {
-          collaborator.receiverRepoId = receiverRepoId;
-        }
-      });
-    });
+    user.collaboratingRepositories.push(invitation.repositoryId);
+    await user.save();
 
     user.invitations.splice(invitationIndex, 1);
     sender.invitations.splice(invitationIndex, 1);
