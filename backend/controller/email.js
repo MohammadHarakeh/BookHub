@@ -209,6 +209,19 @@ const getCollaboratingRepositoryInfo = async (req, res) => {
         .json({ error: "Collaborating repository not found" });
     }
 
+    for (const otherUser of await User.find()) {
+      const repository = otherUser.repositories.find(
+        (repo) => repo._id.toString() === repositoryId
+      );
+      if (repository) {
+        return res.status(200).json({
+          repositoryId: repository._id,
+          name: repository.name,
+          description: repository.description,
+        });
+      }
+    }
+
     return res.status(404).json({ error: "Repository not found in any user" });
   } catch (error) {
     console.error("Error fetching collaborating repository info:", error);
