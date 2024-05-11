@@ -190,6 +190,32 @@ const acceptInvitationToRepository = async (req, res) => {
   }
 };
 
+const getCollaboratingRepositoryInfo = async (req, res) => {
+  const userId = req.user._id;
+  const { repositoryId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const collaboratingRepo = user.collaboratingRepositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+    if (!collaboratingRepo) {
+      return res
+        .status(404)
+        .json({ error: "Collaborating repository not found" });
+    }
+
+    return res.status(404).json({ error: "Repository not found in any user" });
+  } catch (error) {
+    console.error("Error fetching collaborating repository info:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   forgotPassword,
   resetPassword,
