@@ -195,4 +195,5 @@ module.exports = {
   resetPassword,
   inviteToRepository,
   acceptInvitationToRepository,
+  getCollaboratingRepositoryInfo,
 };

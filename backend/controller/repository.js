@@ -215,37 +215,37 @@ function printDifference(previousContent, latestContent) {
   process.stdout.write("\n");
 }
 
-const synchronizeCollaboratorsRepositories = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
-    const loggedInUserCollaborators = user.collaboratingRepositories;
-    const otherUsers = await User.find({ _id: { $ne: req.user._id } });
-    const matchingCollaborators = [];
-    const otherUsersRepositories = [];
+// const synchronizeCollaboratorsRepositories = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user._id);
+//     const loggedInUserCollaborators = user.collaboratingRepositories;
+//     const otherUsers = await User.find({ _id: { $ne: req.user._id } });
+//     const matchingCollaborators = [];
+//     const otherUsersRepositories = [];
 
-    for (const otherUser of otherUsers) {
-      otherUsersRepositories.push(
-        ...otherUser.repositories.map((repo) => repo._id.toString())
-      );
-    }
+//     for (const otherUser of otherUsers) {
+//       otherUsersRepositories.push(
+//         ...otherUser.repositories.map((repo) => repo._id.toString())
+//       );
+//     }
 
-    console.log("loggedInUserCollaborators:", loggedInUserCollaborators);
-    console.log("otherUsersRepositories:", otherUsersRepositories);
+//     console.log("loggedInUserCollaborators:", loggedInUserCollaborators);
+//     console.log("otherUsersRepositories:", otherUsersRepositories);
 
-    for (const collab of loggedInUserCollaborators) {
-      if (otherUsersRepositories.includes(collab.toString())) {
-        matchingCollaborators.push(collab);
-      }
-    }
+//     for (const collab of loggedInUserCollaborators) {
+//       if (otherUsersRepositories.includes(collab.toString())) {
+//         matchingCollaborators.push(collab);
+//       }
+//     }
 
-    console.log("matchingCollaborators:", matchingCollaborators);
+//     console.log("matchingCollaborators:", matchingCollaborators);
 
-    return res.status(200).json({ matchingCollaborators });
-  } catch (error) {
-    console.error("Error synchronizing collaborators repositories:", error);
-    throw error;
-  }
-};
+//     return res.status(200).json({ matchingCollaborators });
+//   } catch (error) {
+//     console.error("Error synchronizing collaborators repositories:", error);
+//     throw error;
+//   }
+// };
 
 const { OpenAI } = require("openai");
 
@@ -273,6 +273,6 @@ module.exports = {
   getVersionsDifference,
   compareAnyVersion,
   getRepository,
-  synchronizeCollaboratorsRepositories,
+  // synchronizeCollaboratorsRepositories,
   generateImage,
 };
