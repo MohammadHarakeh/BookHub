@@ -6,15 +6,17 @@ import Footer from "@/app/component/footer/page";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { sendRequest } from "../../tools/apiRequest";
 import defaultImage from "../../../../public/images/defaultImage.png";
+import { useRouter } from "next/navigation";
 
 const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
   const [invitingUserId, setInvitingUserId] = useState();
-  const [invitingUser, setInvitingUser] = useState();
+  const [invitingUserToken, setInvitingUserToken] = useState();
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [invitationAccepted, setInvitationAccepted] = useState(false);
   const [invitingUsername, setInvitingUsername] = useState<string>("");
   const [invitingUserPicture, setInvitingUserPicture] = useState<string>("");
   const [invitingUserRepoId, setInvitingUserRepoId] = useState<string>("");
+
+  const router = useRouter();
 
   const getLoggedinUser = async () => {
     try {
@@ -25,15 +27,16 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
       if (response.status === 200) {
         setLoggedInUser(response.data.user);
         console.log(response.data.user);
-        const invitedFields = response.data.user.invitedFields;
+        const invitedFields = response.data.user.invitations;
 
         invitedFields.forEach((invitation: any) => {
-          if (invitation.invitingUserId) {
-            console.log("Inviting User ID:", invitation.invitingUserId);
-            setInvitingUserId(invitation.invitingUserId);
-            setInvitingUsername(invitation.invitingUsername);
-            setInvitingUserPicture(invitation.invitingProfilePicture);
-            setInvitingUserRepoId(invitation.invitingRepoId);
+          if (invitation.sender) {
+            console.log("Inviting User ID:", invitation.sender);
+            setInvitingUserId(invitation.sender);
+            setInvitingUsername(invitation.senderName);
+            setInvitingUserPicture(invitation.senderProfilePicture);
+            setInvitingUserRepoId(invitation.repositoryId);
+            setInvitingUserToken(invitation.invitationToken);
           } else {
             console.log("Inviting User ID not found in this invitation.");
           }
@@ -48,14 +51,18 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
 
   const acceptInvitation = async () => {
     try {
+      const body = {
+        invitationToken: invitingUserToken,
+      };
       const response = await sendRequest(
         requestMethods.POST,
-        `/user/acceptInvitation/${invitingUserRepoId}`
+        `/user/accept-invitation-to-repository`,
+        body
       );
 
       if (response.status === 200) {
-        setInvitationAccepted(true);
         console.log("Invitation accepted successfully");
+        router.push("/");
       } else {
         console.log("Failed to accept invitation");
       }
@@ -83,7 +90,9 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
           ) : (
             <img src={defaultImage.src} alt="Default Profile" />
           )}
-          <p>{invitingUsername} has invited you to collaborate with them</p>
+          <p>
+            <b>{invitingUsername}</b> has invited you to collaborate with them
+          </p>
 
           <div className="invite-card-buttons">
             <button
