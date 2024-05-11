@@ -238,6 +238,21 @@ const synchronizeCollaboratingRepositoryInfo = async (req, res) => {
         .status(404)
         .json({ error: "Main user's repository not found" });
     }
+
+    const newVersion = {
+      content: content,
+      createdAt: new Date(),
+    };
+
+    mainUserRepository.versions.push(newVersion);
+
+    await mainUser.save();
+
+    console.log("New version added to the repository successfully");
+
+    res
+      .status(200)
+      .json({ message: "New version added to the repository successfully" });
   } catch (error) {
     console.error("Error adding new version to the repository:", error.message);
     res.status(500).json({ error: "Internal server error" });
