@@ -229,6 +229,15 @@ const synchronizeCollaboratingRepositoryInfo = async (req, res) => {
         error: "Main user not found for the collaborating repository",
       });
     }
+
+    const mainUserRepository = mainUser.repositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+    if (!mainUserRepository) {
+      return res
+        .status(404)
+        .json({ error: "Main user's repository not found" });
+    }
   } catch (error) {
     console.error("Error adding new version to the repository:", error.message);
     res.status(500).json({ error: "Internal server error" });
