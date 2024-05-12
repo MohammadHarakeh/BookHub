@@ -89,6 +89,26 @@ const HomeLeft: React.FC = () => {
     }
   };
 
+  const fetchCollaboratingRepos = async () => {
+    if (
+      userInfo &&
+      userInfo.user &&
+      userInfo.user.collaboratingRepositories &&
+      userInfo.user.collaboratingRepositories.length > 0
+    ) {
+      console.log(
+        "User Collaborating Repos:",
+        userInfo.user.collaboratingRepositories
+      );
+      const repoIds = userInfo.user.collaboratingRepositories.map(
+        (repo: any) => repo._id
+      );
+      console.log("Repository IDs:", repoIds);
+      const collaboratingRepos = await collaboratingRepoInfo(repoIds);
+      console.log("Collaborating Repos:", collaboratingRepos);
+    }
+  };
+
   const handleShowMore = () => {
     setDisplayedRepositories((prev) => prev + 3);
   };
