@@ -47,7 +47,6 @@ const {
   resetPassword,
   inviteToRepository,
   acceptInvitationToRepository,
-  getCollaboratingRepositoryInfo,
 } = require("../controller/email");
 
 router.post("/forgotPassword", forgotPassword);
@@ -58,11 +57,6 @@ router.post(
   authMiddleware,
   acceptInvitationToRepository
 );
-router.get(
-  "/collaborating-repos/:repositoryId",
-  authMiddleware,
-  getCollaboratingRepositoryInfo
-);
 
 const {
   createRepository,
@@ -72,9 +66,15 @@ const {
   getRepository,
   synchronizeCollaboratingRepositoryInfo,
   generateImage,
+  getCollaboratingRepositoryInfo,
 } = require("../controller/repository");
 
 router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
+router.get(
+  "/collaborating-repos/:repositoryId",
+  authMiddleware,
+  getCollaboratingRepositoryInfo
+);
 router.post(
   "/createRepository",
   authMiddleware,

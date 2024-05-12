@@ -218,6 +218,49 @@ function printDifference(previousContent, latestContent) {
   process.stdout.write("\n");
 }
 
+const getCollaboratingRepositoryInfo = async (req, res) => {
+  const userId = req.user._id;
+  const { repositoryId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const collaboratingRepo = user.collaboratingRepositories.find(
+      (repo) => repo._id.toString() === repositoryId
+    );
+    if (!collaboratingRepo) {
+      return res
+        .status(404)
+        .json({ error: "Collaborating repository not found" });
+    }
+
+    for (const otherUser of await User.find()) {
+      const repository = otherUser.repositories.find(
+        (repo) => repo._id.toString() === repositoryId
+      );
+      if (repository) {
+        return res.status(200).json({
+          repositoryId: repository._id,
+          name: repository.name,
+          description: repository.description,
+          picture: repository.repo_picture,
+          visibility: repository.visibility,
+          collaborators: repository.collaborators,
+          versions: repository.versions,
+        });
+      }
+    }
+
+    return res.status(404).json({ error: "Repository not found in any user" });
+  } catch (error) {
+    console.error("Error fetching collaborating repository info:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const synchronizeCollaboratingRepositoryInfo = async (req, res) => {
   try {
     const repositoryId = req.body.repositoryId;
@@ -283,4 +326,5 @@ module.exports = {
   getRepository,
   synchronizeCollaboratingRepositoryInfo,
   generateImage,
+  getCollaboratingRepositoryInfo,
 };
