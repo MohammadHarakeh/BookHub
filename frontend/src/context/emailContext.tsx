@@ -11,6 +11,8 @@ type ContextValue = {
   setUserInfo: Dispatch<SetStateAction<any>>;
   repoInfo: any;
   setRepoInfo: Dispatch<SetStateAction<any>>;
+  collabInfo: any;
+  setCollabInfo: Dispatch<SetStateAction<any>>;
 };
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
@@ -20,6 +22,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<any>({});
   const [repoInfo, setRepoInfo] = useState<any>();
+  const [collabInfo, setCollabInfo] = useState<any>();
 
   return (
     <EmailContext.Provider
@@ -32,6 +35,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         setUserInfo,
         repoInfo,
         setRepoInfo,
+        collabInfo,
+        setCollabInfo,
       }}
     >
       {children}

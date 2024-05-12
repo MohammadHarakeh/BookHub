@@ -41,6 +41,8 @@ const HomeLeft: React.FC = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext();
   const { setRepoInfo } = useEmailContext();
+  const { collabInfo, setCollabInfo } = useEmailContext();
+  const [collabInfoId, setCollabInfoId] = useState<string>();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
   const [collaboratingReposInfo, setCollaboratingReposInfo] = useState<any[]>(
     []
@@ -76,8 +78,7 @@ const HomeLeft: React.FC = () => {
         );
 
         if (response.status === 200) {
-          const collaboratingRepo = response.data;
-          collaboratingRepos.push(collaboratingRepo);
+          collaboratingRepos.push(response.data);
         } else {
           console.log(
             `Failed to get collaborating repo data for repo ID ${repoId}`
@@ -119,7 +120,12 @@ const HomeLeft: React.FC = () => {
 
   useEffect(() => {
     fetchCollaboratingRepos();
+    singleRepoInfo();
   }, [userInfo]);
+
+  useEffect(() => {
+    singleRepoInfo();
+  }, [collabInfoId]);
 
   return (
     <div className="homepage-left">
@@ -177,7 +183,12 @@ const HomeLeft: React.FC = () => {
           {collaboratingReposInfo.length > 0 && (
             <div className="user-stories">
               {collaboratingReposInfo.map((repo: any, index: number) => (
-                <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
+                <p
+                  key={index}
+                  onClick={() => {
+                    clickedCollabRepoInfo(repo.repositoryId);
+                  }}
+                >
                   {repo.name}
                 </p>
               ))}

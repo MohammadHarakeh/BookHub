@@ -58,15 +58,27 @@ const getRepository = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const repository = user.repositories.find(
+    let repository = user.repositories.find(
       (repo) => repo._id.toString() === repositoryId
     );
+
+    if (!repository) {
+      for (const collabRepo of user.collaboratingRepositories) {
+        if (collabRepo._id.toString() === repositoryId) {
+          repository = collabRepo;
+          break;
+        }
+      }
+    }
 
     if (!repository) {
       return res.status(404).json({ error: "Repository not found" });
     }
 
-    const latestVersion = repository.versions[repository.versions.length - 1];
+    const latestVersion =
+      repository && repository.versions
+        ? repository.versions[repository.versions.length - 1]
+        : null;
 
     res
       .status(200)

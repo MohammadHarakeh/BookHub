@@ -33,8 +33,6 @@ const EditRepo = () => {
     "#9400d3", // Violet
   ];
 
-  const fontsStyles = [];
-
   const commitRepo = async () => {
     try {
       const formattedContent = formatContentWithFormatting(content, selection);
