@@ -33,16 +33,16 @@ const EditRepo = () => {
     "#9400d3", // Violet
   ];
 
-  const commitRepo = async () => {
+  const collaboratorCommit = async () => {
     try {
       const formattedContent = formatContentWithFormatting(content, selection);
       const body = {
+        repositoryId: collabInfo.repositoryId,
         content: formattedContent,
       };
-
       const response = await sendRequest(
         requestMethods.POST,
-        `/user/uploadRepositoryContent/${collabInfo._id}`,
+        `/user/repositories`,
         body
       );
 
@@ -56,32 +56,6 @@ const EditRepo = () => {
     } catch (error) {
       console.log("Error can't add commit", error);
       toast.error("Error can't add commit");
-    }
-  };
-
-  const inviteUser = async () => {
-    try {
-      const body = {
-        recipientEmail: recipientEmail,
-        repositoryId: collabInfo._id,
-      };
-
-      const response = await sendRequest(
-        requestMethods.POST,
-        `/user/invite-to-repository`,
-        body
-      );
-
-      if (response.status === 200) {
-        console.log("Invited user successfully");
-        toast.success("Invited user successfully");
-      } else {
-        console.log("Failed to invite user");
-        toast.error("Failed to invite user");
-      }
-    } catch (error) {
-      console.error("Error can't invite user", error);
-      toast.error("Error can't invite user");
     }
   };
 
@@ -106,7 +80,7 @@ const EditRepo = () => {
   useEffect(() => {
     if (collabInfo && collabInfo.versions && collabInfo.versions.length > 0) {
       setContent(collabInfo.versions[collabInfo.versions.length - 1].content);
-      console.log("repo info: ", collabInfo);
+      console.log("Collab Info: ", collabInfo);
     }
   }, [collabInfo]);
 
@@ -143,9 +117,6 @@ const EditRepo = () => {
                     }}
                     className={`${`general-input`} ${styles.invite_input}`}
                   />
-                  <button className="general-button" onClick={inviteUser}>
-                    Send Invite
-                  </button>
                 </div>
               </div>
             )}
@@ -174,9 +145,6 @@ const EditRepo = () => {
             <div className={styles.story_collaborators}>
               <p>Collaborators</p>
             </div>
-            <div className={styles.story_collaborators}>
-              <p onClick={handleInviteUserClick}>Invite user</p>
-            </div>
           </div>
         </div>
         <hr />
@@ -198,7 +166,7 @@ const EditRepo = () => {
         </div>
 
         <div className={styles.edit_repo_button}>
-          <button className="general-button" onClick={commitRepo}>
+          <button className="general-button" onClick={collaboratorCommit}>
             Commit
           </button>
         </div>
