@@ -44,6 +44,10 @@ const HomeLeft: React.FC = () => {
   const { collabInfo, setCollabInfo } = useEmailContext();
   const [collabInfoId, setCollabInfoId] = useState<string>();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
+  const [
+    displayedCollaboratingRepositories,
+    setDisplayedCollaboratingRepositories,
+  ] = useState(3);
   const [collaboratingReposInfo, setCollaboratingReposInfo] = useState<any[]>(
     []
   );
@@ -155,6 +159,10 @@ const HomeLeft: React.FC = () => {
     setDisplayedRepositories((prev) => prev + 3);
   };
 
+  const handleShowMoreCollabRepos = () => {
+    setDisplayedCollaboratingRepositories((prev) => prev + 3);
+  };
+
   useEffect(() => {
     fetchCollaboratingRepos();
     singleRepoInfo();
@@ -219,20 +227,26 @@ const HomeLeft: React.FC = () => {
 
           {collaboratingReposInfo.length > 0 && (
             <div className="user-stories">
-              {collaboratingReposInfo.map((repo: any, index: number) => (
-                <p
-                  key={index}
-                  onClick={() => {
-                    clickedCollabRepoInfo(repo.repositoryId);
-                  }}
-                >
-                  {repo.name}
-                </p>
-              ))}
+              {collaboratingReposInfo
+                .slice(0, displayedCollaboratingRepositories)
+                .map((repo: any, index: number) => (
+                  <p
+                    key={index}
+                    onClick={() => {
+                      clickedCollabRepoInfo(repo.repositoryId);
+                    }}
+                  >
+                    {repo.name}
+                  </p>
+                ))}
 
-              {collaboratingReposInfo.length > displayedRepositories && (
+              {collaboratingReposInfo.length >
+                displayedCollaboratingRepositories && (
                 <div className="story-left-button">
-                  <button onClick={handleShowMore} className="general-button">
+                  <button
+                    onClick={handleShowMoreCollabRepos}
+                    className="general-button"
+                  >
                     Show More
                   </button>
                 </div>
