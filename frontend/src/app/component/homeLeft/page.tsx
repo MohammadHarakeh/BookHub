@@ -40,7 +40,7 @@ interface UserInfo {
 const HomeLeft: React.FC = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext();
-  const { repoInfo, setRepoInfo } = useEmailContext();
+  const { setRepoInfo } = useEmailContext();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
 
   const clickedRepoInfo = async (repositoryId: string) => {
@@ -62,15 +62,36 @@ const HomeLeft: React.FC = () => {
     }
   };
 
+  const collaboratingRepoInfo = async (repoIds: string[]) => {
+    try {
+      const collaboratingRepos = [];
+
+      for (const repoId of repoIds) {
+        const response = await sendRequest(
+          requestMethods.GET,
+          `user/collaborating-repos/${repoId}`
+        );
+
+        if (response.status === 200) {
+          const collaboratingRepo = response.data;
+          collaboratingRepos.push(collaboratingRepo);
+        } else {
+          console.log(
+            `Failed to get collaborating repo data for repo ID ${repoId}`
+          );
+        }
+      }
+
+      return collaboratingRepos;
+    } catch (error) {
+      console.log("Error getting collaborating repo data", error);
+      return [];
+    }
+  };
+
   const handleShowMore = () => {
     setDisplayedRepositories((prev) => prev + 3);
   };
-
-  useEffect(() => {
-    if (userInfo && userInfo.user && userInfo.user.repositories) {
-      console.log("Number of repositories:", userInfo.user.repositories.length);
-    }
-  }, [userInfo]);
 
   return (
     <div className="homepage-left">
