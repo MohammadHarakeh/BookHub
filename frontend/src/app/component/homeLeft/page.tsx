@@ -77,7 +77,7 @@ const HomeLeft: React.FC = () => {
       if (response.status === 200) {
         setCollabInfoId(response.data.repository._id);
         console.log(response.data.repository._id);
-        // router.push("/editRepo");
+        router.push("/editCollaboratorRepo");
       } else {
         console.log("Failed to get repo data");
       }

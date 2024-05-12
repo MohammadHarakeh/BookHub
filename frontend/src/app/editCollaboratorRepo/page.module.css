@@ -1,0 +1,141 @@
+.edit_repo_wrapper {
+  color: #fff;
+  min-height: 70vh;
+}
+
+.story_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1.5rem;
+  margin: 1rem 0rem;
+}
+
+.repo_image {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 3rem;
+}
+
+.story_name {
+  font-size: 2rem;
+}
+
+.story_visibility_status {
+  border-radius: 2rem !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 1rem;
+}
+
+.edit_repo_info {
+  width: 75%;
+  margin: 2rem auto;
+}
+
+.edit-repo-info .ql-editor {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  height: 35vh;
+}
+
+.ql-toolbar {
+  background-color: #fff;
+}
+
+.edit_repo_button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem auto;
+  width: 75%;
+}
+
+.collaborators_wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.story_collaborators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #42ff00;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+}
+
+.story_collaborators p {
+  color: #42ff00;
+  cursor: pointer;
+}
+
+.story_collaborators:hover {
+  background-color: #42ff00;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.story_collaborators:hover p {
+  color: black;
+}
+
+.invite_input {
+  background-color: #fff !important;
+}
+
+.invite_title {
+  font-size: 2rem;
+}
+
+.blurred_model {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.blurred {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: auto;
+  background-color: #2d2e3e;
+  gap: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+
+.invite_title_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  max-height: 100% !important;
+}
+.blurred input {
+  color: black;
+}
+
+.invite_title_section img {
+  width: 100%;
+  height: 20rem;
+  border-radius: 1rem;
+}
+
+.close_btn_wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+
+.close_btn {
+  cursor: pointer;
+}

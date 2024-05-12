@@ -16,7 +16,6 @@ import { IoMdClose } from "react-icons/io";
 
 const EditRepo = () => {
   const { userInfo } = useEmailContext();
-  const { repoInfo } = useEmailContext();
   const { collabInfo } = useEmailContext();
   const [content, setContent] = useState<string>("");
   const [selection, setSelection] = useState<any>(null);
@@ -43,7 +42,7 @@ const EditRepo = () => {
 
       const response = await sendRequest(
         requestMethods.POST,
-        `/user/uploadRepositoryContent/${repoInfo._id}`,
+        `/user/uploadRepositoryContent/${collabInfo._id}`,
         body
       );
 
@@ -64,7 +63,7 @@ const EditRepo = () => {
     try {
       const body = {
         recipientEmail: recipientEmail,
-        repositoryId: repoInfo._id,
+        repositoryId: collabInfo._id,
       };
 
       const response = await sendRequest(
@@ -105,11 +104,11 @@ const EditRepo = () => {
   };
 
   useEffect(() => {
-    if (repoInfo && repoInfo.versions && repoInfo.versions.length > 0) {
-      setContent(repoInfo.versions[repoInfo.versions.length - 1].content);
-      console.log("repo info: ", repoInfo);
+    if (collabInfo && collabInfo.versions && collabInfo.versions.length > 0) {
+      setContent(collabInfo.versions[collabInfo.versions.length - 1].content);
+      console.log("repo info: ", collabInfo);
     }
-  }, [repoInfo]);
+  }, [collabInfo]);
 
   return (
     <div>
@@ -151,11 +150,11 @@ const EditRepo = () => {
               </div>
             )}
 
-            {repoInfo &&
-            repoInfo.repo_picture !== undefined &&
-            repoInfo.repo_picture !== "" ? (
+            {collabInfo &&
+            collabInfo.repo_picture !== undefined &&
+            collabInfo.repo_picture !== "" ? (
               <img
-                src={repoInfo.repo_picture}
+                src={collabInfo.repo_picture}
                 className={styles.repo_image}
               ></img>
             ) : (
@@ -163,12 +162,12 @@ const EditRepo = () => {
             )}
 
             <p className={styles.story_name}>
-              {repoInfo ? repoInfo.name : "Loading..."}
+              {collabInfo ? collabInfo.name : "Loading..."}
             </p>
             <p
               className={`${`general-input`} ${styles.story_visibility_status}`}
             >
-              {repoInfo ? repoInfo.visibility : "Loading..."}
+              {collabInfo ? collabInfo.visibility : "Loading..."}
             </p>
           </div>
           <div className={styles.collaborators_wrapper}>
