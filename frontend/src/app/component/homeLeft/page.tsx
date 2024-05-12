@@ -42,6 +42,7 @@ const HomeLeft: React.FC = () => {
   const { userInfo } = useEmailContext();
   const { setRepoInfo } = useEmailContext();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
+  const [collaboratingReposInfo, setCollaboratingReposInfo] = useState<any>();
 
   const clickedRepoInfo = async (repositoryId: string) => {
     try {
@@ -106,12 +107,17 @@ const HomeLeft: React.FC = () => {
       console.log("Repository IDs:", repoIds);
       const collaboratingRepos = await collaboratingRepoInfo(repoIds);
       console.log("Collaborating Repos:", collaboratingRepos);
+      setCollaboratingReposInfo(collaboratingRepos);
     }
   };
 
   const handleShowMore = () => {
     setDisplayedRepositories((prev) => prev + 3);
   };
+
+  useEffect(() => {
+    fetchCollaboratingRepos();
+  }, [userInfo]);
 
   return (
     <div className="homepage-left">
