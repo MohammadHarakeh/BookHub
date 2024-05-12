@@ -112,6 +112,24 @@ const HomeLeft: React.FC = () => {
     }
   };
 
+  const singleRepoInfo = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `user/collaborating-repos/${collabInfoId}`
+      );
+
+      if (response.status === 200) {
+        console.log(response.data);
+        setCollabInfo(response.data);
+      } else {
+        console.log(`Failed to get collaborating repo data for repo ID`);
+      }
+    } catch (error) {
+      console.log("Error getting collaborating repo data", error);
+    }
+  };
+
   const fetchCollaboratingRepos = async () => {
     if (
       userInfo &&
