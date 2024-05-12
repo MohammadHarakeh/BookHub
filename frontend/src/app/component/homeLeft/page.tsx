@@ -67,6 +67,25 @@ const HomeLeft: React.FC = () => {
     }
   };
 
+  const clickedCollabRepoInfo = async (repositoryId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getRepository/${repositoryId}`
+      );
+
+      if (response.status === 200) {
+        setCollabInfoId(response.data.repository._id);
+        console.log(response.data.repository._id);
+        // router.push("/editRepo");
+      } else {
+        console.log("Failed to get repo data");
+      }
+    } catch (error) {
+      console.log("Error getting repo data", error);
+    }
+  };
+
   const collaboratingRepoInfo = async (repoIds: string[]) => {
     try {
       const collaboratingRepos = [];
