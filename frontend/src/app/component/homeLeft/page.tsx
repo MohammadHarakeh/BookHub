@@ -42,7 +42,9 @@ const HomeLeft: React.FC = () => {
   const { userInfo } = useEmailContext();
   const { setRepoInfo } = useEmailContext();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
-  const [collaboratingReposInfo, setCollaboratingReposInfo] = useState<any>();
+  const [collaboratingReposInfo, setCollaboratingReposInfo] = useState<any[]>(
+    []
+  );
 
   const clickedRepoInfo = async (repositoryId: string) => {
     try {
@@ -132,26 +134,55 @@ const HomeLeft: React.FC = () => {
       </div>
 
       <div className="homepage-left-stories">
-        {userInfo &&
-          userInfo.user &&
-          userInfo.user.repositories.length === 0 && (
+        <div className="user-repositories">
+          <h2>Your Repositories</h2>
+          {userInfo &&
+            userInfo.user &&
+            userInfo.user.repositories.length === 0 && (
+              <div className="empty-repo">
+                <p>You currently have no repositories.</p>
+              </div>
+            )}
+          {userInfo.user &&
+            userInfo.user.repositories &&
+            userInfo.user.repositories.length > 0 && (
+              <div className="user-stories">
+                {userInfo.user.repositories
+                  .slice(0, displayedRepositories)
+                  .map((repo: Repository, index: number) => (
+                    <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
+                      {repo.name}
+                    </p>
+                  ))}
+
+                {userInfo.user.repositories.length > displayedRepositories && (
+                  <div className="story-left-button">
+                    <button onClick={handleShowMore} className="general-button">
+                      Show More
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+        </div>
+
+        <div className="collaborating-repositories">
+          <h2>Collaborating Repositories</h2>
+          {collaboratingReposInfo.length === 0 && (
             <div className="empty-repo">
-              <p>You currently have no repositories.</p>
+              <p>You currently have no collaborating repositories.</p>
             </div>
           )}
-        {userInfo.user &&
-          userInfo.user.repositories &&
-          userInfo.user.repositories.length > 0 && (
-            <div className="user-stories">
-              {userInfo.user.repositories
-                .slice(0, displayedRepositories)
-                .map((repo: Repository, index: number) => (
-                  <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
-                    {repo.name}
-                  </p>
-                ))}
 
-              {userInfo.user.repositories.length > displayedRepositories && (
+          {collaboratingReposInfo.length > 0 && (
+            <div className="user-stories">
+              {collaboratingReposInfo.map((repo: any, index: number) => (
+                <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
+                  {repo.name}
+                </p>
+              ))}
+
+              {collaboratingReposInfo.length > displayedRepositories && (
                 <div className="story-left-button">
                   <button onClick={handleShowMore} className="general-button">
                     Show More
@@ -160,6 +191,7 @@ const HomeLeft: React.FC = () => {
               )}
             </div>
           )}
+        </div>
       </div>
     </div>
   );

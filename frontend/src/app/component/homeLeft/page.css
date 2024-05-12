@@ -1,7 +1,7 @@
 .homepage-left {
   background-color: #0e0f32;
   height: 100%;
-  width: 20%;
+  width: 27rem;
   color: #fff;
   padding-left: 4rem;
   padding-right: 2rem;
@@ -43,4 +43,9 @@
 .user-stories p:hover {
   cursor: pointer;
   background-color: #5d5f97;
+}
+
+.collaborating-repositories {
+  margin-top: 4rem;
+  width: 100%;
 }
