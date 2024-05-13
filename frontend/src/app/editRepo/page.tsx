@@ -103,7 +103,7 @@ const EditRepo = () => {
       if (response.status === 200) {
         console.log("AI image generated successfully");
         setGeneratedImage(response.data);
-        console.log(response.data);
+        console.log(response.data.imageUrl);
       } else {
         console.error("Failed to generate image");
       }
