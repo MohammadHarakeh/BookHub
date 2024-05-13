@@ -339,11 +339,17 @@ const generateImage = async (req, res) => {
 
 const generateText = async (req, res) => {
   try {
+    const { prompt } = req.body;
+
+    if (!prompt) {
+      return res.status(400).json({ error: "Prompt is required" });
+    }
+
     const completion = await openai.chat.completions.create({
       messages: [
         {
           role: "user",
-          content: `can you summarize the following text by keeping the main points about the story and making it less than 50% characters:`,
+          content: `can you summarize the following text by keeping the main points about the story and making it less than 50% characters: ${prompt}`,
         },
       ],
       model: "gpt-3.5-turbo",
