@@ -59,3 +59,11 @@ html {
   background-color: rgba(129, 129, 129, 0.1);
   z-index: 1;
 }
+
+.close-button {
+  background-color: red;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}

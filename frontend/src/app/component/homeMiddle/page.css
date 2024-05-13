@@ -135,7 +135,7 @@
 }
 
 .blurred {
-  width: 45%;
+  width: 35%;
   max-height: 30rem;
   background-color: #2d2e3e;
   border-radius: 10px;
@@ -152,9 +152,9 @@
 
 .blurred-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  width: 100%;
 }
 
 .blurred-all-comments {

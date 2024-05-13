@@ -9,6 +9,7 @@ import "../../globals.css";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { useEmailContext } from "@/context/emailContext";
+import { IoMdClose } from "react-icons/io";
 
 const HomeLeft = () => {
   const [content, setContent] = useState("");
@@ -356,31 +357,11 @@ const HomeLeft = () => {
               <div className="blurred-modal">
                 <div className="blurred">
                   <div className="blurred-comment-wrapper">
-                    {userProfileImage ? (
-                      <img
-                        src={userProfileImage}
-                        className="user-profile-small"
-                      />
-                    ) : (
-                      <img
-                        src={defaultImage.src}
-                        className="user-profile-small"
-                      />
-                    )}
-                    <textarea
-                      className="blurred-comment homepage-input-text"
-                      placeholder="Write a comment..."
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    ></textarea>
-
                     <div className="blurred-buttons">
-                      <button
-                        className="general-button"
+                      <IoMdClose
+                        className="close-button"
                         onClick={() => toggleCommentSection(currentPostId)}
-                      >
-                        Back
-                      </button>
+                      ></IoMdClose>
                     </div>
                   </div>
 
