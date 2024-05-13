@@ -22,6 +22,8 @@ const EditRepo = () => {
   const [showModal, setShowModal] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState<string>("");
   const [unformattedContent, setUnformattedContent] = useState<string>("");
+  const [generatedImage, setGeneratedImage] = useState();
+  const [summarizedText, setSummarizedText] = useState();
 
   const colorOptions = [
     "#ffffff", // White
@@ -57,6 +59,31 @@ const EditRepo = () => {
     } catch (error) {
       console.log("Error can't add commit", error);
       toast.error("Error can't add commit");
+    }
+  };
+
+  const generateImage = async () => {
+    try {
+      const body = {
+        prompt: summarizedText,
+      };
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `user/generateImage`,
+        body
+      );
+
+      if (response.status === 200) {
+        console.log("AI image generated successfully");
+        setGeneratedImage(response.data.imageUrl);
+        console.log(response.data.imageUrl);
+      } else {
+        console.error("Failed to generate image");
+      }
+    } catch (error) {
+      console.log("Error can't upload image: ", error);
+      toast.error("Error can't upload image");
     }
   };
 
