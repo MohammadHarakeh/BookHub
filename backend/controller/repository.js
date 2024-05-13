@@ -355,7 +355,7 @@ const generateText = async (req, res) => {
       model: "gpt-3.5-turbo",
     });
     const generatedText = completion.choices[0].message.content;
-    return res.status(200).json({ text: generatedText });
+    return res.status(200).json(generatedText);
   } catch (error) {
     console.error("Error generating text:", error);
     return res.status(500).json({ error: "Internal server error" });
