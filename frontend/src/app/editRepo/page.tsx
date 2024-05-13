@@ -165,6 +165,12 @@ const EditRepo = () => {
     }
   }, [repoInfo]);
 
+  useEffect(() => {
+    if (unformattedContent) {
+      summarizeText();
+    }
+  }, [unformattedContent]);
+
   return (
     <div>
       <Header />
