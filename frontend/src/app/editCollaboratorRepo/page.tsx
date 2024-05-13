@@ -21,6 +21,7 @@ const EditRepo = () => {
   const [selection, setSelection] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState<string>("");
+  const [unformattedContent, setUnformattedContent] = useState<string>("");
 
   const colorOptions = [
     "#ffffff", // White
@@ -80,6 +81,11 @@ const EditRepo = () => {
   useEffect(() => {
     if (collabInfo && collabInfo.versions && collabInfo.versions.length > 0) {
       setContent(collabInfo.versions[collabInfo.versions.length - 1].content);
+      const latestContent =
+        collabInfo.versions[collabInfo.versions.length - 1].content;
+      const unformattedContent = latestContent.replace(/<[^>]*>/g, "");
+      setUnformattedContent(unformattedContent);
+      console.log("Unformatted content:", unformattedContent);
       console.log("Collab Info: ", collabInfo);
     }
   }, [collabInfo]);
