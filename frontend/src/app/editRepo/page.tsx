@@ -22,6 +22,8 @@ const EditRepo = () => {
   const [showModal, setShowModal] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState<string>("");
   const [unformattedContent, setUnformattedContent] = useState<string>("");
+  const [generatedImage, setGeneratedImage] = useState();
+  const [summarizedText, setSummarizedText] = useState();
 
   const colorOptions = [
     "#ffffff", // White
@@ -88,53 +90,50 @@ const EditRepo = () => {
 
   const generateImage = async () => {
     try {
-
       const body = {
-        prompt: 
-      }
+        prompt: generatedImage,
+      };
 
       const response = await sendRequest(
         requestMethods.POST,
         `user/generateImage`,
-        body,
+        body
       );
 
-      if(response.status === 200){
-        console.log("AI image generated successfully")
-      } else{
-        console.error("Failed to generate image")
+      if (response.status === 200) {
+        console.log("AI image generated successfully");
+      } else {
+        console.error("Failed to generate image");
       }
-
     } catch (error) {
       console.log("Error can't upload image: ", error);
       toast.error("Error can't upload image");
     }
   };
 
-  const summarizeText = async ()=>{
+  const summarizeText = async () => {
     try {
-      
       const body = {
-        prompt: 
-      }
+        prompt: unformattedContent,
+      };
 
       const response = await sendRequest(
         requestMethods.POST,
-         `user/generateText`,
-          body
-        )
+        `user/generateText`,
+        body
+      );
 
-        if(response.status === 200){
-          console.log("Text summarized successfully")
-        } else{
-          console.error("Failed to summarize text")
-        }
-      
+      if (response.status === 200) {
+        console.log("Text summarized successfully");
+        setSummarizedText(response.data);
+        console.log(response.data);
+      } else {
+        console.error("Failed to summarize text");
+      }
     } catch (error) {
-      console.error("Error can't summarize text: ", error)
-
+      console.error("Error can't summarize text: ", error);
     }
-  }
+  };
 
   const formatContentWithFormatting = (content: string, selection: any) => {
     if (!selection) return content;
