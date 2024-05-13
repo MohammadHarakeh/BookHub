@@ -102,7 +102,7 @@ const EditRepo = () => {
 
       if (response.status === 200) {
         console.log("AI image generated successfully");
-        setGeneratedImage(response.data);
+        setGeneratedImage(response.data.imageUrl);
         console.log(response.data.imageUrl);
       } else {
         console.error("Failed to generate image");
@@ -264,6 +264,11 @@ const EditRepo = () => {
               ],
             }}
           />
+          {generatedImage && (
+            <div className={styles.generated_image}>
+              <img src={generatedImage} alt="Generated Image" />
+            </div>
+          )}
         </div>
 
         <div className={styles.edit_repo_button}>

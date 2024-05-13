@@ -139,3 +139,18 @@
 .close_btn {
   cursor: pointer;
 }
+
+.generated_image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.generated_image img {
+  width: 512px;
+  height: 512px;
+  border-radius: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
