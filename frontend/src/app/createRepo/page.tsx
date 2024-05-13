@@ -104,64 +104,66 @@ const CreateRepo = () => {
         </div>
         <hr />
 
-        <div className="name-description-wrapper">
-          <div className="story-owner">
-            <p>Owner</p>
+        <div className="create-repo-wrapper">
+          <div className="image-upload">
+            <div className="preview-border">
+              {imagePreview ? (
+                <img src={imagePreview} alt="Preview" />
+              ) : (
+                <img src={defaultImage.src} alt="Default" />
+              )}
+            </div>
+
+            <label htmlFor="image" className="file-label general-button">
+              Upload Image
+            </label>
+
             <input
-              type="text"
-              value={loggedUser?.username || ""}
-              readOnly
-              className="general-input"
-            ></input>
+              type="file"
+              id="image"
+              accept="image/*"
+              className="file-input"
+              onChange={handleImageChange}
+            />
           </div>
-          <p className="story-seperator">/</p>
-          <div className="story-name">
-            <p>Story name</p>
-            <input
-              type="text"
-              className="general-input"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            ></input>
+          <div className="repo-info-wrapper">
+            <div className="name-description-wrapper">
+              <div className="story-owner">
+                <p>Owner</p>
+                <input
+                  type="text"
+                  value={loggedUser?.username || ""}
+                  readOnly
+                  className="general-input"
+                ></input>
+              </div>
+              <p className="story-seperator">/</p>
+              <div className="story-name">
+                <p>Story name</p>
+                <input
+                  type="text"
+                  className="general-input"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+            <div className="story-description">
+              <p>Description</p>
+              <input
+                type="text"
+                value={description}
+                className="general-input description-input"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              ></input>
+            </div>
           </div>
         </div>
-        <div className="story-description">
-          <p>Description</p>
-          <input
-            type="text"
-            value={description}
-            className="general-input description-input"
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-          ></input>
-        </div>
 
-        <hr />
-
-        <div className="image-upload">
-          <div className="preview-border">
-            {imagePreview ? (
-              <img src={imagePreview} alt="Preview" />
-            ) : (
-              <img src={defaultImage.src} alt="Default" />
-            )}
-          </div>
-
-          <label htmlFor="image" className="file-label general-button">
-            Upload Image
-          </label>
-
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            className="file-input"
-            onChange={handleImageChange}
-          />
-        </div>
         <hr />
 
         <div className="story-visablility">
