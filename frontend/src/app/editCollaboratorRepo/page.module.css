@@ -45,7 +45,7 @@
 .edit_repo_button {
   display: flex;
   justify-content: flex-end;
-  margin: 1rem auto;
+  margin: 5rem auto;
   width: 75%;
 }
 

@@ -263,6 +263,10 @@ const EditRepo = () => {
                 ["bold", "italic", "underline"],
               ],
             }}
+            style={{
+              height: "400px",
+              scrollbarWidth: "thin",
+            }}
           />
           {generatedImage && (
             <div className={styles.generated_image}>
