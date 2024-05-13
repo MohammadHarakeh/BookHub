@@ -17,11 +17,11 @@ import { IoMdClose } from "react-icons/io";
 const EditRepo = () => {
   const { userInfo } = useEmailContext();
   const { repoInfo } = useEmailContext();
-  const { collabInfo } = useEmailContext();
   const [content, setContent] = useState<string>("");
   const [selection, setSelection] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState<string>("");
+  const [unformattedContent, setUnformattedContent] = useState<string>("");
 
   const colorOptions = [
     "#ffffff", // White
@@ -107,6 +107,11 @@ const EditRepo = () => {
   useEffect(() => {
     if (repoInfo && repoInfo.versions && repoInfo.versions.length > 0) {
       setContent(repoInfo.versions[repoInfo.versions.length - 1].content);
+      const latestContent =
+        repoInfo.versions[repoInfo.versions.length - 1].content;
+      const unformattedContent = latestContent.replace(/<[^>]*>/g, "");
+      setUnformattedContent(unformattedContent);
+      console.log("Unformatted content:", unformattedContent);
       console.log("repo info: ", repoInfo);
     }
   }, [repoInfo]);
