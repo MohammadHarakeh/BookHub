@@ -316,12 +316,19 @@ const synchronizeCollaboratingRepositoryInfo = async (req, res) => {
 
 const generateImage = async (req, res) => {
   try {
+    const { prompt } = req.body;
+
+    if (!prompt) {
+      return res.status(400).json({ error: "Prompt is required" });
+    }
+
     const response = await openai.images.generate({
       model: "dall-e-3",
-      prompt: "a white siamese cat",
+      prompt: prompt,
       n: 1,
       size: "1024x1024",
     });
+
     const imageUrl = response.data[0].url;
     res.json({ imageUrl });
   } catch (error) {
