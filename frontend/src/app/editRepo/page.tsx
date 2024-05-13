@@ -91,7 +91,7 @@ const EditRepo = () => {
   const generateImage = async () => {
     try {
       const body = {
-        prompt: generatedImage,
+        prompt: summarizedText,
       };
 
       const response = await sendRequest(
@@ -102,6 +102,8 @@ const EditRepo = () => {
 
       if (response.status === 200) {
         console.log("AI image generated successfully");
+        setGeneratedImage(response.data);
+        console.log(response.data);
       } else {
         console.error("Failed to generate image");
       }
@@ -170,6 +172,12 @@ const EditRepo = () => {
       summarizeText();
     }
   }, [unformattedContent]);
+
+  useEffect(() => {
+    if (summarizedText) {
+      generateImage();
+    }
+  }, [summarizedText]);
 
   return (
     <div>
