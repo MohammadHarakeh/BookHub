@@ -337,6 +337,20 @@ const generateImage = async (req, res) => {
   }
 };
 
+const generateText = async (prompt) => {
+  try {
+    const response = await openai.Completion.create({
+      engine: "gpt-3.5-turbo",
+      prompt: prompt,
+      max_tokens: 100,
+    });
+    return response.data.choices[0].text.trim();
+  } catch (error) {
+    console.error("Error generating text:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   createRepository,
   uploadRepositoryContent,
