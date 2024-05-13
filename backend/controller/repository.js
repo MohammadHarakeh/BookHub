@@ -337,17 +337,22 @@ const generateImage = async (req, res) => {
   }
 };
 
-const generateText = async (prompt) => {
+const generateText = async (req, res) => {
   try {
-    const response = await openai.Completion.create({
-      engine: "gpt-3.5-turbo",
-      prompt: prompt,
-      max_tokens: 100,
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: `can you summarize the following text by keeping the main points about the story and making it less than 50% characters:`,
+        },
+      ],
+      model: "gpt-3.5-turbo",
     });
-    return response.data.choices[0].text.trim();
+    const generatedText = completion.choices[0].message.content;
+    return res.status(200).json({ text: generatedText });
   } catch (error) {
     console.error("Error generating text:", error);
-    throw error;
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -360,4 +365,5 @@ module.exports = {
   synchronizeCollaboratingRepositoryInfo,
   generateImage,
   getCollaboratingRepositoryInfo,
+  generateText,
 };

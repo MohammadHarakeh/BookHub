@@ -67,6 +67,7 @@ const {
   synchronizeCollaboratingRepositoryInfo,
   generateImage,
   getCollaboratingRepositoryInfo,
+  generateText,
 } = require("../controller/repository");
 
 router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
@@ -131,5 +132,6 @@ router.post(
 );
 
 router.post("/generateImage", generateImage);
+router.post("/generateText", generateText);
 
 module.exports = router;
