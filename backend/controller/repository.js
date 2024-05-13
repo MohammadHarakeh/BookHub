@@ -330,7 +330,7 @@ const generateImage = async (req, res) => {
     });
 
     const imageUrl = response.data[0].url;
-    res.json({ imageUrl });
+    res.status("200").json({ imageUrl });
   } catch (error) {
     console.error("Error generating image:", error);
     res.status(500).json({ error: "Failed to generate image" });

@@ -86,6 +86,31 @@ const EditRepo = () => {
     }
   };
 
+  const generateImage = async () => {
+    try {
+
+      const body = {
+        prompt: 
+      }
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `user/generateImage`,
+        body,
+      );
+
+      if(response.status === 200){
+        console.log("AI image generated successfully")
+      } else{
+        console.error("Failed to generate image")
+      }
+
+    } catch (error) {
+      console.log("Error can't upload image: ", error);
+      toast.error("Error can't upload image");
+    }
+  };
+
   const formatContentWithFormatting = (content: string, selection: any) => {
     if (!selection) return content;
 
