@@ -141,6 +141,18 @@ const EditRepo = () => {
     }
   }, [collabInfo]);
 
+  useEffect(() => {
+    if (unformattedContent) {
+      summarizeText();
+    }
+  }, [unformattedContent]);
+
+  useEffect(() => {
+    if (summarizedText) {
+      generateImage();
+    }
+  }, [summarizedText]);
+
   return (
     <div>
       <Header />
