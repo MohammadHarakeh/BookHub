@@ -236,6 +236,11 @@ const EditRepo = () => {
               scrollbarWidth: "thin",
             }}
           />
+          {generatedImage && (
+            <div className={styles.generated_image}>
+              <img src={generatedImage} alt="Generated Image" />
+            </div>
+          )}
         </div>
 
         <div className={styles.edit_repo_button}>
