@@ -37,3 +37,12 @@
   height: 4rem;
   border-radius: 2rem;
 }
+
+.show-more-button {
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.no-more-text {
+  margin-top: 1rem;
+}

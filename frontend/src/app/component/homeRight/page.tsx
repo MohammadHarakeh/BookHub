@@ -118,14 +118,13 @@ const HomeRight: React.FC = () => {
         ))}
         {loading && <p>Loading...</p>}
         {!loading && hasMoreUsers && (
-          <button
-            className="show-more-button, general-button"
-            onClick={handleShowMore}
-          >
+          <p className="show-more-button" onClick={handleShowMore}>
             Show More
-          </button>
+          </p>
         )}
-        {!loading && !hasMoreUsers && <p>No more users to show</p>}
+        {!loading && !hasMoreUsers && (
+          <p className="no-more-text">No more users to show</p>
+        )}
       </div>
     </div>
   );
