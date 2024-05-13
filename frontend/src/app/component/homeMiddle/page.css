@@ -114,11 +114,7 @@
 }
 
 .homepage-middle-like-comment {
-  display: flex;
-  gap: 2rem;
   width: 100%;
-  font-size: 2rem;
-  margin: 1rem 0rem;
 }
 
 .like-section,
@@ -229,4 +225,17 @@
   border-radius: 10px;
   font-size: 1.5rem;
   height: 53vh;
+}
+
+.homepage-middle-like-comment-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage-like-comment {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  font-size: 2rem;
+  margin: 1rem 0rem;
 }

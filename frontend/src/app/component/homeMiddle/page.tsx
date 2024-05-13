@@ -303,21 +303,36 @@ const HomeLeft = () => {
             )}
 
             <div className="homepage-middle-like-comment">
-              <div className="like-section" onClick={() => handleLike(post)}>
-                {post.likes.includes(userId) ? (
-                  <AiFillLike />
-                ) : (
-                  <AiOutlineLike />
-                )}
-                <p>{post.likes.length}</p>
-              </div>
+              <div className="homepage-middle-like-comment-wrapper">
+                <div className="homepage-like-comment">
+                  <div
+                    className="like-section"
+                    onClick={() => handleLike(post)}
+                  >
+                    {post.likes.includes(userId) ? (
+                      <AiFillLike />
+                    ) : (
+                      <AiOutlineLike />
+                    )}
+                    <p>{post.likes.length}</p>
+                  </div>
 
-              <div
-                className="comment-section"
-                onClick={() => toggleCommentSection(post._id)}
-              >
-                <FaRegComment />
-                <p>{post.comments.length}</p>
+                  <div
+                    className="comment-section"
+                    onClick={() => toggleCommentSection(post._id)}
+                  >
+                    <FaRegComment />
+                    <p>{post.comments.length}</p>
+                  </div>
+                </div>
+                <div>
+                  <textarea
+                    className="blurred-comment homepage-input-text"
+                    placeholder="Write a comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  ></textarea>
+                </div>
               </div>
             </div>
             {toggleComments && currentPostId === post._id && (
