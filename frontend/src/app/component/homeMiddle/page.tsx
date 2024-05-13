@@ -325,13 +325,30 @@ const HomeLeft = () => {
                     <p>{post.comments.length}</p>
                   </div>
                 </div>
-                <div>
-                  <textarea
+                <div className="comment-section">
+                  {userProfileImage ? (
+                    <img
+                      src={userProfileImage}
+                      className="user-profile-small"
+                    />
+                  ) : (
+                    <img
+                      src={defaultImage.src}
+                      className="user-profile-small"
+                    />
+                  )}
+                  <input
                     className="blurred-comment homepage-input-text"
                     placeholder="Write a comment..."
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                  ></textarea>
+                  ></input>
+                  <button
+                    className="general-button"
+                    onClick={() => handleAddComment()}
+                  >
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>
@@ -358,12 +375,6 @@ const HomeLeft = () => {
                     ></textarea>
 
                     <div className="blurred-buttons">
-                      <button
-                        className="general-button"
-                        onClick={() => handleAddComment()}
-                      >
-                        Submit
-                      </button>
                       <button
                         className="general-button"
                         onClick={() => toggleCommentSection(currentPostId)}

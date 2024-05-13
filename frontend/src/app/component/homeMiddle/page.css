@@ -121,7 +121,7 @@
 .comment-section {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   font-size: 1.75rem;
 }
 
@@ -129,10 +129,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   width: 20rem;
-  height: 5rem;
-  resize: none;
+  padding: 0.5rem 1rem;
 }
 
 .blurred {
