@@ -111,6 +111,31 @@ const EditRepo = () => {
     }
   };
 
+  const summarizeText = async ()=>{
+    try {
+      
+      const body = {
+        prompt: 
+      }
+
+      const response = await sendRequest(
+        requestMethods.POST,
+         `user/generateText`,
+          body
+        )
+
+        if(response.status === 200){
+          console.log("Text summarized successfully")
+        } else{
+          console.error("Failed to summarize text")
+        }
+      
+    } catch (error) {
+      console.error("Error can't summarize text: ", error)
+
+    }
+  }
+
   const formatContentWithFormatting = (content: string, selection: any) => {
     if (!selection) return content;
 
