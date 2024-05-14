@@ -1,4 +1,4 @@
-.pageleft-wrapper {
+.profileleft-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,10 +9,24 @@
   border-radius: 1rem;
 }
 
-.pageleft-image {
+.profileleft-image {
+  display: flex;
+  justify-content: center;
+  background-color: rebeccapurple;
+  width: 100%;
+  height: auto;
   margin: 1rem 0rem;
 }
 
-.pageleft-image img {
+.profileleft-image img {
   border-radius: 50%;
+  width: 50%;
+}
+
+.profileleft-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
 }

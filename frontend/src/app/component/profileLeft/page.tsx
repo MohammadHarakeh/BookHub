@@ -7,12 +7,23 @@ const ProfileLeft = () => {
   const { userInfo } = useEmailContext();
 
   return (
-    <div className="pageleft-wrapper">
-      <div className="pageleft-image">
+    <div className="profileleft-wrapper">
+      <div className="profileleft-image">
         <img
           src={userInfo.user?.profile?.profile_picture}
           alt="User Picture"
         ></img>
+      </div>
+      <div className="profileleft-info">
+        <p>{userInfo.user?.username}</p>
+        <p>{userInfo.user?.profile?.bio}</p>
+        <p>
+          {userInfo.user?.profile?.bio ? (
+            userInfo.user.profile.bio
+          ) : (
+            <p>You have no bio</p>
+          )}
+        </p>
       </div>
     </div>
   );
