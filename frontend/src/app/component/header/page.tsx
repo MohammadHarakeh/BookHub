@@ -36,7 +36,7 @@ const Header: React.FC = () => {
         </div>
 
         <div className="header-links">
-          <Link href="/contact">Profile</Link>
+          <Link href="/profile">Profile</Link>
         </div>
       </div>
 
