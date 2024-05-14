@@ -17,10 +17,12 @@
 
 .right-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   margin: 1rem 0rem;
+  width: 100%;
+  padding: 0rem 1rem;
 }
 
 .right-content {
