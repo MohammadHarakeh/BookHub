@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import "../globals.css";
 import Header from "../component/header/page";
 import Footer from "../component/footer/page";
 import { requestMethods } from "../tools/apiRequestMethods";
@@ -194,7 +195,7 @@ const EditRepo = () => {
                 <div className={styles.blurred}>
                   <div className={styles.close_btn_wrapper}>
                     <IoMdClose
-                      className={styles.close_btn}
+                      className="close-button"
                       onClick={handleInviteUserClick}
                     />
                   </div>
