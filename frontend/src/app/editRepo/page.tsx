@@ -269,17 +269,18 @@ const EditRepo = () => {
               scrollbarWidth: "thin",
             }}
           />
-          {generatedImage && (
-            <div className={styles.generated_image}>
-              <img src={generatedImage} alt="Generated Image" />
+          <div className={styles.test}>
+            {generatedImage && (
+              <div className={styles.generated_image}>
+                <img src={generatedImage} alt="Generated Image" />
+              </div>
+            )}
+            <div className={styles.edit_repo_button}>
+              <button className="general-button" onClick={commitRepo}>
+                Commit
+              </button>
             </div>
-          )}
-        </div>
-
-        <div className={styles.edit_repo_button}>
-          <button className="general-button" onClick={commitRepo}>
-            Commit
-          </button>
+          </div>
         </div>
       </div>
       <hr />
