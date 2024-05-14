@@ -142,8 +142,6 @@
 
 .generated_image {
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   margin-top: 5rem;
 }
