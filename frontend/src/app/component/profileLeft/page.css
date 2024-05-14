@@ -1,0 +1,9 @@
+.pageleft-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: 20%;
+  margin: 3rem 0rem 0rem 5rem;
+}

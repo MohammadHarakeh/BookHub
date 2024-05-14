@@ -4,12 +4,15 @@ import "./page.css";
 import "../globals.css";
 import Header from "../component/header/page";
 import Footer from "../component/footer/page";
+import ProfileLeft from "../component/profileLeft/page";
 
 const Profile = () => {
   return (
     <div className="profile-wrapper">
       <Header />
-      <div className="middle-wrapper">test</div>
+      <div className="middle-wrapper">
+        <ProfileLeft></ProfileLeft>
+      </div>
       <Footer />
     </div>
   );
