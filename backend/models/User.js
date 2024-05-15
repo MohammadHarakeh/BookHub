@@ -202,6 +202,12 @@ const userSchema = new mongoose.Schema({
   },
   posts: [postSchema],
   followers: [followSchema],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   repositories: [repositorySchema],
   invitations: [invitationSchema],
 

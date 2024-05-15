@@ -177,10 +177,28 @@ const followUser = async (req, res) => {
   }
 };
 
+const getFollowedUser = async (req, res) => {
+  try {
+    const currentUserId = req.user.id;
+
+    const currentUser = await User.findById(currentUserId);
+
+    const isFollowed = await User.exists({
+      "followers.followeeId": currentUserId,
+    });
+
+    res.render("userProfile", { currentUser, isFollowed });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   updateProfile,
   googleLogin,
   followUser,
   getLoggedinUser,
   getAllUsers,
+  getFollowedUser,
 };
