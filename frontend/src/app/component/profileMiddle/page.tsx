@@ -7,6 +7,15 @@ import { useEmailContext } from "@/context/emailContext";
 const ProfileMiddle = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext(); //get user repos from this
+  const { allCollaboratingRepos } = useEmailContext();
+
+  useEffect(() => {
+    console.log("profile all collaboartions: ", allCollaboratingRepos);
+  }, [allCollaboratingRepos]);
+
+  useEffect(() => {
+    console.log("profile userinfo: ", userInfo);
+  }, [userInfo]);
 
   return (
     <div className="profile-middle-wrapper">

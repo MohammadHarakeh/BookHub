@@ -42,6 +42,7 @@ const HomeLeft: React.FC = () => {
   const { userInfo } = useEmailContext();
   const { setRepoInfo } = useEmailContext();
   const { collabInfo, setCollabInfo } = useEmailContext();
+  const { setAllCollaboratingRepos } = useEmailContext();
   const [collabInfoId, setCollabInfoId] = useState<string>();
   const [displayedRepositories, setDisplayedRepositories] = useState(3);
   const [
@@ -152,6 +153,7 @@ const HomeLeft: React.FC = () => {
       const collaboratingRepos = await collaboratingRepoInfo(repoIds);
       console.log("Collaborating Repos:", collaboratingRepos);
       setCollaboratingReposInfo(collaboratingRepos);
+      setAllCollaboratingRepos(collaboratingRepos);
     }
   };
 
