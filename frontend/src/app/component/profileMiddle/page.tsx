@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./page.css";
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useEmailContext } from "@/context/emailContext";
 
 const ProfileMiddle = () => {
   const router = useRouter();
+  const { userInfo } = useEmailContext(); //get user repos from this
+
   return (
     <div className="profile-middle-wrapper">
       <div className="profile-middle-title">

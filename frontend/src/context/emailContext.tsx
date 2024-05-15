@@ -13,6 +13,8 @@ type ContextValue = {
   setRepoInfo: Dispatch<SetStateAction<any>>;
   collabInfo: any;
   setCollabInfo: Dispatch<SetStateAction<any>>;
+  allCollaboratingRepos: any;
+  setAllCollaboratingRepos: Dispatch<SetStateAction<any>>;
 };
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
@@ -23,6 +25,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [userInfo, setUserInfo] = useState<any>({});
   const [repoInfo, setRepoInfo] = useState<any>();
   const [collabInfo, setCollabInfo] = useState<any>();
+  const [allCollaboratingRepos, setAllCollaboratingRepos] = useState<any>();
 
   return (
     <EmailContext.Provider
@@ -37,6 +40,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         setRepoInfo,
         collabInfo,
         setCollabInfo,
+        setAllCollaboratingRepos,
+        allCollaboratingRepos,
       }}
     >
       {children}
