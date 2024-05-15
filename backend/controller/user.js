@@ -186,13 +186,17 @@ const getFollowedUser = async (req, res) => {
       { _id: 1, username: 1, "profile.profile_picture": 1 }
     );
 
+    const currentUser = await User.findById(currentUserId);
+    const followingUsers = followers.map((follower) => follower._id);
+    currentUser.following = followingUsers;
+    await currentUser.save();
+
     res.status(200).json(followers);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 };
-
 module.exports = {
   updateProfile,
   googleLogin,
