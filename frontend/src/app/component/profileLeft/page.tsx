@@ -21,14 +21,19 @@ const ProfileLeft = () => {
       </div>
       <div className="profileleft-info">
         <p>{userInfo.user?.username}</p>
-        <p>{userInfo.user?.profile?.bio}</p>
-        <p>
-          {userInfo.user?.profile?.bio ? (
-            userInfo.user.profile.bio
-          ) : (
-            <p>You have no bio</p>
-          )}
-        </p>
+        {userInfo.user?.profile?.bio && <p>{userInfo.user.profile.bio}</p>}
+        {userInfo.user?.profile?.location && (
+          <p>{userInfo.user.profile.location}</p>
+        )}
+        {userInfo.user?.profile?.linkedin_link && (
+          <p>{userInfo.user.profile.linkedin_link}</p>
+        )}
+        {userInfo.user?.profile?.instagram_link && (
+          <p>{userInfo.user.profile.instagram_link}</p>
+        )}
+        {userInfo.user?.profile?.twitter_link && (
+          <p>{userInfo.user.profile.twitter_link}</p>
+        )}
       </div>
       <div className="general-button">Edit Profile</div>
       <div className="following-info-wrapper">
