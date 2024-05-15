@@ -3,11 +3,10 @@ import "./page.css";
 
 const ProfileMiddle = () => {
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus hic
-      quibusdam dolor nesciunt doloremque enim laboriosam! Est, ab delectus
-      perferendis ipsa accusantium, ratione enim quae distinctio nam consequatur
-      voluptates quibusdam?
+    <div className="profile-middle-wrapper">
+      <div className="profile-middle-title">
+        <p>Recently worked on stories</p>
+      </div>
     </div>
   );
 };

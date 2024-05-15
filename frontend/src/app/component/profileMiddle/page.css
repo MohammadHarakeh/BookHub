@@ -1,0 +1,13 @@
+.profile-middle-wrapper {
+  width: 100%;
+}
+
+.profile-middle-title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.profile-middle-title p {
+  font-size: 1.75rem;
+}
