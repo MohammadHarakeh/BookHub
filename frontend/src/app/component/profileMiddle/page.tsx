@@ -28,7 +28,11 @@ const ProfileMiddle = () => {
         userInfo.user.repositories &&
         userInfo.user.repositories.length > 0 ? (
           userInfo.user.repositories.map((repo: any) => (
-            <div key={repo._id}>{repo.name}</div>
+            <div key={repo._id} className="repo-container">
+              <div className="repo-container-info">
+                <p>{repo.name}</p>
+              </div>
+            </div>
           ))
         ) : (
           <div>
