@@ -55,6 +55,21 @@ const HomeRight: React.FC = () => {
     }
   };
 
+  const followingUsers = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getFollowedUser`
+      );
+
+      if (response.status !== 200) {
+        console.log("failed to fetch following users");
+      }
+    } catch (error) {
+      console.log("Error can't get followed user");
+    }
+  };
+
   const toggleFollow = async (followeeId: string) => {
     try {
       const response = await sendRequest(
