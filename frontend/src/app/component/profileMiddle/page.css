@@ -35,8 +35,13 @@
 
 .repo-container-info {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: red;
+  gap: 1rem;
+}
+.repo-info {
+  display: flex;
   gap: 1rem;
 }
 

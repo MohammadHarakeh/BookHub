@@ -31,9 +31,14 @@ const ProfileMiddle = () => {
         userInfo.user.repositories.length > 0 ? (
           userInfo.user.repositories.map((repo: any) => (
             <div key={repo._id} className="repo-container">
-              <div className="repo-container-info">
-                <p className="repo-container-name">{repo.name}</p>
-                <p className="general-input">{repo.visibility}</p>
+              <div className="repo-container-info-wrapper">
+                <div className="repo-container-info">
+                  <div className="repo-info">
+                    <p className="repo-container-name">{repo.name}</p>
+                    <p className="general-input">{repo.visibility}</p>
+                  </div>
+                  <div>test</div>
+                </div>
                 <div>
                   <p>{formatDistanceToNow(new Date(repo.createdAt))}</p>
                 </div>
