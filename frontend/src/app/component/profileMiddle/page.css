@@ -29,5 +29,22 @@
   border-radius: 0.5rem;
 }
 
+.repo-container-name {
+  font-size: 2rem;
+}
+
 .repo-container-info {
+  display: flex;
+  align-items: center;
+  background-color: red;
+  gap: 1rem;
+}
+
+.general-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  font-size: 1rem;
+  width: 5rem;
 }

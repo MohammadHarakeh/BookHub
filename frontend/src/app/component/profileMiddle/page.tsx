@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./page.css";
+import "../../globals.css";
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useEmailContext } from "@/context/emailContext";
@@ -14,7 +15,7 @@ const ProfileMiddle = () => {
   }, [allCollaboratingRepos]);
 
   useEffect(() => {
-    console.log("profile userinfo: ", userInfo.user.repositories);
+    console.log("profile userinfo: ", userInfo?.user?.repositories);
   }, [userInfo]);
 
   return (
@@ -30,7 +31,8 @@ const ProfileMiddle = () => {
           userInfo.user.repositories.map((repo: any) => (
             <div key={repo._id} className="repo-container">
               <div className="repo-container-info">
-                <p>{repo.name}</p>
+                <p className="repo-container-name">{repo.name}</p>
+                <p className="general-input">{repo.visibility}</p>
               </div>
             </div>
           ))
