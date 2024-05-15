@@ -12,10 +12,10 @@ const Profile = () => {
     <div className="profile-wrapper">
       <Header />
       <div className="middle-wrapper">
-        <div className="test1">
+        <div className="profile-left-section">
           <ProfileLeft />
         </div>
-        <div className="test2">
+        <div className="profile-middle-section">
           <ProfileMiddle />
         </div>
       </div>

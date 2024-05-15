@@ -5,16 +5,15 @@
 
 .middle-wrapper {
   display: flex;
-  background-color: red;
 }
 
-.test1 {
-  background-color: rebeccapurple;
+.profile-left-section {
   width: 30%;
   margin-top: 3rem;
   margin-left: 4rem;
   margin-right: 1rem;
 }
-.test2 {
-  background-color: aqua;
+.profile-middle-section {
+  margin-top: 3rem;
+  margin-right: 3rem;
 }
