@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./page.css";
 import defaultImage from "../../../../public/images/defaultImage.png";
 import { useEmailContext } from "@/context/emailContext";
+import { GoPersonFill } from "react-icons/go";
 
 const ProfileLeft = () => {
   const { userInfo } = useEmailContext();
@@ -10,9 +11,13 @@ const ProfileLeft = () => {
     <div className="profileleft-wrapper">
       <div className="profileleft-image">
         <img
-          src={userInfo.user?.profile?.profile_picture}
+          src={
+            userInfo.user?.profile?.profile_picture
+              ? userInfo.user.profile.profile_picture
+              : defaultImage.src
+          }
           alt="User Picture"
-        ></img>
+        />
       </div>
       <div className="profileleft-info">
         <p>{userInfo.user?.username}</p>
@@ -25,6 +30,7 @@ const ProfileLeft = () => {
           )}
         </p>
       </div>
+      <div className="general-button">Edit Profile</div>
     </div>
   );
 };
