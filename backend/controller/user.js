@@ -181,13 +181,12 @@ const getFollowedUser = async (req, res) => {
   try {
     const currentUserId = req.user.id;
 
-    const currentUser = await User.findById(currentUserId);
+    const followers = await User.find(
+      { "followers.followeeId": currentUserId },
+      { _id: 1, username: 1, "profile.profile_picture": 1 }
+    );
 
-    const isFollowed = await User.exists({
-      "followers.followeeId": currentUserId,
-    });
-
-    res.render("userProfile", { currentUser, isFollowed });
+    res.status(200).json(followers);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
