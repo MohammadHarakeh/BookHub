@@ -2,3 +2,19 @@
   color: #fff;
   min-height: 70vh;
 }
+
+.middle-wrapper {
+  display: flex;
+  background-color: red;
+}
+
+.test1 {
+  background-color: rebeccapurple;
+  width: 30%;
+  margin-top: 3rem;
+  margin-left: 4rem;
+  margin-right: 1rem;
+}
+.test2 {
+  background-color: aqua;
+}

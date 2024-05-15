@@ -5,13 +5,19 @@ import "../globals.css";
 import Header from "../component/header/page";
 import Footer from "../component/footer/page";
 import ProfileLeft from "../component/profileLeft/page";
+import ProfileMiddle from "../component/profileMiddle/page";
 
 const Profile = () => {
   return (
     <div className="profile-wrapper">
       <Header />
       <div className="middle-wrapper">
-        <ProfileLeft></ProfileLeft>
+        <div className="test1">
+          <ProfileLeft />
+        </div>
+        <div className="test2">
+          <ProfileMiddle />
+        </div>
       </div>
       <Footer />
     </div>
