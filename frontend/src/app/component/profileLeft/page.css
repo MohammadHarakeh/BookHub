@@ -30,3 +30,14 @@
   align-items: center;
   background-color: red;
 }
+
+.following-info-wrapper {
+  display: flex;
+  font-size: 1.5rem;
+  gap: 1rem;
+}
+
+.following-count {
+  display: flex;
+  gap: 0.5rem;
+}

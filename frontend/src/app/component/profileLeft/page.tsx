@@ -31,6 +31,16 @@ const ProfileLeft = () => {
         </p>
       </div>
       <div className="general-button">Edit Profile</div>
+      <div className="following-info-wrapper">
+        <div>
+          <GoPersonFill />
+        </div>
+        <div className="following-count">
+          {userInfo.user?.following ? userInfo.user?.following?.length : 0}
+
+          <p>following</p>
+        </div>
+      </div>
     </div>
   );
 };
