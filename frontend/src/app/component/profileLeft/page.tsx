@@ -37,8 +37,9 @@ const ProfileLeft = () => {
         </div>
         <div className="following-count">
           {userInfo.user?.following ? userInfo.user?.following?.length : 0}
-
-          <p>follower</p>
+          <p>following - </p>
+          {userInfo.user?.followers ? userInfo.user?.followers?.length : 0}
+          <p>followers</p>
         </div>
       </div>
     </div>
