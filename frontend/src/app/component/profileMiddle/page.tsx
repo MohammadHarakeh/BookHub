@@ -14,7 +14,7 @@ const ProfileMiddle = () => {
   }, [allCollaboratingRepos]);
 
   useEffect(() => {
-    console.log("profile userinfo: ", userInfo);
+    console.log("profile userinfo: ", userInfo.user.repositories);
   }, [userInfo]);
 
   return (
@@ -23,8 +23,13 @@ const ProfileMiddle = () => {
         <p>Recently worked on stories</p>
       </div>
       <div className="profile-middle-stories">
-        {userInfo && userInfo.user && userInfo.user.repositories ? (
-          <div>{userInfo.user.repositories.name}</div>
+        {userInfo &&
+        userInfo.user &&
+        userInfo.user.repositories &&
+        userInfo.user.repositories.length > 0 ? (
+          userInfo.user.repositories.map((repo: any) => (
+            <div key={repo._id}>{repo.name}</div>
+          ))
         ) : (
           <div>
             <p>You haven't worked on any story</p>
