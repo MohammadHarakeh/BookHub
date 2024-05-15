@@ -87,6 +87,7 @@ const HomeRight: React.FC = () => {
               : user
           )
         );
+        followingUsers();
       } else {
         console.log("Failed to toggle follow");
       }
