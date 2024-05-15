@@ -4,6 +4,7 @@ import "../../globals.css";
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useEmailContext } from "@/context/emailContext";
+import { formatDistanceToNow } from "date-fns";
 
 const ProfileMiddle = () => {
   const router = useRouter();
@@ -33,6 +34,9 @@ const ProfileMiddle = () => {
               <div className="repo-container-info">
                 <p className="repo-container-name">{repo.name}</p>
                 <p className="general-input">{repo.visibility}</p>
+                <div>
+                  <p>{formatDistanceToNow(new Date(repo.createdAt))}</p>
+                </div>
               </div>
             </div>
           ))
