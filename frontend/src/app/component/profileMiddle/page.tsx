@@ -23,14 +23,20 @@ const ProfileMiddle = () => {
         <p>Recently worked on stories</p>
       </div>
       <div className="profile-middle-stories">
-        <p>You haven't worked on any story</p>
-        <p>Create a story now</p>
-        <button
-          className="general-button"
-          onClick={() => router.push("/createRepo")}
-        >
-          <FaPlus /> New
-        </button>
+        {userInfo && userInfo.user && userInfo.user.repositories ? (
+          <div>{userInfo.user.repositories.name}</div>
+        ) : (
+          <div>
+            <p>You haven't worked on any story</p>
+            <p>Create a story now</p>
+            <button
+              className="general-button"
+              onClick={() => router.push("/createRepo")}
+            >
+              <FaPlus /> New
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
