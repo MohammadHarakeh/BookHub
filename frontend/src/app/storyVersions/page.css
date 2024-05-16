@@ -1,13 +1,18 @@
 .story-version-wrapper {
   color: #fff;
-}
-
-.story-version-container {
   min-height: 70vh;
 }
 
+.story-version-container {
+}
+
+.story-version-container {
+  display: flex;
+  align-items: center;
+}
+
 .story-version-container img {
-  width: 10rem;
-  height: 10rem;
-  border-radius: 5rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;
 }

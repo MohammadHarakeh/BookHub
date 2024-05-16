@@ -9,14 +9,20 @@ import defaultImage from "../../../public/images/defaultImage.png";
 const StoryVersions = () => {
   const { storyVersions, setStoryVersions } = useEmailContext();
   return (
-    <div className="story-version-wrapper">
+    <div>
       <Header />
-      <div className="story-version-container">
-        {storyVersions ? (
-          <img src={storyVersions.repo_picture} />
-        ) : (
-          <img src={defaultImage.src} />
-        )}
+      <div className="story-version-wrapper">
+        <div className="story-version-container">
+          {storyVersions ? (
+            <img
+              src={storyVersions.repo_picture || defaultImage.src}
+              alt={storyVersions.name || "Default Image"}
+            />
+          ) : (
+            <img src={defaultImage.src} alt="Default Image" />
+          )}
+          <p>{storyVersions?.name}</p>
+        </div>
       </div>
       <Footer />
     </div>
