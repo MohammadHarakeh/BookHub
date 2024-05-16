@@ -43,6 +43,15 @@ const VersionDifference = () => {
     return start + startTag + selectedText + endTag + end;
   };
 
+  const formatDifferences = (differences: any) => {
+    return differences
+      .map((part: any) => {
+        const color = part.added ? "green" : part.removed ? "red" : "black";
+        return `<span style="color: ${color};">${part.value}</span>`;
+      })
+      .join("");
+  };
+
   useEffect(() => {
     console.log("story difference: ", storyDifference);
   }, []);
@@ -87,6 +96,7 @@ const VersionDifference = () => {
             </div>
             <ReactQuill
               value={storyDifference.previousContent}
+              readOnly={true}
               modules={{
                 toolbar: [
                   [{ font: [] }],
@@ -108,6 +118,30 @@ const VersionDifference = () => {
             </div>
             <ReactQuill
               value={storyDifference.latestContent}
+              readOnly={true}
+              modules={{
+                toolbar: [
+                  [{ font: [] }],
+                  [{ size: [] }],
+                  [{ color: colorOptions }],
+                  ["bold", "italic", "underline"],
+                ],
+              }}
+              style={{
+                height: "400px",
+                scrollbarWidth: "thin",
+              }}
+            />
+          </div>
+        </div>
+        <div>
+          <div className={styles.edit_repo_info_previous}>
+            <div className={styles.edit_repo_title}>
+              <p>Difference</p>
+            </div>
+            <ReactQuill
+              value={formatDifferences(storyDifference.differences)}
+              readOnly={true}
               modules={{
                 toolbar: [
                   [{ font: [] }],
