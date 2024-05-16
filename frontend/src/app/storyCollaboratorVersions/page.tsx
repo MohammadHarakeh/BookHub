@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./page.css";
 import "../globals.css";
 import Header from "../component/header/page";
@@ -28,7 +28,7 @@ const StoryVersions = () => {
       if (response.status === 200) {
         console.log(response.data);
         setStoryDifference(response.data);
-        // router.push("/versionDifference");
+        router.push("/versionDifference");
       } else {
         console.log("Failed to get version difference");
       }

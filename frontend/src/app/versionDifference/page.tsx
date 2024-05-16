@@ -14,7 +14,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const VersionDifference = () => {
-  const { repoInfo, storyDifference } = useEmailContext();
+  const { repoInfo, storyDifference, collabInfo } = useEmailContext();
 
   const colorOptions = [
     "#ffffff", // White
@@ -31,6 +31,8 @@ const VersionDifference = () => {
     console.log("story difference: ", storyDifference);
   }, []);
 
+  const currentRepoInfo = repoInfo || collabInfo;
+
   return (
     <div>
       <Header />
@@ -41,11 +43,11 @@ const VersionDifference = () => {
         />
         <div className={styles.story_info}>
           <div className={styles.story_info}>
-            {repoInfo &&
-            repoInfo.repo_picture !== undefined &&
-            repoInfo.repo_picture !== "" ? (
+            {currentRepoInfo &&
+            currentRepoInfo.repo_picture !== undefined &&
+            currentRepoInfo.repo_picture !== "" ? (
               <img
-                src={repoInfo.repo_picture}
+                src={currentRepoInfo.repo_picture}
                 className={styles.repo_image}
               ></img>
             ) : (
@@ -53,12 +55,12 @@ const VersionDifference = () => {
             )}
 
             <p className={styles.story_name}>
-              {repoInfo ? repoInfo.name : "Loading..."}
+              {currentRepoInfo ? currentRepoInfo.name : "Loading..."}
             </p>
             <p
               className={`${`general-input`} ${styles.story_visibility_status}`}
             >
-              {repoInfo ? repoInfo.visibility : "Loading..."}
+              {currentRepoInfo ? currentRepoInfo.visibility : "Loading..."}
             </p>
           </div>
         </div>
@@ -108,29 +110,6 @@ const VersionDifference = () => {
               }}
             />
           </div>
-        </div>
-        <div>
-          {/* <div className={styles.edit_repo_info_previous}>
-            <div className={styles.edit_repo_title}>
-              <p>Difference</p>
-            </div>
-            <ReactQuill
-              value={storyDifference?.difference}
-              readOnly={true}
-              modules={{
-                toolbar: [
-                  [{ font: [] }],
-                  [{ size: [] }],
-                  [{ color: colorOptions }],
-                  ["bold", "italic", "underline"],
-                ],
-              }}
-              style={{
-                height: "400px",
-                scrollbarWidth: "thin",
-              }}
-            />
-          </div> */}
         </div>
       </div>
       <hr />
