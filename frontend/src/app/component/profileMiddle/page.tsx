@@ -93,7 +93,13 @@ const ProfileMiddle = () => {
               </div>
             </div>
           ))
-        ) 
+        ) : (
+          <div>
+            <p>You haven't collaborated on any stories</p>
+            <p>Get invited by a user to collaborate</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
