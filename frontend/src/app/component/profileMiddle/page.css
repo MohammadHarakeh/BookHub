@@ -33,6 +33,12 @@
 
 .repo-container-name {
   font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.repo-container-name:hover {
+  text-decoration: underline;
+  color: #3d88f1;
 }
 
 .repo-container-info {
@@ -78,8 +84,4 @@
   padding: 2rem;
   border-radius: 0.5rem;
   margin: 1rem;
-}
-
-.repo-container-info-wrapper {
-  cursor: pointer;
 }
