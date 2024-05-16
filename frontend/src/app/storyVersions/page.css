@@ -1,6 +1,6 @@
 .story-version-wrapper {
   color: #fff;
-  min-height: 70vh;
+  min-height: 65vh;
   margin: 2rem 4rem;
 }
 
@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 .story-name-title {
   font-size: 2.5rem;
@@ -26,4 +27,11 @@
   border-radius: 1.5rem !important;
   font-size: 1rem !important;
   padding: 0.5rem !important;
+}
+
+.all-versions-wrapper {
+  background-color: #0e0f32;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 2rem;
 }

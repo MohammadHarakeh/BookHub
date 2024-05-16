@@ -6,6 +6,7 @@ import Header from "../component/header/page";
 import Footer from "../component/footer/page";
 import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
+import { formatDistanceToNow } from "date-fns";
 
 const StoryVersions = () => {
   const { storyVersions, setStoryVersions } = useEmailContext();
@@ -26,6 +27,14 @@ const StoryVersions = () => {
           <p className="general-input versions-visibility">
             {storyVersions?.visibility}
           </p>
+        </div>
+
+        <div className="all-versions-wrapper">
+          {storyVersions?.versions?.map((version: any, index: any) => (
+            <div key={index} className="version-items">
+              <p>Version {index + 1}</p>
+            </div>
+          ))}
         </div>
       </div>
       <Footer />
