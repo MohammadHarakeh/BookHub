@@ -81,8 +81,11 @@ const ProfileMiddle = () => {
                       {repo.visibility}
                     </p>
                   </div>
+                  <div className="general-input repo-styling star-styling">
+                    <FaStar /> Star
+                  </div>
+                </div>
 
-    </div>
   );
 };
 
