@@ -7,8 +7,9 @@
 .story-version-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 }
 .story-name-title {
   font-size: 2.5rem;
@@ -34,4 +35,15 @@
   border-radius: 1rem;
   padding: 1rem;
   font-size: 2rem;
+  max-width: 50%;
+  margin: auto;
+}
+
+.version-items {
+  padding: 1rem;
+}
+
+.single-version {
+  display: flex;
+  justify-content: space-between;
 }
