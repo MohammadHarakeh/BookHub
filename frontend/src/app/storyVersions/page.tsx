@@ -24,8 +24,9 @@ const StoryVersions = () => {
       );
 
       if (response.status === 200) {
-        console.log("Version difference printed successfully");
-        router.push("/versionDifference");
+        console.log("Version difference printed successfully:");
+        console.log(response.data.previousContent);
+        // router.push("/versionDifference");
       } else {
         console.log("Failed to get version difference");
       }

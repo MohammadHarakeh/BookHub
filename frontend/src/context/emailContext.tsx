@@ -17,6 +17,8 @@ type ContextValue = {
   setAllCollaboratingRepos: Dispatch<SetStateAction<any>>;
   storyVersions: any;
   setStoryVersions: Dispatch<SetStateAction<any>>;
+  storyDifference: any;
+  setStoryDifference: Dispatch<SetStateAction<any>>;
 };
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
@@ -29,6 +31,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [collabInfo, setCollabInfo] = useState<any>();
   const [allCollaboratingRepos, setAllCollaboratingRepos] = useState<any>();
   const [storyVersions, setStoryVersions] = useState<any>();
+  const [storyDifference, setStoryDifference] = useState<any>();
 
   return (
     <EmailContext.Provider
@@ -47,6 +50,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         allCollaboratingRepos,
         storyVersions,
         setStoryVersions,
+        storyDifference,
+        setStoryDifference,
       }}
     >
       {children}
