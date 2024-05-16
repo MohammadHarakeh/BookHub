@@ -123,7 +123,14 @@ const ProfileMiddle = () => {
               <div className="repo-container-info-wrapper">
                 <div className="repo-container-info">
                   <div className="repo-info">
-                    <p className="repo-container-name">{repo.name}</p>
+                    <p
+                      onClick={() => {
+                        clickedCollabRepoInfo(repo.repositoryId);
+                      }}
+                      className="repo-container-name"
+                    >
+                      {repo.name}
+                    </p>
                     <p className="general-input repo-styling">
                       {repo.visibility}
                     </p>
