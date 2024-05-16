@@ -37,7 +37,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: red;
   gap: 1rem;
 }
 .repo-info {
@@ -45,11 +44,23 @@
   gap: 1rem;
 }
 
-.general-input {
+.repo-styling {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 1rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   width: 4.5rem;
+}
+
+.star-styling {
+  font-size: 1.25rem;
+  cursor: pointer;
+  width: 6rem;
+  gap: 1rem;
+}
+
+.repo-time {
+  color: grey;
+  font-size: 1rem;
 }

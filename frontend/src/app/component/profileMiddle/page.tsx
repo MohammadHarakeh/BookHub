@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useEmailContext } from "@/context/emailContext";
 import { formatDistanceToNow } from "date-fns";
+import { FaStar } from "react-icons/fa";
 
 const ProfileMiddle = () => {
   const router = useRouter();
@@ -35,12 +36,18 @@ const ProfileMiddle = () => {
                 <div className="repo-container-info">
                   <div className="repo-info">
                     <p className="repo-container-name">{repo.name}</p>
-                    <p className="general-input">{repo.visibility}</p>
+                    <p className="general-input repo-styling">
+                      {repo.visibility}
+                    </p>
                   </div>
-                  <div>test</div>
+                  <div className="general-input repo-styling star-styling">
+                    <FaStar /> Star
+                  </div>
                 </div>
                 <div>
-                  <p>{formatDistanceToNow(new Date(repo.createdAt))}</p>
+                  <p className="repo-time">
+                    {formatDistanceToNow(new Date(repo.createdAt))} ago
+                  </p>
                 </div>
               </div>
             </div>
