@@ -12,7 +12,7 @@ import { requestMethods } from "@/app/tools/apiRequestMethods";
 import { useRouter } from "next/navigation";
 
 const StoryVersions = () => {
-  const { storyVersions, setStoryVersions } = useEmailContext();
+  const { storyVersions, setStoryVersions } = useEmailContext(); //repo version
   const { storyDifference, setStoryDifference } = useEmailContext();
   const { setRepoInfo } = useEmailContext();
   const [clickedVersion, setClickedVersion] = useState<string>("");
@@ -37,8 +37,27 @@ const StoryVersions = () => {
     }
   };
 
+  const clickedRepoInfo = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getRepository/${storyVersions._id}`
+      );
+
+      if (response.status === 200) {
+        setRepoInfo(response.data.repository);
+        router.push("/editRepo");
+      } else {
+        console.log("Failed to get repo data");
+      }
+    } catch (error) {
+      console.log("Error getting repo data", error);
+    }
+  };
+
   const handleVersionClick = (versionId: string, index: number) => {
     if (index === storyVersions.versions.length - 1) {
+      clickedRepoInfo();
       router.push("/editRepo");
     } else {
       setClickedVersion(versionId);
