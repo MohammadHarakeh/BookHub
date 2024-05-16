@@ -31,7 +31,13 @@ const ProfileMiddle = () => {
         userInfo.user.repositories &&
         userInfo.user.repositories.length > 0 ? (
           userInfo.user.repositories.map((repo: any) => (
-            <div key={repo._id} className="repo-container">
+            <div
+              key={repo._id}
+              className="repo-container"
+              onClick={() => {
+                console.log(repo._id);
+              }}
+            >
               <div className="repo-container-info-wrapper">
                 <div className="repo-container-info">
                   <div className="repo-info">
@@ -72,7 +78,13 @@ const ProfileMiddle = () => {
       <div className="profile-middle-stories">
         {allCollaboratingRepos && allCollaboratingRepos.length > 0 ? (
           allCollaboratingRepos.map((repo: any) => (
-            <div key={repo.repositoryId} className="repo-container">
+            <div
+              key={repo.repositoryId}
+              onClick={() => {
+                console.log(repo.repositoryId);
+              }}
+              className="repo-container"
+            >
               <div className="repo-container-info-wrapper">
                 <div className="repo-container-info">
                   <div className="repo-info">

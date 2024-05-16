@@ -79,3 +79,7 @@
   border-radius: 0.5rem;
   margin: 1rem;
 }
+
+.repo-container-info-wrapper {
+  cursor: pointer;
+}
