@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./page.css";
 import "../../globals.css";
 import { FaPlus } from "react-icons/fa";
@@ -6,11 +6,34 @@ import { useRouter } from "next/navigation";
 import { useEmailContext } from "@/context/emailContext";
 import { formatDistanceToNow } from "date-fns";
 import { FaStar } from "react-icons/fa";
+import { sendRequest } from "@/app/tools/apiRequest";
+import { requestMethods } from "@/app/tools/apiRequestMethods";
 
 const ProfileMiddle = () => {
   const router = useRouter();
-  const { userInfo } = useEmailContext(); //get user repos from this
+  const { userInfo } = useEmailContext();
   const { allCollaboratingRepos } = useEmailContext();
+  const [repoInfo, setRepoInfo] = useState<any>();
+  const [collabInfoId, setCollabInfoId] = useState<any>();
+
+  const clickedRepoInfo = async (repositoryId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getRepository/${repositoryId}`
+      );
+
+      if (response.status === 200) {
+        setRepoInfo(response.data.repository);
+        console.log(response.data.repository);
+        router.push("/editRepo");
+      } else {
+        console.log("Failed to get repo data");
+      }
+    } catch (error) {
+      console.log("Error getting repo data", error);
+    }
+  };
 
   useEffect(() => {
     console.log("profile all collaboartions: ", allCollaboratingRepos);
