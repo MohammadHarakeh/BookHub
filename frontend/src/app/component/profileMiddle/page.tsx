@@ -35,6 +35,25 @@ const ProfileMiddle = () => {
     }
   };
 
+  const clickedCollabRepoInfo = async (repositoryId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/getRepository/${repositoryId}`
+      );
+
+      if (response.status === 200) {
+        setCollabInfoId(response.data.repository._id);
+        console.log(response.data.repository._id);
+        router.push("/editCollaboratorRepo");
+      } else {
+        console.log("Failed to get repo data");
+      }
+    } catch (error) {
+      console.log("Error getting repo data", error);
+    }
+  };
+
   useEffect(() => {
     console.log("profile all collaboartions: ", allCollaboratingRepos);
   }, [allCollaboratingRepos]);
