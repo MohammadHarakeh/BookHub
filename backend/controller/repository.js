@@ -169,12 +169,15 @@ const getVersionsDifference = async (userId, repositoryId) => {
   }
 };
 
-const compareAnyVersion = async (userId, repositoryId, versionIdToCompare) => {
+const compareAnyVersion = async (req, res) => {
+  const { repositoryId, versionIdToCompare } = req.params;
+  const userId = req.user.id;
+
   try {
     const user = await User.findById(userId);
 
     if (!user) {
-      throw new Error("User not found");
+      return res.status(404).json({ message: "User not found" });
     }
 
     const repository = user.repositories.find(
@@ -182,13 +185,15 @@ const compareAnyVersion = async (userId, repositoryId, versionIdToCompare) => {
     );
 
     if (!repository) {
-      throw new Error("Repository not found");
+      return res.status(404).json({ message: "Repository not found" });
     }
 
     const latestVersion = repository.versions[repository.versions.length - 1];
 
     if (!latestVersion) {
-      throw new Error("No versions found for the repository");
+      return res
+        .status(404)
+        .json({ message: "No versions found for the repository" });
     }
 
     let versionToCompare;
@@ -198,26 +203,37 @@ const compareAnyVersion = async (userId, repositoryId, versionIdToCompare) => {
       );
 
       if (!versionToCompare) {
-        throw new Error("Version to compare not found");
+        return res
+          .status(404)
+          .json({ message: "Version to compare not found" });
       }
     } else {
       versionToCompare = repository.versions[repository.versions.length - 2];
       if (!versionToCompare) {
-        throw new Error("No previous version found for comparison");
+        return res
+          .status(404)
+          .json({ message: "No previous version found for comparison" });
       }
     }
 
     const previousContent = versionToCompare.content;
     const latestContent = latestVersion.content;
 
-    console.log("Content Before Change:");
-    console.log(previousContent);
-    console.log("\nContent After Change:");
-    console.log(latestContent);
-    console.log("\nDifferences:");
-    printDifference(previousContent, latestContent);
+    const differences = diff.diffWords(previousContent, latestContent);
+    const differencesFormatted = differences.map((part) => ({
+      value: part.value,
+      added: !!part.added,
+      removed: !!part.removed,
+    }));
+
+    res.status(200).json({
+      previousContent,
+      latestContent,
+      differences: differencesFormatted,
+    });
   } catch (error) {
     console.error("Error getting versions difference:", error.message);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

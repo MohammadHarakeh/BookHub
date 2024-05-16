@@ -9,10 +9,12 @@ import defaultImage from "../../../public/images/defaultImage.png";
 import { formatDistanceToNow } from "date-fns";
 import { sendRequest } from "@/app/tools/apiRequest";
 import { requestMethods } from "@/app/tools/apiRequestMethods";
+import { useRouter } from "next/navigation";
 
 const StoryVersions = () => {
   const { storyVersions, setStoryVersions } = useEmailContext();
   const [clickedVersion, setClickedVersion] = useState<string>("");
+  const router = useRouter();
 
   const getVersionDifference = async () => {
     try {
@@ -23,6 +25,7 @@ const StoryVersions = () => {
 
       if (response.status === 200) {
         console.log("Version difference printed successfully");
+        router.push("/versionDifference");
       } else {
         console.log("Failed to get version difference");
       }
