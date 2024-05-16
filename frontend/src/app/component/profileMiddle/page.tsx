@@ -14,6 +14,7 @@ const ProfileMiddle = () => {
   const { userInfo } = useEmailContext();
   const { allCollaboratingRepos } = useEmailContext();
   const { storyVersions, setStoryVersions } = useEmailContext();
+  const { collabInfo, setCollabInfo } = useEmailContext();
 
   const clickedRepoInfo = async (repositoryId: string) => {
     try {
@@ -43,8 +44,8 @@ const ProfileMiddle = () => {
 
       if (response.status === 200) {
         console.log(response.data);
-        // setCollabInfo(response.data);
-        router.push("/storyVersions");
+        setCollabInfo(response.data);
+        router.push("/storyCollaboratorVersions");
       } else {
         console.log(`Failed to get collaborating repo data for repo ID`);
       }

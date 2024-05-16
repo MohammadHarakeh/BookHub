@@ -180,9 +180,26 @@ const compareAnyVersion = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const repository = user.repositories.find(
+    let repository = user.repositories.find(
       (repo) => repo._id.toString() === repositoryId
     );
+
+    if (!repository) {
+      const allUsers = await User.find({ "repositories._id": repositoryId });
+
+      for (const collaboratorUser of allUsers) {
+        repository = collaboratorUser.repositories.find(
+          (repo) => repo._id.toString() === repositoryId
+        );
+        if (repository) {
+          const isCollaborator = repository.collaborators.some(
+            (collab) => collab.user.toString() === userId
+          );
+          if (isCollaborator) break;
+          repository = null;
+        }
+      }
+    }
 
     if (!repository) {
       return res.status(404).json({ message: "Repository not found" });
@@ -201,7 +218,6 @@ const compareAnyVersion = async (req, res) => {
       versionToCompare = repository.versions.find(
         (version) => version._id.toString() === versionIdToCompare
       );
-
       if (!versionToCompare) {
         return res
           .status(404)
@@ -220,14 +236,6 @@ const compareAnyVersion = async (req, res) => {
     const latestContent = latestVersion.content;
 
     const differences = diff.diffWords(previousContent, latestContent);
-    differences.forEach((part) => {
-      const color = part.added
-        ? "\x1b[32m"
-        : part.removed
-        ? "\x1b[31m"
-        : "\x1b[0m";
-      console.log(color + part.value);
-    });
 
     res.status(200).json({
       previousContent,
