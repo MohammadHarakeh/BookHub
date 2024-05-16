@@ -78,7 +78,10 @@ const ProfileMiddle = () => {
                   <div className="repo-info">
                     <p className="repo-container-name">{repo.name}</p>
                     <p className="general-input repo-styling">
-        
+                      {repo.visibility}
+                    </p>
+                  </div>
+
     </div>
   );
 };
