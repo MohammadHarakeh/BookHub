@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import "./page.css";
 import "../globals.css";
 import Header from "../component/header/page";
@@ -7,9 +7,20 @@ import Footer from "../component/footer/page";
 import { useEmailContext } from "@/context/emailContext";
 import defaultImage from "../../../public/images/defaultImage.png";
 import { formatDistanceToNow } from "date-fns";
+import { sendRequest } from "@/app/tools/apiRequest";
+import { requestMethods } from "@/app/tools/apiRequestMethods";
 
 const StoryVersions = () => {
   const { storyVersions, setStoryVersions } = useEmailContext();
+  const [clickedVersion, setClickedVersion] = useState<string>("");
+
+  const getVersionDifference = async () => {
+    const response = sendRequest(
+      requestMethods.GET,
+      `/user/versionDifference/${storyVersions._id}`
+    );
+  };
+
   return (
     <div>
       <Header />
@@ -32,7 +43,13 @@ const StoryVersions = () => {
         <div className="all-versions-wrapper">
           {storyVersions?.versions?.map((version: any, index: any) => (
             <div key={index} className="version-items">
-              <div className="single-version">
+              <div
+                onClick={() => {
+                  console.log(version._id);
+                  setClickedVersion(version._id);
+                }}
+                className="single-version"
+              >
                 <p>Version {index + 1}</p>
                 <p className="version-createdat">
                   Created {formatDistanceToNow(new Date(version.createdAt))} ago

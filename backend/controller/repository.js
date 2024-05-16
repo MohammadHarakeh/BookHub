@@ -210,6 +210,11 @@ const compareAnyVersion = async (userId, repositoryId, versionIdToCompare) => {
     const previousContent = versionToCompare.content;
     const latestContent = latestVersion.content;
 
+    console.log("Content Before Change:");
+    console.log(previousContent);
+    console.log("\nContent After Change:");
+    console.log(latestContent);
+    console.log("\nDifferences:");
     printDifference(previousContent, latestContent);
   } catch (error) {
     console.error("Error getting versions difference:", error.message);
