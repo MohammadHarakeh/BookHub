@@ -95,7 +95,7 @@ const VersionDifference = () => {
               <p>Previous</p>
             </div>
             <ReactQuill
-              value={storyDifference.previousContent}
+              value={storyDifference?.previousContent}
               readOnly={true}
               modules={{
                 toolbar: [
@@ -117,7 +117,7 @@ const VersionDifference = () => {
               <p>Latest</p>
             </div>
             <ReactQuill
-              value={storyDifference.latestContent}
+              value={storyDifference?.latestContent}
               readOnly={true}
               modules={{
                 toolbar: [
@@ -140,7 +140,7 @@ const VersionDifference = () => {
               <p>Difference</p>
             </div>
             <ReactQuill
-              value={formatDifferences(storyDifference.differences)}
+              value={storyDifference?.latestContent}
               readOnly={true}
               modules={{
                 toolbar: [

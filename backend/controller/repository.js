@@ -169,6 +169,11 @@ const getVersionsDifference = async (userId, repositoryId) => {
   }
 };
 
+const preprocessContent = (content) => {
+  // Remove <p> and <span> tags
+  return content.replace(/<[^>]*>/g, "");
+};
+
 const compareAnyVersion = async (req, res) => {
   const { repositoryId, versionIdToCompare } = req.params;
   const userId = req.user.id;
@@ -216,20 +221,15 @@ const compareAnyVersion = async (req, res) => {
       }
     }
 
-    const previousContent = versionToCompare.content;
-    const latestContent = latestVersion.content;
+    const previousContent = preprocessContent(versionToCompare.content);
+    const latestContent = preprocessContent(latestVersion.content);
 
-    const differences = diff.diffWords(previousContent, latestContent);
-    const differencesFormatted = differences.map((part) => ({
-      value: part.value,
-      added: !!part.added,
-      removed: !!part.removed,
-    }));
+    // Print the preprocessed content instead of returning differences
+    printDifference(previousContent, latestContent);
 
     res.status(200).json({
-      previousContent,
-      latestContent,
-      differences: differencesFormatted,
+      previousContent: versionToCompare.content,
+      latestContent: latestVersion.content,
     });
   } catch (error) {
     console.error("Error getting versions difference:", error.message);
@@ -239,16 +239,25 @@ const compareAnyVersion = async (req, res) => {
 
 function printDifference(previousContent, latestContent) {
   const differences = diff.diffWords(previousContent, latestContent);
+  let removedContent = "";
+  let addedContent = "";
+
   differences.forEach((part) => {
-    const color = part.added
-      ? "\x1b[32m"
-      : part.removed
-      ? "\x1b[31m"
-      : "\x1b[0m";
-    process.stdout.write(color + part.value);
+    let color;
+    if (part.removed) {
+      color = "\x1b[31m"; // red color for removed content
+      removedContent += color + part.value + " ";
+    } else if (part.added) {
+      color = "\x1b[32m"; // green color for added content
+      addedContent += color + part.value + " ";
+    } else {
+      color = "\x1b[37m"; // white color for changed content
+      removedContent += color + part.value + " ";
+      addedContent += color + part.value + " ";
+    }
   });
-  process.stdout.write("\x1b[0m");
-  process.stdout.write("\n");
+  console.log("Removed:", removedContent);
+  console.log("Added:", addedContent);
 }
 
 const getCollaboratingRepositoryInfo = async (req, res) => {
