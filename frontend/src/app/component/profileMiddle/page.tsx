@@ -24,9 +24,8 @@ const ProfileMiddle = () => {
       );
 
       if (response.status === 200) {
-        setRepoInfo(response.data.repository);
-        console.log(response.data.repository);
-        router.push("/editRepo");
+        console.log(response.data.repository.versions);
+        // router.push("/editRepo");
       } else {
         console.log("Failed to get repo data");
       }
@@ -43,9 +42,8 @@ const ProfileMiddle = () => {
       );
 
       if (response.status === 200) {
-        setCollabInfoId(response.data.repository._id);
-        console.log(response.data.repository._id);
-        router.push("/editCollaboratorRepo");
+        console.log(response.data);
+        // router.push("/editCollaboratorRepo");
       } else {
         console.log("Failed to get repo data");
       }
@@ -77,7 +75,7 @@ const ProfileMiddle = () => {
               key={repo._id}
               className="repo-container"
               onClick={() => {
-                console.log(repo._id);
+                clickedRepoInfo(repo._id);
               }}
             >
               <div className="repo-container-info-wrapper">
@@ -123,7 +121,7 @@ const ProfileMiddle = () => {
             <div
               key={repo.repositoryId}
               onClick={() => {
-                console.log(repo.repositoryId);
+                clickedCollabRepoInfo(repo.repositoryId);
               }}
               className="repo-container"
             >
