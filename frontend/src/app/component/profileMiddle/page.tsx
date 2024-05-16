@@ -65,7 +65,13 @@ const ProfileMiddle = () => {
           </div>
         )}
       </div>
-    </div>
+
+      <div className="profile-middle-title">
+        <p>Collaborating Stories</p>
+      </div>
+      <div className="profile-middle-stories">
+        {allCollaboratingRepos && userInfo.length > 0 ? (
+         
   );
 };
 
