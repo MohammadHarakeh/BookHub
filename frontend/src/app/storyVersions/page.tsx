@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 const StoryVersions = () => {
   const { storyVersions, setStoryVersions } = useEmailContext();
+  const { storyDifference, setStoryDifference } = useEmailContext();
   const [clickedVersion, setClickedVersion] = useState<string>("");
   const router = useRouter();
 
@@ -24,9 +25,9 @@ const StoryVersions = () => {
       );
 
       if (response.status === 200) {
-        console.log("Version difference printed successfully:");
-        console.log(response.data.previousContent);
-        // router.push("/versionDifference");
+        console.log(response.data);
+        setStoryDifference(response.data);
+        router.push("/versionDifference");
       } else {
         console.log("Failed to get version difference");
       }
