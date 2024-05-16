@@ -33,6 +33,9 @@ const StoryVersions = () => {
           {storyVersions?.versions?.map((version: any, index: any) => (
             <div key={index} className="version-items">
               <p>Version {index + 1}</p>
+              <p>
+                Created {formatDistanceToNow(new Date(version.createdAt))} ago
+              </p>
             </div>
           ))}
         </div>
