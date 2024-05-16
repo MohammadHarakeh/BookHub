@@ -43,15 +43,6 @@ const VersionDifference = () => {
     return start + startTag + selectedText + endTag + end;
   };
 
-  const formatDifferences = (differences: any) => {
-    return differences
-      .map((part: any) => {
-        const color = part.added ? "green" : part.removed ? "red" : "black";
-        return `<span style="color: ${color};">${part.value}</span>`;
-      })
-      .join("");
-  };
-
   useEffect(() => {
     console.log("story difference: ", storyDifference);
   }, []);
@@ -140,7 +131,7 @@ const VersionDifference = () => {
               <p>Difference</p>
             </div>
             <ReactQuill
-              value={storyDifference?.latestContent}
+              value={storyDifference?.difference}
               readOnly={true}
               modules={{
                 toolbar: [
