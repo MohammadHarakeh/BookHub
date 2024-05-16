@@ -70,8 +70,16 @@ const ProfileMiddle = () => {
         <p>Collaborating Stories</p>
       </div>
       <div className="profile-middle-stories">
-        {allCollaboratingRepos && userInfo.length > 0 ? (
-         
+        {allCollaboratingRepos && allCollaboratingRepos.length > 0 ? (
+          allCollaboratingRepos.map((repo: any) => (
+            <div key={repo.repositoryId} className="repo-container">
+              <div className="repo-container-info-wrapper">
+                <div className="repo-container-info">
+                  <div className="repo-info">
+                    <p className="repo-container-name">{repo.name}</p>
+                    <p className="general-input repo-styling">
+        
+    </div>
   );
 };
 

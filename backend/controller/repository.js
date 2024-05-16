@@ -262,6 +262,7 @@ const getCollaboratingRepositoryInfo = async (req, res) => {
           visibility: repository.visibility,
           collaborators: repository.collaborators,
           versions: repository.versions,
+          createdAt: repository.createdAt,
         });
       }
     }
