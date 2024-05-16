@@ -85,7 +85,16 @@ const ProfileMiddle = () => {
                     <FaStar /> Star
                   </div>
                 </div>
-
+                <div>
+                  <p className="repo-time">
+                    {formatDistanceToNow(new Date(repo.createdAt))} ago
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) 
+    </div>
   );
 };
 
