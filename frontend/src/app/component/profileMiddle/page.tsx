@@ -34,21 +34,22 @@ const ProfileMiddle = () => {
     }
   };
 
-  const clickedCollabRepoInfo = async (repositoryId: string) => {
+  const singleRepoInfo = async (repositoryId: string) => {
     try {
       const response = await sendRequest(
         requestMethods.GET,
-        `/user/getRepository/${repositoryId}`
+        `user/collaborating-repos/${repositoryId}`
       );
 
       if (response.status === 200) {
         console.log(response.data);
+        // setCollabInfo(response.data);
         router.push("/storyVersions");
       } else {
-        console.log("Failed to get repo data");
+        console.log(`Failed to get collaborating repo data for repo ID`);
       }
     } catch (error) {
-      console.log("Error getting repo data", error);
+      console.log("Error getting collaborating repo data", error);
     }
   };
 
@@ -125,7 +126,7 @@ const ProfileMiddle = () => {
                   <div className="repo-info">
                     <p
                       onClick={() => {
-                        clickedCollabRepoInfo(repo.repositoryId);
+                        singleRepoInfo(repo.repositoryId);
                       }}
                       className="repo-container-name"
                     >
