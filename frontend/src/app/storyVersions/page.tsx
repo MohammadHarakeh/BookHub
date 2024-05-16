@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 const StoryVersions = () => {
   const { storyVersions, setStoryVersions } = useEmailContext();
   const { storyDifference, setStoryDifference } = useEmailContext();
+  const { setRepoInfo } = useEmailContext();
   const [clickedVersion, setClickedVersion] = useState<string>("");
   const router = useRouter();
 
@@ -36,9 +37,13 @@ const StoryVersions = () => {
     }
   };
 
-  const handleVersionClick = (versionId: string) => {
-    setClickedVersion(versionId);
-    getVersionDifference(versionId);
+  const handleVersionClick = (versionId: string, index: number) => {
+    if (index === storyVersions.versions.length - 1) {
+      router.push("/editRepo");
+    } else {
+      setClickedVersion(versionId);
+      getVersionDifference(versionId);
+    }
   };
 
   return (
@@ -65,7 +70,7 @@ const StoryVersions = () => {
             <div key={index} className="version-items">
               <div
                 onClick={() => {
-                  handleVersionClick(version._id);
+                  handleVersionClick(version._id, index);
                 }}
                 className="single-version"
               >

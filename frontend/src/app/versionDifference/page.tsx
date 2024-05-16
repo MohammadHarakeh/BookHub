@@ -14,9 +14,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const VersionDifference = () => {
-  const { userInfo } = useEmailContext();
-  const { repoInfo } = useEmailContext();
-  const { storyDifference, setStoryDifference } = useEmailContext();
+  const { repoInfo, storyDifference } = useEmailContext();
 
   const colorOptions = [
     "#ffffff", // White
@@ -28,20 +26,6 @@ const VersionDifference = () => {
     "#4b0082", // Indigo
     "#9400d3", // Violet
   ];
-
-  const formatContentWithFormatting = (content: string, selection: any) => {
-    if (!selection) return content;
-
-    const { index, length, fontColor, fontStyle, fontFamily } = selection;
-    if (!fontColor || !fontStyle || !fontFamily) return content;
-
-    const startTag = `<span style="color: ${fontColor}; font-style: ${fontStyle}; font-family: ${fontFamily};">`;
-    const endTag = "</span>";
-    const start = content.slice(0, index);
-    const selectedText = content.slice(index, index + length);
-    const end = content.slice(index + length);
-    return start + startTag + selectedText + endTag + end;
-  };
 
   useEffect(() => {
     console.log("story difference: ", storyDifference);
@@ -126,7 +110,7 @@ const VersionDifference = () => {
           </div>
         </div>
         <div>
-          <div className={styles.edit_repo_info_previous}>
+          {/* <div className={styles.edit_repo_info_previous}>
             <div className={styles.edit_repo_title}>
               <p>Difference</p>
             </div>
@@ -146,7 +130,7 @@ const VersionDifference = () => {
                 scrollbarWidth: "thin",
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <hr />
