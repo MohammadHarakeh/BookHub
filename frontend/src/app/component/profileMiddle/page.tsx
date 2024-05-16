@@ -13,8 +13,7 @@ const ProfileMiddle = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext();
   const { allCollaboratingRepos } = useEmailContext();
-  const [repoInfo, setRepoInfo] = useState<any>();
-  const [collabInfoId, setCollabInfoId] = useState<any>();
+  const { storyVersions, setStoryVersions } = useEmailContext();
 
   const clickedRepoInfo = async (repositoryId: string) => {
     try {
@@ -24,8 +23,9 @@ const ProfileMiddle = () => {
       );
 
       if (response.status === 200) {
-        console.log(response.data.repository.versions);
-        // router.push("/editRepo");
+        console.log(response.data.repository);
+        setStoryVersions(response.data.repository);
+        router.push("/storyVersions");
       } else {
         console.log("Failed to get repo data");
       }
@@ -43,7 +43,7 @@ const ProfileMiddle = () => {
 
       if (response.status === 200) {
         console.log(response.data);
-        // router.push("/editCollaboratorRepo");
+        router.push("/storyVersions");
       } else {
         console.log("Failed to get repo data");
       }
