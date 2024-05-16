@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import "./page.css";
+import "../globals.css";
 import Header from "../component/header/page";
 import Footer from "../component/footer/page";
 import { useEmailContext } from "@/context/emailContext";
@@ -21,7 +22,10 @@ const StoryVersions = () => {
           ) : (
             <img src={defaultImage.src} alt="Default Image" />
           )}
-          <p>{storyVersions?.name}</p>
+          <p className="story-name-title">{storyVersions?.name}</p>
+          <p className="general-input versions-visibility">
+            {storyVersions?.visibility}
+          </p>
         </div>
       </div>
       <Footer />

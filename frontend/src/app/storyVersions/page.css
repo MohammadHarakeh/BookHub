@@ -1,18 +1,29 @@
 .story-version-wrapper {
   color: #fff;
   min-height: 70vh;
-}
-
-.story-version-container {
+  margin: 2rem 4rem;
 }
 
 .story-version-container {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+.story-name-title {
+  font-size: 2.5rem;
 }
 
 .story-version-container img {
   width: 8rem;
   height: 8rem;
   border-radius: 4rem;
+}
+
+.versions-visibility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.5rem !important;
+  font-size: 1rem !important;
+  padding: 0.5rem !important;
 }
