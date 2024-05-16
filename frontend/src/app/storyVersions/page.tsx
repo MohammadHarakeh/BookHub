@@ -34,7 +34,7 @@ const StoryVersions = () => {
             <div key={index} className="version-items">
               <div className="single-version">
                 <p>Version {index + 1}</p>
-                <p>
+                <p className="version-createdat">
                   Created {formatDistanceToNow(new Date(version.createdAt))} ago
                 </p>
               </div>

@@ -1,7 +1,7 @@
 .story-version-wrapper {
   color: #fff;
   min-height: 65vh;
-  margin: 2rem 4rem;
+  margin: 1rem 4rem;
 }
 
 .story-version-container {
@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 .story-name-title {
   font-size: 2.5rem;
@@ -41,9 +41,20 @@
 
 .version-items {
   padding: 1rem;
+  cursor: pointer;
+}
+
+.version-items:hover {
+  background-color: #25263f;
+  border-radius: 1rem;
 }
 
 .single-version {
   display: flex;
   justify-content: space-between;
+}
+
+.version-createdat {
+  font-size: 1.5rem;
+  color: grey;
 }
