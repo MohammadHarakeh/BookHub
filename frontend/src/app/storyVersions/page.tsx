@@ -15,10 +15,20 @@ const StoryVersions = () => {
   const [clickedVersion, setClickedVersion] = useState<string>("");
 
   const getVersionDifference = async () => {
-    const response = sendRequest(
-      requestMethods.GET,
-      `/user/versionDifference/${storyVersions._id}`
-    );
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `/user/versionDifference/${storyVersions._id}/${clickedVersion}`
+      );
+
+      if (response.status === 200) {
+        console.log("Version difference printed successfully");
+      } else {
+        console.log("Failed to get version difference");
+      }
+    } catch (error) {
+      console.log("Error can't get version difference", error);
+    }
   };
 
   return (
@@ -47,6 +57,7 @@ const StoryVersions = () => {
                 onClick={() => {
                   console.log(version._id);
                   setClickedVersion(version._id);
+                  getVersionDifference();
                 }}
                 className="single-version"
               >
