@@ -82,7 +82,9 @@ const VersionDifference = () => {
 
         <div className={styles.changes_information}>
           <div className={styles.edit_repo_info_previous}>
-            <p>Previous</p>
+            <div className={styles.edit_repo_title}>
+              <p>Previous</p>
+            </div>
             <ReactQuill
               value={storyDifference.previousContent}
               modules={{
@@ -101,6 +103,9 @@ const VersionDifference = () => {
           </div>
 
           <div className={styles.edit_repo_info_previous}>
+            <div className={styles.edit_repo_title}>
+              <p>Latest</p>
+            </div>
             <ReactQuill
               value={storyDifference.latestContent}
               modules={{

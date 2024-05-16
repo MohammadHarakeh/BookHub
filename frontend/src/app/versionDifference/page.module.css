@@ -1,6 +1,6 @@
 .edit_repo_wrapper {
   color: #fff;
-  min-height: 70vh;
+  margin-bottom: 3rem;
 }
 
 .story_info {
@@ -161,4 +161,12 @@
 
 .test {
   display: flex;
+}
+
+.edit_repo_title {
+  display: flex;
+  font-size: 2rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 }
