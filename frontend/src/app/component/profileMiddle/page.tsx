@@ -53,7 +53,7 @@ const ProfileMiddle = () => {
             </div>
           ))
         ) : (
-          <div>
+          <div className="profile-empty-state">
             <p>You haven't worked on any story</p>
             <p>Create a story now</p>
             <button
@@ -94,7 +94,7 @@ const ProfileMiddle = () => {
             </div>
           ))
         ) : (
-          <div>
+          <div className="profile-empty-state">
             <p>You haven't collaborated on any stories</p>
             <p>Get invited by a user to collaborate</p>
           </div>
