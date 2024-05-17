@@ -17,6 +17,14 @@ const Header: React.FC = () => {
     setIsLoggedIn(!!token);
   }, []);
 
+  useEffect(() => {
+    if (themeMode === "light") {
+      document.documentElement.classList.add("light-mode");
+    } else {
+      document.documentElement.classList.remove("light-mode");
+    }
+  }, [themeMode]);
+
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
   };
