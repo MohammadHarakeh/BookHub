@@ -70,6 +70,7 @@ const {
   generateImage,
   getCollaboratingRepositoryInfo,
   generateText,
+  starRepo,
 } = require("../controller/repository");
 
 router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
@@ -122,5 +123,6 @@ router.post(
 
 router.post("/generateImage", generateImage);
 router.post("/generateText", generateText);
+router.post("/starRepo/:repositoryId", authMiddleware, starRepo);
 
 module.exports = router;

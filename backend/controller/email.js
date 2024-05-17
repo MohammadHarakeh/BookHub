@@ -95,6 +95,7 @@ const inviteToRepository = async (req, res) => {
     const recipient = await User.findOne({ email: recipientEmail });
 
     if (!recipient) {
+      console.log(`Recipient with email ${recipientEmail} not found.`);
       return res.status(404).json({ message: "Recipient user not found" });
     }
 
@@ -124,6 +125,10 @@ const inviteToRepository = async (req, res) => {
       recipientEmail,
       token,
       repositoryId
+    );
+
+    console.log(
+      `Invitation sent from ${sender.username} to ${recipient.username} for repository ${repositoryId}.`
     );
 
     return res.status(200).json({ message: "Invitation sent successfully" });

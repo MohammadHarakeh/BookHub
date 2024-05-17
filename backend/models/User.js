@@ -219,6 +219,15 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  starredRepos: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Repository",
+      },
+    ],
+    default: [],
+  },
 });
 
 userSchema.virtual("isPasswordRequired").get(function () {
