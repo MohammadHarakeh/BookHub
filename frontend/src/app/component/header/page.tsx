@@ -48,7 +48,6 @@ const Header: React.FC = () => {
 
   return (
     <header className={themeMode === "dark" ? "" : "light-mode"}>
-      {" "}
       <div className="header-logo" onClick={() => router.push("/")}>
         <img src={mainLogo.src} alt="My Image" />
       </div>

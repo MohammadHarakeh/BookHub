@@ -43,11 +43,11 @@ const VersionDifference = () => {
         />
         <div className={styles.story_info}>
           <div className={styles.story_info}>
-            {currentRepoInfo ? (
+            {currentRepoInfo && currentRepoInfo.repo_picture ? (
               <img
                 className={styles.repo_image}
                 src={`http://localhost:3001/${
-                  currentRepoInfo?.repo_picture?.split("repoPictures\\")[1]
+                  currentRepoInfo.repo_picture.split("repoPictures\\")[1]
                 }`}
                 alt={currentRepoInfo.name}
               />

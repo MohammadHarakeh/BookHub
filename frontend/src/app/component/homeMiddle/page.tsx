@@ -4,6 +4,7 @@ import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
 import defaultImage from "../../../../public/images/defaultImage.png";
+import "../../white.css";
 import "./page.css";
 import "../../globals.css";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";

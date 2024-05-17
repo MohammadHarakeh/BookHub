@@ -280,7 +280,7 @@ const getCollaboratingRepositoryInfo = async (req, res) => {
           repositoryId: repository._id,
           name: repository.name,
           description: repository.description,
-          picture: repository.repo_picture,
+          repo_picture: repository.repo_picture,
           visibility: repository.visibility,
           collaborators: repository.collaborators,
           versions: repository.versions,

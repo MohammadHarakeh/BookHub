@@ -70,10 +70,10 @@ const StoryVersions = () => {
       <Header />
       <div className="story-version-wrapper">
         <div className="story-version-container">
-          {storyVersions ? (
+          {storyVersions?.repo_picture ? (
             <img
               src={`http://localhost:3001/${
-                storyVersions?.repo_picture?.split("repoPictures\\")[1]
+                storyVersions.repo_picture.split("repoPictures\\")[1]
               }`}
               alt={storyVersions.name}
             />

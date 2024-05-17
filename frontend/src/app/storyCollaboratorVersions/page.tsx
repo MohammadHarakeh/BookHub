@@ -70,10 +70,10 @@ const StoryVersions = () => {
       <Header />
       <div className="story-version-wrapper">
         <div className="story-version-container">
-          {collabInfo ? (
+          {collabInfo && collabInfo.picture ? (
             <img
               src={`http://localhost:3001/${
-                collabInfo?.picture?.split("repoPictures\\")[1]
+                collabInfo.picture.split("repoPictures\\")[1]
               }`}
               alt={collabInfo.name}
             />
