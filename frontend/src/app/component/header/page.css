@@ -24,7 +24,26 @@ header {
 }
 
 .user-profile img {
-  width: 5rem;
+  position: relative;
+  width: 6rem;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 6rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: -0.5rem;
+}
+
+.dropdown-content button {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   cursor: pointer;
 }
