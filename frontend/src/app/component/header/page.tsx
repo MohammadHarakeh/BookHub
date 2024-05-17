@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import "./page.css";
 import mainLogo from "../../../../public/images/mainLogo.png";
@@ -9,10 +9,16 @@ import { useRouter } from "next/navigation";
 const Header: React.FC = () => {
   const { userInfo } = useEmailContext();
   const router = useRouter();
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  useEffect(() => {
-    console.log("use info: ", userInfo);
-  }, [userInfo]);
+  const handleDropdownToggle = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
 
   return (
     <header>
@@ -42,7 +48,17 @@ const Header: React.FC = () => {
 
       <div className="user-profile">
         {userInfo.user ? (
-          <img src={userInfo.user.profile.profile_picture}></img>
+          <div className="dropdown">
+            <img
+              src={userInfo.user.profile.profile_picture}
+              onClick={handleDropdownToggle}
+            />
+            {showDropdown && (
+              <div className="dropdown-content">
+                <button onClick={handleLogout}>Sign Out</button>
+              </div>
+            )}
+          </div>
         ) : (
           <img src={defaultImage.src}></img>
         )}
