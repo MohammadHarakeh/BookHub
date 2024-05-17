@@ -56,10 +56,23 @@ const Header: React.FC = () => {
       <div className="user-profile">
         {isLoggedIn && userInfo.user ? (
           <div className="dropdown">
-            <img
-              src={userInfo.user.profile.profile_picture}
-              onClick={handleDropdownToggle}
-            />
+            {userInfo.user.profile.profile_picture ? (
+              <img
+                src={`http://localhost:3001/${
+                  userInfo.user.profile.profile_picture.split(
+                    "profilePictures\\"
+                  )[1]
+                }`}
+                alt="Profile Picture"
+                className="user-profile-small"
+              />
+            ) : (
+              <img
+                src={defaultImage.src}
+                alt="Default Image"
+                className="user-profile-small"
+              />
+            )}
             {showDropdown && (
               <div className="dropdown-content">
                 <button onClick={handleLogout}>Sign Out</button>
