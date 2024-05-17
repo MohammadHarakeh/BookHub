@@ -72,8 +72,10 @@ const StoryVersions = () => {
         <div className="story-version-container">
           {collabInfo ? (
             <img
-              src={collabInfo.picture || defaultImage.src}
-              alt={collabInfo.name || "Default Image"}
+              src={`http://localhost:3001/${
+                collabInfo?.picture?.split("repoPictures\\")[1]
+              }`}
+              alt={collabInfo.name}
             />
           ) : (
             <img src={defaultImage.src} alt="Default Image" />
