@@ -16,7 +16,7 @@ const ProfileLeft = () => {
     twitter_link: userInfo.user?.profile?.twitter_link || "",
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setProfileData({
       ...profileData,
@@ -70,18 +70,16 @@ const ProfileLeft = () => {
         {editMode ? "Save Profile" : "Edit Profile"}
       </div>
       <div className="following-info-wrapper">
-        <div>
-          <GoPersonFill />
-        </div>
         <div className="following-count">
+          <GoPersonFill />
           {userInfo.user?.following ? userInfo.user?.following?.length : 0}
           <p>following - </p>
           {userInfo.user?.followers ? userInfo.user?.followers?.length : 0}
           <p>followers</p>
         </div>
-        <div>
+        <div className="edit-section">
           {editMode ? (
-            <div className="edit-section">
+            <div>
               <input
                 className="general-input"
                 type="text"
