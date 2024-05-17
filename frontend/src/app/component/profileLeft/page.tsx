@@ -137,15 +137,17 @@ const ProfileLeft = () => {
           Edit Profile
         </div>
       )}
-      <div className="following-info-wrapper">
-        <div className="following-count">
-          <GoPersonFill />
-          {userInfo.user?.following ? userInfo.user?.following?.length : 0}
-          <p>following - </p>
-          {userInfo.user?.followers ? userInfo.user?.followers?.length : 0}
-          <p>followers</p>
+      {!editMode && (
+        <div className="following-info-wrapper">
+          <div className="following-count">
+            <GoPersonFill />
+            {userInfo.user?.following ? userInfo.user?.following?.length : 0}
+            <p>following - </p>
+            {userInfo.user?.followers ? userInfo.user?.followers?.length : 0}
+            <p>followers</p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -58,3 +58,9 @@
   justify-content: center;
   align-items: center;
 }
+
+.button-group {
+  display: flex;
+  margin: 1rem 0rem;
+  gap: 2rem;
+}
