@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,6 +24,7 @@ const HomeLeft = () => {
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
   const { userLoggedIn, setUserLoggedIn } = useEmailContext();
   const { userInfo, setUserInfo } = useEmailContext();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const createPost = async () => {
     try {
@@ -95,7 +96,14 @@ const HomeLeft = () => {
         "/user/getLoggedinUser"
       );
       if (response.status === 200) {
-        setUserProfileImage(response.data.user.profile.profile_picture);
+        const profileImage = response.data.user.profile.profile_picture
+          ? `http://localhost:3001/${
+              response.data.user.profile.profile_picture.split(
+                "profilePictures\\"
+              )[1]
+            }`
+          : null;
+        setUserProfileImage(profileImage);
         setUserId(response.data.user._id);
         setUserInfo(response.data);
         console.log(response.data);
@@ -125,6 +133,7 @@ const HomeLeft = () => {
       toast.error("Failed to toggle like");
     }
   };
+
   const handleLike = (post: any) => {
     if (userLoggedIn) {
       togglePostLike(post._id);
@@ -150,6 +159,7 @@ const HomeLeft = () => {
       toast.error("Failed to toggle comment like");
     }
   };
+
   const handleCommentLike = (postId: any, commentId: any) => {
     if (userLoggedIn) {
       toggleCommentLike(postId, commentId);
@@ -234,9 +244,17 @@ const HomeLeft = () => {
       <div className="homepage-middle-upload-container">
         <div className="homepage-middle-upload">
           {userProfileImage ? (
-            <img src={userProfileImage} className="user-profile-small" />
+            <img
+              src={userProfileImage}
+              className="user-profile-small"
+              alt="User Profile"
+            />
           ) : (
-            <img src={defaultImage.src} className="user-profile-small" />
+            <img
+              src={defaultImage.src}
+              className="user-profile-small"
+              alt="Default Profile"
+            />
           )}
           <input
             placeholder="What's on your mind"
@@ -254,7 +272,12 @@ const HomeLeft = () => {
               >
                 Choose File
               </label>
-              <input id="fileInput" type="file" onChange={handleImageChange} />
+              <input
+                id="fileInput"
+                type="file"
+                onChange={handleImageChange}
+                ref={fileInputRef}
+              />
             </div>
             <button className="general-button" onClick={handleCreatePost}>
               Upload
@@ -275,9 +298,19 @@ const HomeLeft = () => {
           <div key={post._id} className="posts">
             <div className="posts-info">
               {post.profile_picture ? (
-                <img src={post.profile_picture} alt="Profile Picture" />
+                <img
+                  src={`http://localhost:3001/${
+                    post.profile_picture.split("profilePictures\\")[1]
+                  }`}
+                  alt="Profile Picture"
+                  className="user-profile-small"
+                />
               ) : (
-                <img src={defaultImage.src} alt="Default Image" />
+                <img
+                  src={defaultImage.src}
+                  alt="Default Image"
+                  className="user-profile-small"
+                />
               )}
 
               <div className="posts-username-time">
@@ -300,6 +333,7 @@ const HomeLeft = () => {
                   post.image.split("uploadPosts\\")[1]
                 }`}
                 alt="Post Image"
+                className="post-image"
               />
             )}
 
@@ -331,11 +365,13 @@ const HomeLeft = () => {
                     <img
                       src={userProfileImage}
                       className="user-profile-small"
+                      alt="User Profile"
                     />
                   ) : (
                     <img
                       src={defaultImage.src}
                       className="user-profile-small"
+                      alt="Default Image"
                     />
                   )}
                   <input
@@ -371,7 +407,11 @@ const HomeLeft = () => {
                         <div className="comment-profilepicture">
                           {comment.profile_picture ? (
                             <img
-                              src={comment.profile_picture}
+                              src={`http://localhost:3001/${
+                                comment.profile_picture.split(
+                                  "profilePictures\\"
+                                )[1]
+                              }`}
                               alt="Profile Picture"
                               className="user-profile-small"
                             />

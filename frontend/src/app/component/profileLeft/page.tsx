@@ -30,7 +30,7 @@ const ProfileLeft = () => {
     formData.append("instagram_link", profileData.instagram_link);
     formData.append("twitter_link", profileData.twitter_link);
     if (profilePicture) {
-      formData.append("image", profilePicture); // Correct field name
+      formData.append("image", profilePicture);
     }
 
     try {
@@ -43,6 +43,8 @@ const ProfileLeft = () => {
         toast.success("Profile updated successfully");
         setUserInfo({ ...userInfo, user: response.data.user });
         setEditMode(false);
+        setProfilePicture(null); // Reset profilePicture after update
+        setImagePreview(null); // Reset imagePreview after update
       }
     } catch (error) {
       toast.error("Profile update failed");
@@ -86,6 +88,8 @@ const ProfileLeft = () => {
       instagram_link: userInfo.user?.profile?.instagram_link || "",
       twitter_link: userInfo.user?.profile?.twitter_link || "",
     });
+    setProfilePicture(null);
+    setImagePreview(null);
   };
 
   useEffect(() => {
@@ -106,7 +110,13 @@ const ProfileLeft = () => {
       />
       <div className="profileleft-image" onClick={handleImageClick}>
         <img
-          src={imagePreview ? imagePreview : defaultImage.src}
+          src={
+            imagePreview
+              ? imagePreview
+              : `http://localhost:3001/${userInfo.user.profile.profile_picture.split(
+                  "profilePicture\\"[1]
+                )}`
+          }
           alt="User Picture"
         />
         <input
@@ -205,9 +215,9 @@ const ProfileLeft = () => {
         <div className="following-info-wrapper">
           <div className="following-count">
             <GoPersonFill />
-            {userInfo.user?.following ? userInfo.user?.following?.length : 0}
+            {userInfo.user?.following ? userInfo.user.following.length : 0}
             <p>following - </p>
-            {userInfo.user?.followers ? userInfo.user?.followers?.length : 0}
+            {userInfo.user?.followers ? userInfo.user.followers.length : 0}
             <p>followers</p>
           </div>
         </div>
