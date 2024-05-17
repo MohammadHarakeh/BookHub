@@ -8,6 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 import { FaStar } from "react-icons/fa";
 import { sendRequest } from "@/app/tools/apiRequest";
 import { requestMethods } from "@/app/tools/apiRequestMethods";
+import { toast } from "react-toastify";
 
 const ProfileMiddle = () => {
   const router = useRouter();
@@ -51,6 +52,26 @@ const ProfileMiddle = () => {
       }
     } catch (error) {
       console.log("Error getting collaborating repo data", error);
+    }
+  };
+
+  const starRepo = async (repositoryId: string) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `user/starRepo/${repositoryId}`
+      );
+
+      if (response.status === 200) {
+        console.log("Repository added to favorits");
+        toast.success("Repository added to favorits");
+      } else {
+        console.log("Failed to add repository to favorits");
+        toast.error("Failed to add repository to favorits");
+      }
+    } catch (error) {
+      console.log("Error can't add repository to favorits: ", error);
+      toast.error("Error can't add repository to favorits");
     }
   };
 

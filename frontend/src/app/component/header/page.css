@@ -23,6 +23,10 @@ header {
   color: #fff;
 }
 
+.header-links a:hover {
+  color: #37ff00;
+}
+
 .user-profile img {
   position: relative;
   width: 6rem;
