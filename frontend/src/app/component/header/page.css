@@ -47,3 +47,7 @@ header {
   font-size: 1rem;
   cursor: pointer;
 }
+
+.dropdown-content button:hover {
+  background-color: #bdbdbd;
+}
