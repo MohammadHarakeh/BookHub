@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import "./page.css";
 import "../../globals.css";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaStar } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useEmailContext } from "@/context/emailContext";
 import { formatDistanceToNow } from "date-fns";
-import { FaStar } from "react-icons/fa";
 import { sendRequest } from "@/app/tools/apiRequest";
 import { requestMethods } from "@/app/tools/apiRequestMethods";
 import { toast } from "react-toastify";
 
-const ProfileMiddle = () => {
+interface Repository {
+  _id: string;
+  name: string;
+  visibility: string;
+  createdAt: string;
+}
+
+interface CollaboratingRepository {
+  repositoryId: string;
+  name: string;
+  visibility: string;
+  createdAt: string;
+}
+
+const ProfileMiddle: React.FC = () => {
   const router = useRouter();
   const { userInfo } = useEmailContext();
   const { allCollaboratingRepos } = useEmailContext();
   const { storyVersions, setStoryVersions } = useEmailContext();
   const { collabInfo, setCollabInfo } = useEmailContext();
+
+  const [starredRepos, setStarredRepos] = useState<string[]>([]);
 
   const clickedRepoInfo = async (repositoryId: string) => {
     try {
@@ -63,20 +78,26 @@ const ProfileMiddle = () => {
       );
 
       if (response.status === 200) {
-        console.log("Toggled favorit repository successfully");
-        toast.success("Toggled favorit repository successfully");
+        console.log("Toggled favorite repository successfully");
+        toast.success("Toggled favorite repository successfully");
+        // Update starred repositories state
+        setStarredRepos((prevStarredRepos) =>
+          prevStarredRepos.includes(repositoryId)
+            ? prevStarredRepos.filter((id) => id !== repositoryId)
+            : [...prevStarredRepos, repositoryId]
+        );
       } else {
-        console.log("Failed to toggle repository to favorits");
-        toast.error("Failed to toggle repository to favorits");
+        console.log("Failed to toggle repository to favorites");
+        toast.error("Failed to toggle repository to favorites");
       }
     } catch (error) {
-      console.log("Error can't toggle repository to favorits: ", error);
-      toast.error("Error can't toggle repository to favorits");
+      console.log("Error can't toggle repository to favorites: ", error);
+      toast.error("Error can't toggle repository to favorites");
     }
   };
 
   useEffect(() => {
-    console.log("profile all collaboartions: ", allCollaboratingRepos);
+    console.log("profile all collaborations: ", allCollaboratingRepos);
   }, [allCollaboratingRepos]);
 
   useEffect(() => {
@@ -93,7 +114,7 @@ const ProfileMiddle = () => {
         userInfo.user &&
         userInfo.user.repositories &&
         userInfo.user.repositories.length > 0 ? (
-          userInfo.user.repositories.map((repo: any) => (
+          userInfo.user.repositories.map((repo: Repository) => (
             <div key={repo._id} className="repo-container">
               <div className="repo-container-info-wrapper">
                 <div className="repo-container-info">
@@ -114,7 +135,12 @@ const ProfileMiddle = () => {
                     onClick={() => toggleStarRepo(repo._id)}
                     className="general-input repo-styling star-styling"
                   >
-                    <FaStar /> Star
+                    <FaStar
+                      color={
+                        starredRepos.includes(repo._id) ? "yellow" : "white"
+                      }
+                    />{" "}
+                    Star
                   </div>
                 </div>
                 <div>
@@ -144,7 +170,7 @@ const ProfileMiddle = () => {
       </div>
       <div className="profile-middle-stories">
         {allCollaboratingRepos && allCollaboratingRepos.length > 0 ? (
-          allCollaboratingRepos.map((repo: any) => (
+          allCollaboratingRepos.map((repo: CollaboratingRepository) => (
             <div key={repo.repositoryId} className="repo-container">
               <div className="repo-container-info-wrapper">
                 <div className="repo-container-info">
@@ -162,7 +188,14 @@ const ProfileMiddle = () => {
                     </p>
                   </div>
                   <div className="general-input repo-styling star-styling">
-                    <FaStar /> Star
+                    <FaStar
+                      color={
+                        starredRepos.includes(repo.repositoryId)
+                          ? "yellow"
+                          : "white"
+                      }
+                    />{" "}
+                    Star
                   </div>
                 </div>
                 <div>

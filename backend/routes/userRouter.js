@@ -77,6 +77,7 @@ const {
   getCollaboratingRepositoryInfo,
   generateText,
   toggleStarRepo,
+  fetchStarredRepos,
 } = require("../controller/repository");
 
 router.get("/getRepository/:repositoryId", authMiddleware, getRepository);
@@ -130,5 +131,6 @@ router.post(
 router.post("/generateImage", generateImage);
 router.post("/generateText", generateText);
 router.post("/toggleStarRepo/:repositoryId", authMiddleware, toggleStarRepo);
+router.get("/user/starredRepos", authMiddleware, fetchStarredRepos);
 
 module.exports = router;
