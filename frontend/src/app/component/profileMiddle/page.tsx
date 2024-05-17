@@ -55,23 +55,23 @@ const ProfileMiddle = () => {
     }
   };
 
-  const starRepo = async (repositoryId: string) => {
+  const toggleStarRepo = async (repositoryId: string) => {
     try {
       const response = await sendRequest(
         requestMethods.POST,
-        `user/starRepo/${repositoryId}`
+        `user/toggleStarRepo/${repositoryId}`
       );
 
       if (response.status === 200) {
-        console.log("Repository added to favorits");
-        toast.success("Repository added to favorits");
+        console.log("Toggled favorit repository successfully");
+        toast.success("Toggled favorit repository successfully");
       } else {
-        console.log("Failed to add repository to favorits");
-        toast.error("Failed to add repository to favorits");
+        console.log("Failed to toggle repository to favorits");
+        toast.error("Failed to toggle repository to favorits");
       }
     } catch (error) {
-      console.log("Error can't add repository to favorits: ", error);
-      toast.error("Error can't add repository to favorits");
+      console.log("Error can't toggle repository to favorits: ", error);
+      toast.error("Error can't toggle repository to favorits");
     }
   };
 
@@ -110,7 +110,10 @@ const ProfileMiddle = () => {
                       {repo.visibility}
                     </p>
                   </div>
-                  <div className="general-input repo-styling star-styling">
+                  <div
+                    onClick={() => toggleStarRepo(repo._id)}
+                    className="general-input repo-styling star-styling"
+                  >
                     <FaStar /> Star
                   </div>
                 </div>

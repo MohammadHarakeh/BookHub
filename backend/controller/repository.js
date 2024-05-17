@@ -385,7 +385,7 @@ const generateText = async (req, res) => {
   }
 };
 
-const starRepo = async (req, res) => {
+const toggleStarRepo = async (req, res) => {
   const userId = req.user.id;
   const { repositoryId } = req.params;
 
@@ -403,12 +403,17 @@ const starRepo = async (req, res) => {
       return res.status(404).json({ error: "Repository not found" });
     }
 
-    user.starredRepos.addToSet(repositoryId);
+    const isStarred = user.starredRepos.includes(repositoryId);
+    if (isStarred) {
+      user.starredRepos.pull(repositoryId);
+    } else {
+      user.starredRepos.addToSet(repositoryId);
+    }
     await user.save();
 
     res.json(user);
   } catch (error) {
-    console.error("Error adding repository to starredRepos:", error.message);
+    console.error("Error toggling repository star:", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -423,5 +428,5 @@ module.exports = {
   generateImage,
   getCollaboratingRepositoryInfo,
   generateText,
-  starRepo,
+  toggleStarRepo,
 };
