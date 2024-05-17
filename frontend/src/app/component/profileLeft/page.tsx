@@ -95,9 +95,13 @@ const ProfileLeft = () => {
   useEffect(() => {
     if (userInfo.user?.profile?.profile_picture) {
       setImagePreview(
-        `http://localhost:3001/${
-          userInfo.user.profile.profile_picture.split("profilePictures\\")[1]
-        }`
+        userInfo.user.profile.profile_picture.startsWith("https://")
+          ? userInfo.user.profile.profile_picture
+          : `http://localhost:3001/${
+              userInfo.user.profile.profile_picture.split(
+                "profilePictures\\"
+              )[1]
+            }`
       );
     }
   }, [userInfo]);
@@ -113,12 +117,18 @@ const ProfileLeft = () => {
           src={
             imagePreview
               ? imagePreview
-              : `http://localhost:3001/${userInfo.user.profile.profile_picture.split(
-                  "profilePicture\\"[1]
-                )}`
+              : userInfo.user.profile.profile_picture &&
+                userInfo.user.profile.profile_picture.startsWith("https://")
+              ? userInfo.user.profile.profile_picture
+              : `http://localhost:3001/${
+                  userInfo.user.profile.profile_picture.split(
+                    "profilePicture\\"
+                  )[1]
+                }`
           }
           alt="User Picture"
         />
+
         <input
           type="file"
           ref={fileInputRef}
