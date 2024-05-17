@@ -19,6 +19,7 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use(express.static("uploadPosts"));
 app.use(express.static("repoPictures"));
+app.use(express.static("profilePictures"));
 
 app.listen(port, (err) => {
   if (err) throw new Error(err);

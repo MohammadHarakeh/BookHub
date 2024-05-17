@@ -95,14 +95,6 @@ const getAllUsers = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    multerMiddleware(req, res, async (err) => {
-      if (err instanceof multer.MulterError) {
-        return res.status(400).json({ error: err.message });
-      } else if (err) {
-        return res.status(500).json({ error: "File upload failed" });
-      }
-    });
-
     const { bio, location, linkedin_link, instagram_link, twitter_link } =
       req.body;
     const userId = req.user._id;
@@ -136,6 +128,7 @@ const updateProfile = async (req, res) => {
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res.status(500).json({ error: "Profile update failed" });
+    console.log(error);
   }
 };
 

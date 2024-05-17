@@ -3,9 +3,11 @@ import "./page.css";
 import defaultImage from "../../../../public/images/defaultImage.png";
 import { useEmailContext } from "@/context/emailContext";
 import { GoPersonFill } from "react-icons/go";
+import { sendRequest } from "../../tools/apiRequest";
+import { requestMethods } from "../../tools/apiRequestMethods";
 
 const ProfileLeft = () => {
-  const { userInfo } = useEmailContext();
+  const { userInfo, setUserInfo } = useEmailContext();
   const [editMode, setEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
     username: userInfo.user?.username || "",
@@ -15,6 +17,35 @@ const ProfileLeft = () => {
     instagram_link: userInfo.user?.profile?.instagram_link || "",
     twitter_link: userInfo.user?.profile?.twitter_link || "",
   });
+
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  const updateProfile = async () => {
+    const formData = new FormData();
+    formData.append("bio", profileData.bio);
+    formData.append("location", profileData.location);
+    formData.append("linkedin_link", profileData.linkedin_link);
+    formData.append("instagram_link", profileData.instagram_link);
+    formData.append("twitter_link", profileData.twitter_link);
+    if (profilePicture) {
+      formData.append("profile_picture", profilePicture);
+    }
+
+    try {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `user/updateProfile`,
+        formData
+      );
+      if (response.status === 200) {
+        alert("Profile updated successfully");
+        setUserInfo({ ...userInfo, user: response.data.user });
+        setEditMode(false);
+      }
+    } catch (error) {
+      alert("Profile update failed");
+    }
+  };
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -28,9 +59,12 @@ const ProfileLeft = () => {
     setEditMode(!editMode);
   };
 
+  const handleFileChange = (e: any) => {
+    setProfilePicture(e.target.files[0]);
+  };
+
   const handleBackClick = () => {
     setEditMode(false);
-    // Optionally, reset profileData to initial userInfo values if changes should be discarded
     setProfileData({
       username: userInfo.user?.username || "",
       bio: userInfo.user?.profile?.bio || "",
@@ -52,6 +86,7 @@ const ProfileLeft = () => {
           }
           alt="User Picture"
         />
+        {editMode && <input type="file" onChange={handleFileChange} />}
       </div>
       <div className="profileleft-info">
         {editMode ? (
@@ -63,6 +98,7 @@ const ProfileLeft = () => {
               placeholder="Username"
               value={profileData.username}
               onChange={handleInputChange}
+              disabled
             />
             <input
               className="general-input"
@@ -105,7 +141,7 @@ const ProfileLeft = () => {
               onChange={handleInputChange}
             />
             <div className="button-group">
-              <div className="general-button" onClick={toggleEditMode}>
+              <div className="general-button" onClick={updateProfile}>
                 Save Profile
               </div>
               <div className="general-button" onClick={handleBackClick}>
