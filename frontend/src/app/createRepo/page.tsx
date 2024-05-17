@@ -10,6 +10,7 @@ import { sendRequest } from "../tools/apiRequest";
 import { requestMethods } from "../tools/apiRequestMethods";
 import defaultImage from "../../../public/images/defaultImage.png";
 import { useEmailContext } from "@/context/emailContext";
+import { useRouter } from "next/navigation";
 
 interface User {
   username: string;
@@ -20,10 +21,12 @@ const CreateRepo = () => {
   const [loggedUser, setLoggedUser] = useState<User | undefined>();
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [visibility, setVisibility] = useState<string>("");
+  const [visibility, setVisibility] = useState<string>("Public");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const { userInfo, setUserInfo } = useEmailContext();
+
+  const router = useRouter();
 
   const getLoggedinUser = async () => {
     try {
@@ -57,10 +60,11 @@ const CreateRepo = () => {
         console.log("Created repo successfully");
         setDescription("");
         setName("");
-        setVisibility("public");
+        setVisibility("");
         setIsPublic(true);
         setImage(null);
         setImagePreview(null);
+        router.push("/");
       } else {
         ("Failed to create repo");
       }
@@ -80,12 +84,12 @@ const CreateRepo = () => {
 
   const handlePublicClick = () => {
     setIsPublic(true);
-    setVisibility("public");
+    setVisibility("Public");
   };
 
   const handlePrivateClick = () => {
     setIsPublic(false);
-    setVisibility("private");
+    setVisibility("Private");
   };
 
   useEffect(() => {

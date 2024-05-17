@@ -180,6 +180,13 @@ const EditRepo = () => {
     }
   }, [summarizedText]);
 
+  useEffect(() => {
+    console.log(repoInfo.repo_picture.split("repoPictures\\")[1]);
+  }, []);
+
+  useEffect(() => {
+    console.log("Repository Image Path:", repoInfo.repo_picture);
+  }, [repoInfo]);
   return (
     <div>
       <Header />
@@ -224,9 +231,12 @@ const EditRepo = () => {
             repoInfo.repo_picture !== undefined &&
             repoInfo.repo_picture !== "" ? (
               <img
-                src={repoInfo.repo_picture}
                 className={styles.repo_image}
-              ></img>
+                src={`http://localhost:3001/${
+                  repoInfo.repo_picture.split("repoPictures\\")[1]
+                }`}
+                alt="Repository Image"
+              />
             ) : (
               <img src={defaultImage.src} className={styles.repo_image}></img>
             )}
