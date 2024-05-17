@@ -117,7 +117,11 @@ const updateProfile = async (req, res) => {
       const newProfilePicturePath = req.file.path;
 
       if (oldProfilePicturePath) {
-        fs.unlinkSync(oldProfilePicturePath);
+        try {
+          await fs.unlink(path.resolve(oldProfilePicturePath));
+        } catch (err) {
+          console.error(`Failed to delete old profile picture: ${err.message}`);
+        }
       }
 
       user.profile.profile_picture = newProfilePicturePath;
@@ -127,8 +131,8 @@ const updateProfile = async (req, res) => {
 
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Profile update failed" });
-    console.log(error);
   }
 };
 

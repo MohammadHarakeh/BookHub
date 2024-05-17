@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./page.css";
 import defaultImage from "../../../../public/images/defaultImage.png";
 import { useEmailContext } from "@/context/emailContext";
@@ -19,6 +19,7 @@ const ProfileLeft = () => {
     twitter_link: userInfo.user?.profile?.twitter_link || "",
   });
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const updateProfile = async () => {
@@ -29,7 +30,7 @@ const ProfileLeft = () => {
     formData.append("instagram_link", profileData.instagram_link);
     formData.append("twitter_link", profileData.twitter_link);
     if (profilePicture) {
-      formData.append("profile_picture", profilePicture);
+      formData.append("image", profilePicture); // Correct field name
     }
 
     try {
@@ -41,7 +42,6 @@ const ProfileLeft = () => {
       if (response.status === 200) {
         toast.success("Profile updated successfully");
         setUserInfo({ ...userInfo, user: response.data.user });
-        console.log(userInfo);
         setEditMode(false);
       }
     } catch (error) {
@@ -61,20 +61,12 @@ const ProfileLeft = () => {
     setEditMode(!editMode);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setProfilePicture(selectedFile);
-        setProfileData((prevProfileData) => ({
-          ...prevProfileData,
-          profile_picture: reader.result as string, // save image URL to profile_data
-        }));
-      };
-
-      reader.readAsDataURL(selectedFile);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setProfilePicture(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
     }
   };
 
@@ -96,6 +88,16 @@ const ProfileLeft = () => {
     });
   };
 
+  useEffect(() => {
+    if (userInfo.user?.profile?.profile_picture) {
+      setImagePreview(
+        `http://localhost:3001/${
+          userInfo.user.profile.profile_picture.split("profilePictures\\")[1]
+        }`
+      );
+    }
+  }, [userInfo]);
+
   return (
     <div className="profileleft-wrapper">
       <ToastContainer
@@ -104,18 +106,14 @@ const ProfileLeft = () => {
       />
       <div className="profileleft-image" onClick={handleImageClick}>
         <img
-          src={
-            userInfo.user?.profile?.profile_picture
-              ? userInfo.user.profile.profile_picture
-              : defaultImage.src
-          }
+          src={imagePreview ? imagePreview : defaultImage.src}
           alt="User Picture"
         />
         <input
           type="file"
           ref={fileInputRef}
           style={{ display: "none" }}
-          onChange={handleFileChange}
+          onChange={handleImageChange}
         />
       </div>
       <div className="profileleft-info">
