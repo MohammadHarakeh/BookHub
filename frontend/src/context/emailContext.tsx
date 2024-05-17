@@ -19,6 +19,8 @@ type ContextValue = {
   setStoryVersions: Dispatch<SetStateAction<any>>;
   storyDifference: any;
   setStoryDifference: Dispatch<SetStateAction<any>>;
+  themeMode: "light" | "dark";
+  toggleTheme: () => void;
 };
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
@@ -32,6 +34,11 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [allCollaboratingRepos, setAllCollaboratingRepos] = useState<any>();
   const [storyVersions, setStoryVersions] = useState<any>();
   const [storyDifference, setStoryDifference] = useState<any>();
+  const [themeMode, setThemeMode] = useState<"light" | "dark">("dark");
+
+  const toggleTheme = () => {
+    setThemeMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  };
 
   return (
     <EmailContext.Provider
@@ -52,6 +59,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         setStoryVersions,
         storyDifference,
         setStoryDifference,
+        themeMode,
+        toggleTheme,
       }}
     >
       {children}
