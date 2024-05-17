@@ -429,7 +429,7 @@ const fetchStarredRepos = async (req, res) => {
     }
     const starredRepos = user.starredRepos;
 
-    res.json({ starredRepos });
+    res.status(200).json({ starredRepos });
   } catch (error) {
     console.error("Error fetching starred repositories:", error.message);
     res.status(500).json({ error: "Internal server error" });

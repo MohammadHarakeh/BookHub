@@ -96,12 +96,31 @@ const ProfileMiddle: React.FC = () => {
     }
   };
 
+  const fetchStarredRepos = async () => {
+    try {
+      const response = await sendRequest(
+        requestMethods.GET,
+        `user/starredRepos`
+      );
+
+      if (response.status === 200) {
+        setStarredRepos(response.data.starredRepos);
+        console.log(response.data.starredRepos);
+      } else {
+        console.log("Failed to fetch starred repos");
+      }
+    } catch (error) {
+      console.log("Error fetching starred repos", error);
+    }
+  };
+
   useEffect(() => {
     console.log("profile all collaborations: ", allCollaboratingRepos);
   }, [allCollaboratingRepos]);
 
   useEffect(() => {
     console.log("profile userinfo: ", userInfo?.user?.repositories);
+    fetchStarredRepos();
   }, [userInfo]);
 
   return (

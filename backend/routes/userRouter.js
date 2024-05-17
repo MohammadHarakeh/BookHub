@@ -131,6 +131,6 @@ router.post(
 router.post("/generateImage", generateImage);
 router.post("/generateText", generateText);
 router.post("/toggleStarRepo/:repositoryId", authMiddleware, toggleStarRepo);
-router.get("/user/starredRepos", authMiddleware, fetchStarredRepos);
+router.get("/starredRepos", authMiddleware, fetchStarredRepos);
 
 module.exports = router;
