@@ -1,6 +1,13 @@
 "use client";
-import { createContext, useContext, useState } from "react";
-import { Dispatch, SetStateAction } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 type ContextValue = {
   email: string;
@@ -25,7 +32,7 @@ type ContextValue = {
 
 const EmailContext = createContext<ContextValue | undefined>(undefined);
 
-export default function Provider({ children }: { children: React.ReactNode }) {
+export default function Provider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string>("");
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<any>({});
@@ -34,10 +41,33 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [allCollaboratingRepos, setAllCollaboratingRepos] = useState<any>();
   const [storyVersions, setStoryVersions] = useState<any>();
   const [storyDifference, setStoryDifference] = useState<any>();
-  const [themeMode, setThemeMode] = useState<"light" | "dark">("dark");
+  const [themeMode, setThemeMode] = useState<"light" | "dark">(() => {
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("themeMode");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        return storedTheme;
+      }
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("themeMode");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        setThemeMode(storedTheme);
+      }
+    }
+  }, []);
 
   const toggleTheme = () => {
-    setThemeMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+    setThemeMode((prevMode) => {
+      const newMode = prevMode === "light" ? "dark" : "light";
+      if (typeof window !== "undefined") {
+        localStorage.setItem("themeMode", newMode);
+      }
+      return newMode;
+    });
   };
 
   return (
@@ -72,7 +102,7 @@ export function useEmailContext() {
   const context = useContext(EmailContext);
 
   if (context === undefined) {
-    throw new Error("use context is not found");
+    throw new Error("useEmailContext must be used within an EmailProvider");
   }
   return context;
 }
