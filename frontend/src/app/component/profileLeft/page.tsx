@@ -28,6 +28,19 @@ const ProfileLeft = () => {
     setEditMode(!editMode);
   };
 
+  const handleBackClick = () => {
+    setEditMode(false);
+    // Optionally, reset profileData to initial userInfo values if changes should be discarded
+    setProfileData({
+      username: userInfo.user?.username || "",
+      bio: userInfo.user?.profile?.bio || "",
+      location: userInfo.user?.profile?.location || "",
+      linkedin_link: userInfo.user?.profile?.linkedin_link || "",
+      instagram_link: userInfo.user?.profile?.instagram_link || "",
+      twitter_link: userInfo.user?.profile?.twitter_link || "",
+    });
+  };
+
   return (
     <div className="profileleft-wrapper">
       <div className="profileleft-image">
@@ -42,33 +55,88 @@ const ProfileLeft = () => {
       </div>
       <div className="profileleft-info">
         {editMode ? (
-          <input
-            className="general-input"
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={profileData.username}
-            onChange={handleInputChange}
-          />
+          <>
+            <input
+              className="general-input"
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={profileData.username}
+              onChange={handleInputChange}
+            />
+            <input
+              className="general-input"
+              type="text"
+              name="bio"
+              placeholder="Bio"
+              value={profileData.bio}
+              onChange={handleInputChange}
+            />
+            <input
+              className="general-input"
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={profileData.location}
+              onChange={handleInputChange}
+            />
+            <input
+              className="general-input"
+              type="text"
+              name="linkedin_link"
+              placeholder="LinkedIn"
+              value={profileData.linkedin_link}
+              onChange={handleInputChange}
+            />
+            <input
+              className="general-input"
+              type="text"
+              name="instagram_link"
+              placeholder="Instagram"
+              value={profileData.instagram_link}
+              onChange={handleInputChange}
+            />
+            <input
+              className="general-input"
+              type="text"
+              name="twitter_link"
+              placeholder="Twitter"
+              value={profileData.twitter_link}
+              onChange={handleInputChange}
+            />
+            <div className="button-group">
+              <div className="general-button" onClick={toggleEditMode}>
+                Save Profile
+              </div>
+              <div className="general-button" onClick={handleBackClick}>
+                Back
+              </div>
+            </div>
+          </>
         ) : (
-          <p>{userInfo.user?.username}</p>
-        )}
-        {editMode ? (
-          <input
-            className="general-input"
-            type="text"
-            name="bio"
-            placeholder="Bio"
-            value={profileData.bio}
-            onChange={handleInputChange}
-          />
-        ) : (
-          userInfo.user?.profile?.bio && <p>{userInfo.user.profile.bio}</p>
+          <>
+            <p>{userInfo.user?.username}</p>
+            {userInfo.user?.profile?.bio && <p>{userInfo.user.profile.bio}</p>}
+            {userInfo.user?.profile?.location && (
+              <p>{userInfo.user.profile.location}</p>
+            )}
+            {userInfo.user?.profile?.linkedin_link && (
+              <p>{userInfo.user.profile.linkedin_link}</p>
+            )}
+            {userInfo.user?.profile?.instagram_link && (
+              <p>{userInfo.user.profile.instagram_link}</p>
+            )}
+            {userInfo.user?.profile?.twitter_link && (
+              <p>{userInfo.user.profile.twitter_link}</p>
+            )}
+          </>
         )}
       </div>
-      <div className="general-button" onClick={toggleEditMode}>
-        {editMode ? "Save Profile" : "Edit Profile"}
-      </div>
+      {!editMode && (
+        <div className="general-button" onClick={toggleEditMode}>
+          Edit Profile
+        </div>
+      )}
       <div className="following-info-wrapper">
         <div className="following-count">
           <GoPersonFill />
@@ -76,59 +144,6 @@ const ProfileLeft = () => {
           <p>following - </p>
           {userInfo.user?.followers ? userInfo.user?.followers?.length : 0}
           <p>followers</p>
-        </div>
-        <div className="edit-section">
-          {editMode ? (
-            <div>
-              <input
-                className="general-input"
-                type="text"
-                name="location"
-                placeholder="Location"
-                value={profileData.location}
-                onChange={handleInputChange}
-              />
-              <input
-                className="general-input"
-                type="text"
-                name="linkedin_link"
-                placeholder="LinkedIn"
-                value={profileData.linkedin_link}
-                onChange={handleInputChange}
-              />
-              <input
-                className="general-input"
-                type="text"
-                name="instagram_link"
-                placeholder="Instagram"
-                value={profileData.instagram_link}
-                onChange={handleInputChange}
-              />
-              <input
-                className="general-input"
-                type="text"
-                name="twitter_link"
-                placeholder="Twitter"
-                value={profileData.twitter_link}
-                onChange={handleInputChange}
-              />
-            </div>
-          ) : (
-            <>
-              {userInfo.user?.profile?.location && (
-                <p>{userInfo.user.profile.location}</p>
-              )}
-              {userInfo.user?.profile?.linkedin_link && (
-                <p>{userInfo.user.profile.linkedin_link}</p>
-              )}
-              {userInfo.user?.profile?.instagram_link && (
-                <p>{userInfo.user.profile.instagram_link}</p>
-              )}
-              {userInfo.user?.profile?.twitter_link && (
-                <p>{userInfo.user.profile.twitter_link}</p>
-              )}
-            </>
-          )}
         </div>
       </div>
     </div>
