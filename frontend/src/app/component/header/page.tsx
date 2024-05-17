@@ -10,6 +10,12 @@ const Header: React.FC = () => {
   const { userInfo } = useEmailContext();
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
@@ -17,6 +23,11 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    router.push("/login");
+  };
+
+  const handleLogin = () => {
     router.push("/login");
   };
 
@@ -37,17 +48,13 @@ const Header: React.FC = () => {
           <Link href="/">Home</Link>
         </div>
 
-        {/* <div className="header-links">
-          <Link href="/about">Stories</Link>
-        </div> */}
-
         <div className="header-links">
           <Link href="/profile">Profile</Link>
         </div>
       </div>
 
       <div className="user-profile">
-        {userInfo.user ? (
+        {isLoggedIn && userInfo.user ? (
           <div className="dropdown">
             <img
               src={userInfo.user.profile.profile_picture}
@@ -60,7 +67,14 @@ const Header: React.FC = () => {
             )}
           </div>
         ) : (
-          <img src={defaultImage.src}></img>
+          <div className="dropdown">
+            <img src={defaultImage.src} onClick={handleDropdownToggle} />
+            {showDropdown && (
+              <div className="dropdown-content">
+                <button onClick={handleLogin}>Sign In</button>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </header>

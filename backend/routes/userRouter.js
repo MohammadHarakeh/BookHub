@@ -14,12 +14,7 @@ const {
 
 router.get("/getLoggedinUser", authMiddleware, getLoggedinUser);
 router.get("/getAllUsers", authMiddleware, getAllUsers);
-router.post(
-  "/updateProfile",
-  authMiddleware,
-  multerMiddleware.profilePictureUpload,
-  updateProfile
-);
+router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/googleLogin", googleLogin);
 router.post("/followUser/:followeeId", authMiddleware, followUser);
 router.get("/getFollowedUser", authMiddleware, getFollowedUser);

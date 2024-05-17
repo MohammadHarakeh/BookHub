@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./page.css";
 import defaultImage from "../../../../public/images/defaultImage.png";
 import { useEmailContext } from "@/context/emailContext";
 import { GoPersonFill } from "react-icons/go";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
+import { ToastContainer, toast } from "react-toastify";
 
 const ProfileLeft = () => {
   const { userInfo, setUserInfo } = useEmailContext();
@@ -17,8 +18,8 @@ const ProfileLeft = () => {
     instagram_link: userInfo.user?.profile?.instagram_link || "",
     twitter_link: userInfo.user?.profile?.twitter_link || "",
   });
-
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const updateProfile = async () => {
     const formData = new FormData();
@@ -38,16 +39,17 @@ const ProfileLeft = () => {
         formData
       );
       if (response.status === 200) {
-        alert("Profile updated successfully");
+        toast.success("Profile updated successfully");
         setUserInfo({ ...userInfo, user: response.data.user });
+        console.log(userInfo);
         setEditMode(false);
       }
     } catch (error) {
-      alert("Profile update failed");
+      toast.error("Profile update failed");
     }
   };
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfileData({
       ...profileData,
@@ -59,8 +61,27 @@ const ProfileLeft = () => {
     setEditMode(!editMode);
   };
 
-  const handleFileChange = (e: any) => {
-    setProfilePicture(e.target.files[0]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setProfilePicture(selectedFile);
+        setProfileData((prevProfileData) => ({
+          ...prevProfileData,
+          profile_picture: reader.result as string, // save image URL to profile_data
+        }));
+      };
+
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const handleBackClick = () => {
@@ -77,7 +98,11 @@ const ProfileLeft = () => {
 
   return (
     <div className="profileleft-wrapper">
-      <div className="profileleft-image">
+      <ToastContainer
+        theme="dark"
+        toastStyle={{ backgroundColor: "#0e0f32" }}
+      />
+      <div className="profileleft-image" onClick={handleImageClick}>
         <img
           src={
             userInfo.user?.profile?.profile_picture
@@ -86,7 +111,12 @@ const ProfileLeft = () => {
           }
           alt="User Picture"
         />
-        {editMode && <input type="file" onChange={handleFileChange} />}
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
       </div>
       <div className="profileleft-info">
         {editMode ? (
