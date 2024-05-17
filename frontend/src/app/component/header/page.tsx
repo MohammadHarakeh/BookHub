@@ -7,7 +7,7 @@ import defaultImage from "../../../../public/images/defaultImage.png";
 import { useRouter } from "next/navigation";
 
 const Header: React.FC = () => {
-  const { userInfo } = useEmailContext();
+  const { userInfo, themeMode, toggleTheme } = useEmailContext();
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,11 +47,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header>
+    <header className={themeMode === "dark" ? "" : "light-mode"}>
+      {" "}
       <div className="header-logo" onClick={() => router.push("/")}>
         <img src={mainLogo.src} alt="My Image" />
       </div>
-
       <div className="header-links-wrapper">
         <div className="header-links">
           <Link href="/">Home</Link>
@@ -61,7 +61,16 @@ const Header: React.FC = () => {
           <Link href="/profile">Profile</Link>
         </div>
       </div>
-
+      <div className="toggle-switch">
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={themeMode === "light"}
+            onChange={toggleTheme}
+          />
+          <span className="slider round"></span>
+        </label>
+      </div>
       <div className="user-profile">
         <div className="dropdown">
           <img
