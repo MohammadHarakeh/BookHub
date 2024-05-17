@@ -396,9 +396,12 @@ const toggleStarRepo = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const repositoryExists = user.repositories.some((repo) =>
-      repo._id.equals(repositoryId)
-    );
+    const repositoryExists =
+      user.repositories.some((repo) => repo._id.equals(repositoryId)) ||
+      user.collaboratingRepositories.some((collabRepo) =>
+        collabRepo._id.equals(repositoryId)
+      );
+
     if (!repositoryExists) {
       return res.status(404).json({ error: "Repository not found" });
     }

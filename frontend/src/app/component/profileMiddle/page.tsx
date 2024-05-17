@@ -80,7 +80,6 @@ const ProfileMiddle: React.FC = () => {
       if (response.status === 200) {
         console.log("Toggled favorite repository successfully");
         toast.success("Toggled favorite repository successfully");
-        // Update starred repositories state
         setStarredRepos((prevStarredRepos) =>
           prevStarredRepos.includes(repositoryId)
             ? prevStarredRepos.filter((id) => id !== repositoryId)
@@ -206,7 +205,10 @@ const ProfileMiddle: React.FC = () => {
                       {repo.visibility}
                     </p>
                   </div>
-                  <div className="general-input repo-styling star-styling">
+                  <div
+                    onClick={() => toggleStarRepo(repo.repositoryId)}
+                    className="general-input repo-styling star-styling"
+                  >
                     <FaStar
                       color={
                         starredRepos.includes(repo.repositoryId)
