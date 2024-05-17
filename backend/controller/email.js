@@ -206,9 +206,35 @@ const acceptInvitationToRepository = async (req, res) => {
   }
 };
 
+const declineInvitationToRepository = async (req, res) => {
+  const { invitationToken } = req.body;
+  const user = req.user;
+
+  try {
+    const invitationIndex = user.invitations.findIndex(
+      (invite) => invite.invitationToken === invitationToken
+    );
+
+    if (invitationIndex === -1) {
+      return res.status(404).json({ message: "Invitation not found" });
+    }
+
+    user.invitations.splice(invitationIndex, 1);
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Invitation declined successfully" });
+  } catch (error) {
+    console.error("Error declining invitation:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   forgotPassword,
   resetPassword,
   inviteToRepository,
   acceptInvitationToRepository,
+  declineInvitationToRepository,
 };

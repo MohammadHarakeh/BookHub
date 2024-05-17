@@ -31,7 +31,6 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
 
         invitedFields.forEach((invitation: any) => {
           if (invitation.sender) {
-            console.log("Inviting User ID:", invitation.sender);
             setInvitingUserId(invitation.sender);
             setInvitingUsername(invitation.senderName);
             setInvitingUserPicture(invitation.senderProfilePicture);

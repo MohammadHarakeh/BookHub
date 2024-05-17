@@ -49,6 +49,7 @@ const {
   resetPassword,
   inviteToRepository,
   acceptInvitationToRepository,
+  declineInvitationToRepository,
 } = require("../controller/email");
 
 router.post("/forgotPassword", forgotPassword);
@@ -58,6 +59,11 @@ router.post(
   "/accept-invitation-to-repository",
   authMiddleware,
   acceptInvitationToRepository
+);
+router.post(
+  "/decline-invitation-to-repository",
+  authMiddleware,
+  declineInvitationToRepository
 );
 
 const {
