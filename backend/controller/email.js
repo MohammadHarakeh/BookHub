@@ -99,6 +99,17 @@ const inviteToRepository = async (req, res) => {
       return res.status(404).json({ message: "Recipient user not found" });
     }
 
+    const repository = sender.repositories.find(
+      (repo) => repo._id == repositoryId
+    );
+
+    if (!repository) {
+      console.log(`Repository with ID ${repositoryId} not found for sender.`);
+      return res
+        .status(404)
+        .json({ message: "Repository not found for sender" });
+    }
+
     const { token, expiresAt } = generateInvitationToken();
 
     const invitation = {
@@ -120,15 +131,15 @@ const inviteToRepository = async (req, res) => {
     await recipient.save();
 
     await sendRepositoryInvitationEmail(
-      sender.email,
-      sender.username,
       recipientEmail,
-      token,
-      repositoryId
+      recipient.username,
+      repository.name,
+      sender.username,
+      token
     );
 
     console.log(
-      `Invitation sent from ${sender.username} to ${recipient.username} for repository ${repositoryId}.`
+      `Invitation sent from ${sender.username} to ${recipient.username} for repository ${repository.name}.`
     );
 
     return res.status(200).json({ message: "Invitation sent successfully" });

@@ -28,6 +28,7 @@ const sendPasswordResetEmail = async (to, username, pin) => {
 
 const sendRepositoryInvitationEmail = async (
   to,
+  receiverName,
   repositoryName,
   invitingUsername,
   invitationToken
@@ -38,7 +39,7 @@ const sendRepositoryInvitationEmail = async (
     from: process.env.GOOGLE_EMAIL,
     to,
     subject: "Invitation to join a repository",
-    text: `Dear ${to},\n\nYou have been invited by ${invitingUsername} to join the repository "${repositoryName}". Click on the link to accept the invitation: ${invitationLink}.\n\nBest Regards,\nBookHub Team`,
+    text: `Dear ${receiverName},\n\nYou have been invited by ${invitingUsername} to join the repository "${repositoryName}". Click on the link to accept the invitation: ${invitationLink}.\n\nBest Regards,\nBookHub Team`,
     html: `<p>Dear ${to},</p><p>You have been invited by ${invitingUsername} to join the repository "<strong>${repositoryName}</strong>". Click <a href="${invitationLink}">here</a> to accept the invitation.</p><p>Best Regards,<br>BookHub Team</p>`,
   };
 
