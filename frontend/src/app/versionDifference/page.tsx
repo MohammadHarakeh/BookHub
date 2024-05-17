@@ -43,15 +43,16 @@ const VersionDifference = () => {
         />
         <div className={styles.story_info}>
           <div className={styles.story_info}>
-            {currentRepoInfo &&
-            currentRepoInfo.repo_picture !== undefined &&
-            currentRepoInfo.repo_picture !== "" ? (
+            {currentRepoInfo ? (
               <img
-                src={currentRepoInfo.repo_picture}
                 className={styles.repo_image}
-              ></img>
+                src={`http://localhost:3001/${
+                  currentRepoInfo?.repo_picture?.split("repoPictures\\")[1]
+                }`}
+                alt={currentRepoInfo.name}
+              />
             ) : (
-              <img src={defaultImage.src} className={styles.repo_image}></img>
+              <img src={defaultImage.src} alt="Default Image" />
             )}
 
             <p className={styles.story_name}>
