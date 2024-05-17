@@ -60,15 +60,10 @@ const Header: React.FC = () => {
           <Link href="/profile">Profile</Link>
         </div>
       </div>
-      <div className="toggle-switch">
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={themeMode === "light"}
-            onChange={toggleTheme}
-          />
-          <span className="slider round"></span>
-        </label>
+      <div className="toggle-switch" onClick={toggleTheme}>
+        <div
+          className={`slider round ${themeMode === "light" ? "light" : ""}`}
+        ></div>
       </div>
       <div className="user-profile">
         <div className="dropdown">

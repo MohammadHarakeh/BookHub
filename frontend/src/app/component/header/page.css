@@ -28,7 +28,6 @@ header {
 }
 
 .user-profile img {
-  position: relative;
   width: 6rem;
   border-radius: 50%;
   cursor: pointer;
@@ -38,20 +37,80 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: absolute;
-  width: 6rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  top: 70px;
+  right: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-top: -0.5rem;
+  z-index: 1000;
 }
 
 .dropdown-content button {
   border: none;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
   border-radius: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
+  background-color: #f1f1f1;
 }
 
 .dropdown-content button:hover {
   background-color: #bdbdbd;
+}
+
+.light-mode {
+  background-color: white;
+}
+
+.light-mode .header-links a {
+  color: #000;
+}
+
+.light-mode .header-links a:hover {
+  color: #37ff00;
+}
+
+.light-mode .dropdown-content {
+  background-color: #f9f9f9;
+}
+
+.light-mode .dropdown-content button {
+  background-color: #e0e0e0;
+}
+
+.light-mode .dropdown-content button:hover {
+  background-color: #bdbdbd;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 60px;
+  height: 34px;
+  background-color: rgb(173, 199, 216);
+  border-radius: 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.slider.round {
+  width: 26px;
+  height: 26px;
+  background-color: rgb(239, 246, 247);
+  border-radius: 50%;
+  transition: transform 0.2s;
+  margin-left: 4px;
+}
+
+.slider.round.light {
+  transform: translateX(26px);
+}
+
+.light-mode .toggle-switch {
+  background-color: rgb(58, 149, 209);
 }
