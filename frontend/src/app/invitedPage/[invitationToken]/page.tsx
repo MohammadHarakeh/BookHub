@@ -69,6 +69,27 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
       console.log("Error accepting invitation", error);
     }
   };
+  const declineInvitation = async () => {
+    try {
+      const body = {
+        invitationToken: invitingUserToken,
+      };
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/user/decline-invitation-to-repository`,
+        body
+      );
+
+      if (response.status === 200) {
+        console.log("Invitation declined successfully");
+        router.push("/");
+      } else {
+        console.log("Failed to decline invitation");
+      }
+    } catch (error) {
+      console.log("Error declining invitation", error);
+    }
+  };
 
   useEffect(() => {
     getLoggedinUser();
@@ -100,7 +121,10 @@ const InvitedPage = ({ params }: { params: { invitationToken: string } }) => {
             >
               Accept
             </button>
-            <button className="general-button decline-button invite-card-btn">
+            <button
+              className="general-button decline-button invite-card-btn"
+              onClick={declineInvitation}
+            >
               Decline
             </button>
           </div>
