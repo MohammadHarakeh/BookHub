@@ -243,12 +243,24 @@ const HomeLeft = () => {
     <div className={`homepage-middle`}>
       <div className="homepage-middle-upload-container">
         <div className="homepage-middle-upload">
-          {userProfileImage ? (
-            <img
-              src={userProfileImage}
-              className="user-profile-small"
-              alt="User Profile"
-            />
+          {userInfo?.user?.profile?.profile_picture ? (
+            userInfo?.user?.profile?.profile_picture?.startsWith("https://") ? (
+              <img
+                src={userInfo.user.profile.profile_picture}
+                className="user-profile-small"
+                alt="User Profile"
+              />
+            ) : (
+              <img
+                src={`http://localhost:3001/${
+                  userInfo.user.profile.profile_picture.split(
+                    "profilePictures\\"
+                  )[1]
+                }`}
+                className="user-profile-small"
+                alt="User Profile"
+              />
+            )
           ) : (
             <img
               src={defaultImage.src}
@@ -369,19 +381,6 @@ const HomeLeft = () => {
                   </div>
                 </div>
                 <div className="comment-section">
-                  {userProfileImage ? (
-                    <img
-                      src={userProfileImage}
-                      className="user-profile-small"
-                      alt="User Profile"
-                    />
-                  ) : (
-                    <img
-                      src={defaultImage.src}
-                      className="user-profile-small"
-                      alt="Default Image"
-                    />
-                  )}
                   <input
                     className="blurred-comment homepage-input-text"
                     placeholder="Write a comment..."
@@ -413,23 +412,6 @@ const HomeLeft = () => {
                     {currentPostComments.map((comment) => (
                       <div key={comment._id} className="comments">
                         <div className="comment-profilepicture">
-                          {comment.profile_picture ? (
-                            <img
-                              src={`http://localhost:3001/${
-                                comment.profile_picture.split(
-                                  "profilePictures\\"
-                                )[1]
-                              }`}
-                              alt="Profile Picture"
-                              className="user-profile-small"
-                            />
-                          ) : (
-                            <img
-                              className="user-profile-small"
-                              src={defaultImage.src}
-                              alt="Default Image"
-                            />
-                          )}
                           <div className="comment-time-wrapper">
                             <div className="comment-time">
                               <p>
