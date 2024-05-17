@@ -31,16 +31,28 @@ const Header: React.FC = () => {
     router.push("/login");
   };
 
+  const getProfilePictureSrc = () => {
+    if (isLoggedIn && userInfo.user && userInfo.user.profile) {
+      if (userInfo.user.profile.profile_picture) {
+        // Check if profile picture is from Google
+        if (userInfo.user.profile.profile_picture.startsWith("https://")) {
+          return userInfo.user.profile.profile_picture;
+        } else {
+          // Profile picture is from the local server
+          return `http://localhost:3001/${
+            userInfo.user.profile.profile_picture.split("profilePictures\\")[1]
+          }`;
+        }
+      }
+    }
+    // Return default image source if no profile picture found
+    return defaultImage.src;
+  };
+
   return (
     <header>
-      <div className="header-logo">
-        <img
-          src={mainLogo.src}
-          alt="My Image"
-          onClick={() => {
-            router.push("/");
-          }}
-        />
+      <div className="header-logo" onClick={() => router.push("/")}>
+        <img src={mainLogo.src} alt="My Image" />
       </div>
 
       <div className="header-links-wrapper">
@@ -54,41 +66,23 @@ const Header: React.FC = () => {
       </div>
 
       <div className="user-profile">
-        {isLoggedIn && userInfo.user ? (
-          <div className="dropdown">
-            {userInfo.user.profile.profile_picture ? (
-              <img
-                src={`http://localhost:3001/${
-                  userInfo.user.profile.profile_picture.split(
-                    "profilePictures\\"
-                  )[1]
-                }`}
-                alt="Profile Picture"
-                className="user-profile-small"
-              />
-            ) : (
-              <img
-                src={defaultImage.src}
-                alt="Default Image"
-                className="user-profile-small"
-              />
-            )}
-            {showDropdown && (
-              <div className="dropdown-content">
+        <div className="dropdown">
+          <img
+            src={getProfilePictureSrc()}
+            alt="Profile Picture"
+            className="user-profile-small"
+            onClick={handleDropdownToggle}
+          />
+          {showDropdown && (
+            <div className="dropdown-content">
+              {isLoggedIn ? (
                 <button onClick={handleLogout}>Sign Out</button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="dropdown">
-            <img src={defaultImage.src} onClick={handleDropdownToggle} />
-            {showDropdown && (
-              <div className="dropdown-content">
+              ) : (
                 <button onClick={handleLogin}>Sign In</button>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
