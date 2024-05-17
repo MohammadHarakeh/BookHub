@@ -381,6 +381,34 @@ const HomeLeft = () => {
                   </div>
                 </div>
                 <div className="comment-section">
+                  {userInfo.user.profile.profile_picture ? (
+                    userInfo.user.profile.profile_picture.startsWith(
+                      "https://"
+                    ) ? (
+                      <img
+                        src={userInfo.user.profile.profile_picture}
+                        className="user-profile-small"
+                        alt="User Profile"
+                      />
+                    ) : (
+                      <img
+                        src={`http://localhost:3001/${
+                          userInfo.user.profile.profile_picture.split(
+                            "profilePictures\\"
+                          )[1]
+                        }`}
+                        className="user-profile-small"
+                        alt="User Profile"
+                      />
+                    )
+                  ) : (
+                    <img
+                      src={defaultImage.src}
+                      className="user-profile-small"
+                      alt="Default Image"
+                    />
+                  )}
+
                   <input
                     className="blurred-comment homepage-input-text"
                     placeholder="Write a comment..."
