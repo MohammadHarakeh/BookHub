@@ -88,22 +88,27 @@ const StoryVersions = () => {
         </div>
 
         <div className="all-versions-wrapper">
-          {storyVersions?.versions?.map((version: any, index: any) => (
-            <div key={index} className="version-items">
-              <div
-                onClick={() => {
-                  handleVersionClick(version._id, index);
-                }}
-                className="single-version"
-              >
-                <p>Version {index + 1}</p>
-                <p className="version-createdat">
-                  Created {formatDistanceToNow(new Date(version.createdAt))} ago
-                </p>
+          {storyVersions?.versions?.length > 0 ? (
+            storyVersions.versions.map((version: any, index: any) => (
+              <div key={index} className="version-items">
+                <div
+                  onClick={() => {
+                    handleVersionClick(version._id, index);
+                  }}
+                  className="single-version"
+                >
+                  <p>Version {index + 1}</p>
+                  <p className="version-createdat">
+                    Created {formatDistanceToNow(new Date(version.createdAt))}{" "}
+                    ago
+                  </p>
+                </div>
+                <hr />
               </div>
-              <hr />
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="empty-state">No versions available</div>
+          )}
         </div>
       </div>
       <Footer />
