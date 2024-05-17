@@ -115,9 +115,18 @@ const HomeRight: React.FC = () => {
         {visibleUsers.map((user) => (
           <div key={user._id} className="right-content">
             {user.profile.profile_picture ? (
-              <img src={user.profile.profile_picture} alt={user.username} />
+              user.profile.profile_picture.startsWith("https://") ? (
+                <img src={user.profile.profile_picture} alt={user.username} />
+              ) : (
+                <img
+                  src={`http://localhost:3001/${
+                    user.profile.profile_picture.split("profilePictures\\")[1]
+                  }`}
+                  alt={user.username}
+                />
+              )
             ) : (
-              <img src={defaultImage.src} alt="Default"></img>
+              <img src={defaultImage.src} alt="Default" />
             )}
 
             <p>{user.username}</p>
