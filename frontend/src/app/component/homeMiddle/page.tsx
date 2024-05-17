@@ -298,13 +298,21 @@ const HomeLeft = () => {
           <div key={post._id} className="posts">
             <div className="posts-info">
               {post.profile_picture ? (
-                <img
-                  src={`http://localhost:3001/${
-                    post.profile_picture.split("profilePictures\\")[1]
-                  }`}
-                  alt="Profile Picture"
-                  className="user-profile-small"
-                />
+                post.profile_picture.startsWith("https://") ? (
+                  <img
+                    src={post.profile_picture}
+                    alt="Profile Picture"
+                    className="user-profile-small"
+                  />
+                ) : (
+                  <img
+                    src={`http://localhost:3001/${
+                      post.profile_picture.split("profilePictures\\")[1]
+                    }`}
+                    alt="Profile Picture"
+                    className="user-profile-small"
+                  />
+                )
               ) : (
                 <img
                   src={defaultImage.src}

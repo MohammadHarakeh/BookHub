@@ -34,18 +34,15 @@ const Header: React.FC = () => {
   const getProfilePictureSrc = () => {
     if (isLoggedIn && userInfo.user && userInfo.user.profile) {
       if (userInfo.user.profile.profile_picture) {
-        // Check if profile picture is from Google
         if (userInfo.user.profile.profile_picture.startsWith("https://")) {
           return userInfo.user.profile.profile_picture;
         } else {
-          // Profile picture is from the local server
           return `http://localhost:3001/${
             userInfo.user.profile.profile_picture.split("profilePictures\\")[1]
           }`;
         }
       }
     }
-    // Return default image source if no profile picture found
     return defaultImage.src;
   };
 
