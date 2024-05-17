@@ -72,12 +72,15 @@ const StoryVersions = () => {
         <div className="story-version-container">
           {storyVersions ? (
             <img
-              src={storyVersions.repo_picture || defaultImage.src}
-              alt={storyVersions.name || "Default Image"}
+              src={`http://localhost:3001/${
+                storyVersions?.repo_picture?.split("repoPictures\\")[1]
+              }`}
+              alt={storyVersions.name}
             />
           ) : (
             <img src={defaultImage.src} alt="Default Image" />
           )}
+
           <p className="story-name-title">{storyVersions?.name}</p>
           <p className="general-input versions-visibility">
             {storyVersions?.visibility}
