@@ -440,6 +440,32 @@ const HomeLeft = () => {
                     {currentPostComments.map((comment) => (
                       <div key={comment._id} className="comments">
                         <div className="comment-profilepicture">
+                          {comment.profile_picture ? (
+                            comment.profile_picture.startsWith("https://") ? (
+                              <img
+                                src={comment.profile_picture}
+                                alt="Profile Picture"
+                                className="user-profile-small"
+                              />
+                            ) : (
+                              <img
+                                src={`http://localhost:3001/${
+                                  comment.profile_picture.split(
+                                    "profilePictures\\"
+                                  )[1]
+                                }`}
+                                alt="Profile Picture"
+                                className="user-profile-small"
+                              />
+                            )
+                          ) : (
+                            <img
+                              src={defaultImage.src}
+                              alt="Default Image"
+                              className="user-profile-small"
+                            />
+                          )}
+
                           <div className="comment-time-wrapper">
                             <div className="comment-time">
                               <p>
