@@ -1,8 +1,8 @@
 .homepage-left {
   background-color: #0e0f32;
+  color: #fff;
   height: 100%;
   width: 27rem;
-  color: #fff;
   padding-left: 4rem;
   padding-right: 2rem;
   padding-bottom: 1rem;
@@ -11,8 +11,8 @@
 .homepage-left-title {
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
   align-items: center;
+  flex-direction: row;
   gap: 1.5rem;
   font-size: 1.5rem;
   padding-top: 1rem;
@@ -53,4 +53,17 @@
 
 .user-repositories h2 {
   margin: 1rem 0rem;
+}
+
+.light-mode .homepage-left {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.light-mode .homepage-left-stories p {
+  background-color: #e0e0e0;
+}
+
+.light-mode .user-stories p:hover {
+  background-color: #c0c0c0;
 }

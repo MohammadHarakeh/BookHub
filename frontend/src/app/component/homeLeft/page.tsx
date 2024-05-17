@@ -39,7 +39,7 @@ interface UserInfo {
 
 const HomeLeft: React.FC = () => {
   const router = useRouter();
-  const { userInfo } = useEmailContext();
+  const { userInfo, themeMode, toggleTheme } = useEmailContext();
   const { setRepoInfo } = useEmailContext();
   const { collabInfo, setCollabInfo } = useEmailContext();
   const { setAllCollaboratingRepos } = useEmailContext();
@@ -175,86 +175,94 @@ const HomeLeft: React.FC = () => {
   }, [collabInfoId]);
 
   return (
-    <div className="homepage-left">
-      <div className="homepage-left-title">
-        <p>Collaboration</p>
-        <button
-          onClick={() => router.push("/createRepo")}
-          className="general-button"
-        >
-          <FaPlus /> New
-        </button>
-      </div>
+    <div
+      className={`homepage-left ${themeMode === "dark" ? "" : "light-mode"}`}
+    >
+      <div className="homepage-left-container">
+        <div className="homepage-left-title">
+          <p>Collaboration</p>
+          <button
+            onClick={() => router.push("/createRepo")}
+            className="general-button"
+          >
+            <FaPlus /> New
+          </button>
+        </div>
 
-      <div className="homepage-left-stories">
-        <div className="user-repositories">
-          <h2>Your Repositories</h2>
-          {userInfo &&
-            userInfo.user &&
-            userInfo.user.repositories.length === 0 && (
+        <div className="homepage-left-stories">
+          <div className="user-repositories">
+            <h2>Your Repositories</h2>
+            {userInfo &&
+              userInfo.user &&
+              userInfo.user.repositories.length === 0 && (
+                <div className="empty-repo">
+                  <p>You currently have no repositories.</p>
+                </div>
+              )}
+            {userInfo.user &&
+              userInfo.user.repositories &&
+              userInfo.user.repositories.length > 0 && (
+                <div className="user-stories">
+                  {userInfo.user.repositories
+                    .slice(0, displayedRepositories)
+                    .map((repo: Repository, index: number) => (
+                      <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
+                        {repo.name}
+                      </p>
+                    ))}
+
+                  {userInfo.user.repositories.length >
+                    displayedRepositories && (
+                    <div className="story-left-button">
+                      <button
+                        onClick={handleShowMore}
+                        className="general-button"
+                      >
+                        Show More
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+          </div>
+
+          <div className="collaborating-repositories">
+            <h2>Collaborating Repositories</h2>
+            {collaboratingReposInfo.length === 0 && (
               <div className="empty-repo">
-                <p>You currently have no repositories.</p>
+                <p>You currently have no collaborating repositories.</p>
               </div>
             )}
-          {userInfo.user &&
-            userInfo.user.repositories &&
-            userInfo.user.repositories.length > 0 && (
+
+            {collaboratingReposInfo.length > 0 && (
               <div className="user-stories">
-                {userInfo.user.repositories
-                  .slice(0, displayedRepositories)
-                  .map((repo: Repository, index: number) => (
-                    <p key={index} onClick={() => clickedRepoInfo(repo._id)}>
+                {collaboratingReposInfo
+                  .slice(0, displayedCollaboratingRepositories)
+                  .map((repo: any, index: number) => (
+                    <p
+                      key={index}
+                      onClick={() => {
+                        clickedCollabRepoInfo(repo.repositoryId);
+                      }}
+                    >
                       {repo.name}
                     </p>
                   ))}
 
-                {userInfo.user.repositories.length > displayedRepositories && (
+                {collaboratingReposInfo.length >
+                  displayedCollaboratingRepositories && (
                   <div className="story-left-button">
-                    <button onClick={handleShowMore} className="general-button">
+                    <button
+                      onClick={handleShowMoreCollabRepos}
+                      className="general-button"
+                    >
                       Show More
                     </button>
                   </div>
                 )}
               </div>
             )}
-        </div>
-
-        <div className="collaborating-repositories">
-          <h2>Collaborating Repositories</h2>
-          {collaboratingReposInfo.length === 0 && (
-            <div className="empty-repo">
-              <p>You currently have no collaborating repositories.</p>
-            </div>
-          )}
-
-          {collaboratingReposInfo.length > 0 && (
-            <div className="user-stories">
-              {collaboratingReposInfo
-                .slice(0, displayedCollaboratingRepositories)
-                .map((repo: any, index: number) => (
-                  <p
-                    key={index}
-                    onClick={() => {
-                      clickedCollabRepoInfo(repo.repositoryId);
-                    }}
-                  >
-                    {repo.name}
-                  </p>
-                ))}
-
-              {collaboratingReposInfo.length >
-                displayedCollaboratingRepositories && (
-                <div className="story-left-button">
-                  <button
-                    onClick={handleShowMoreCollabRepos}
-                    className="general-button"
-                  >
-                    Show More
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
