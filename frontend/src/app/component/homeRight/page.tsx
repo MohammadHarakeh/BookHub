@@ -18,9 +18,7 @@ interface UserData {
 
 const HomeRight: React.FC = () => {
   const [allUsers, setAllUsers] = useState<UserData[]>([]);
-  const [visibleUsers, setVisibleUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(false);
-  const [hasMoreUsers, setHasMoreUsers] = useState(true);
 
   const fetchUsers = async () => {
     try {
@@ -35,7 +33,6 @@ const HomeRight: React.FC = () => {
         console.log(response.data.users);
 
         if (newUsers.length === 0) {
-          setHasMoreUsers(false);
           return;
         }
 
@@ -44,7 +41,6 @@ const HomeRight: React.FC = () => {
         const sixRandomUsers = shuffledUsers.slice(0, 6);
 
         setAllUsers(sixRandomUsers);
-        setVisibleUsers(sixRandomUsers.slice(0, 3));
       } else {
         console.error("Failed to fetch users");
       }
@@ -80,27 +76,12 @@ const HomeRight: React.FC = () => {
       if (response.status === 200) {
         console.log("Followed/Unfollowed user successfully");
 
-        setVisibleUsers((prevVisibleUsers) =>
-          prevVisibleUsers.map((user) =>
-            user._id === followeeId
-              ? { ...user, following: !user.following }
-              : user
-          )
-        );
         followingUsers();
       } else {
         console.log("Failed to toggle follow");
       }
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const handleShowMore = () => {
-    const nextIndex = visibleUsers.length + 2;
-    setVisibleUsers(allUsers.slice(0, nextIndex));
-    if (nextIndex >= allUsers.length) {
-      setHasMoreUsers(false);
     }
   };
 
@@ -112,7 +93,7 @@ const HomeRight: React.FC = () => {
     <div className="homepage-right">
       <div className="right-title">Suggested Users</div>
       <div className="right-container">
-        {visibleUsers.map((user) => (
+        {allUsers.map((user) => (
           <div key={user._id} className="right-content">
             {user.profile.profile_picture ? (
               user.profile.profile_picture.startsWith("https://") ? (
@@ -141,7 +122,7 @@ const HomeRight: React.FC = () => {
             </button>
           </div>
         ))}
-        {loading && <p>Loading...</p>}
+        {/* {loading && <p>Loading...</p>}
         {!loading && hasMoreUsers && (
           <p className="show-more-button" onClick={handleShowMore}>
             Show More
@@ -149,7 +130,7 @@ const HomeRight: React.FC = () => {
         )}
         {!loading && !hasMoreUsers && (
           <p className="no-more-text">No more users to show</p>
-        )}
+        )} */}
       </div>
     </div>
   );
