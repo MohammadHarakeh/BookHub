@@ -13,9 +13,15 @@
 
 - As a user, I want to browse user posts so that i can get inspired and react to their posts.
 - As a user, I want to be able to create a project were i can invite multiple people to collaborate with me on the idea.
-- As a user, I want to be able to view previous versions of my project to compare the changes
+- As a user, I want to be able to view previous versions of my project to compare the changes made.
 
 <br><br>
+
+### Collaborator Stories
+
+- As a collaborator, I want to be able to get invited by other users and collaborate with them.
+- As a collaborator, I want to be able to modify and make changes to the story.
+- As a collaborator, I want the story to be shown in my profile for other people to view.
 
 <!-- Tech stack -->
 <img src="./readme/title3.svg"/>
