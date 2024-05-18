@@ -68,11 +68,11 @@ const Header: React.FC = () => {
           <Link href="/profile">Profile</Link>
         </div>
       </div>
-      <div className="toggle-switch" onClick={toggleTheme}>
+      {/* <div className="toggle-switch" onClick={toggleTheme}>
         <div
           className={`slider round ${themeMode === "light" ? "light" : ""}`}
-        ></div>
-      </div>
+        ></div>asd
+      </div> */}
       <div className="user-profile">
         <div className="dropdown">
           <img

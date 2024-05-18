@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./page.module.css";
 import "../globals.css";
 import Header from "../component/header/page";
@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { IoMdClose } from "react-icons/io";
+import Quill from "quill"; // Import Quill directly
+import registerQuillSpellChecker from "react-quill-spell-checker";
 
 const EditRepo = () => {
   const { userInfo } = useEmailContext();
@@ -181,12 +183,18 @@ const EditRepo = () => {
   }, [summarizedText]);
 
   useEffect(() => {
-    console.log(repoInfo.repo_picture.split("repoPictures\\")[1]);
+    console.log(repoInfo?.repo_picture.split("repoPictures\\")[1]);
   }, []);
 
   useEffect(() => {
-    console.log("Repository Image Path:", repoInfo.repo_picture);
+    console.log("Repository Image Path:", repoInfo?.repo_picture);
   }, [repoInfo]);
+
+  useEffect(() => {
+    const Quill = ReactQuill.Quill;
+    registerQuillSpellChecker(Quill);
+  }, []);
+
   return (
     <div>
       <Header />
