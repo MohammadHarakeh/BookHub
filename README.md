@@ -23,12 +23,14 @@
 - As a collaborator, I want to be able to modify and make changes to the story.
 - As a collaborator, I want the story to be shown in my profile for other people to view.
 
+<br><br>
+
 <!-- Tech stack -->
 <img src="./readme/title3.svg"/>
 
-### Coffee Express is built using the following technologies:
+### BookHub is built using the following technologies:
 
-- This project uses the [Flutter app development framework](https://flutter.dev/). Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
+- This project uses the [Next.js development framework](https://nextjs.org/docs). Next.js is a React-based web framework that enables server-side rendering, static site generation, and other powerful features for building modern web applications.
 - For persistent storage (database), the app uses the [Hive](https://hivedb.dev/) package which allows the app to create a custom storage schema and save it to a local database.
 - To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
   - 🚨 Currently, notifications aren't working on macOS. This is a known issue that we are working to resolve!
