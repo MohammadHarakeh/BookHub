@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { IoMdClose } from "react-icons/io";
+import registerQuillSpellChecker from "react-quill-spell-checker";
 
 const EditRepo = () => {
   const { userInfo } = useEmailContext();
@@ -152,6 +153,11 @@ const EditRepo = () => {
       generateImage();
     }
   }, [summarizedText]);
+
+  useEffect(() => {
+    const Quill = ReactQuill.Quill;
+    registerQuillSpellChecker(Quill);
+  }, []);
 
   return (
     <div>

@@ -14,7 +14,6 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { IoMdClose } from "react-icons/io";
-import Quill from "quill"; // Import Quill directly
 import registerQuillSpellChecker from "react-quill-spell-checker";
 
 const EditRepo = () => {
