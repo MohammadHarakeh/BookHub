@@ -31,6 +31,7 @@
 ### BookHub is built using the following technologies:
 
 - This project uses the [Next.js development framework](https://nextjs.org/docs). Next.js is a React-based web framework that enables server-side rendering, static site generation, and other powerful features for building modern web applications.
+- The website uses [useContext](https://vercel.com/guides/react-context-state-management-nextjs) for state management, providing a state container. This ensures efficient data flow throughout the application.
 - For persistent storage (database), the app uses the [Hive](https://hivedb.dev/) package which allows the app to create a custom storage schema and save it to a local database.
 - To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
   - 🚨 Currently, notifications aren't working on macOS. This is a known issue that we are working to resolve!
