@@ -70,8 +70,8 @@
 | ![Landing](./readme/SignIn.gif)         | ![fsdaf](./readme/SignUp.gif)         |
 | Google Login screen                     | Home Screen                           |
 | ![Landing](./readme/GoogleSignin.gif)   | ![fsdaf](./readme/HomePage.gif)       |
-| Create Story screen                     | Register screen                       |
-| ![Landing](./readme/CreateStory.gif)    | ![fsdaf](./readme/demo/1440x1024.png) |
+| Create Story screen                     | Commit Story screen                   |
+| ![Landing](./readme/CreateStory.gif)    | ![fsdaf](./readme/CommitStory.gif)    |
 | Home screen                             | Menu Screen                           |
 | ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
 
