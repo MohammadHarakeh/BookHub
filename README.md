@@ -226,36 +226,35 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 <!-- How to run -->
 <img src="./readme/title10.svg"/>
 
-> To set up Coffee Express locally, follow these steps:
+> To set up BookHub locally, follow these steps:
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+1. Install [Node & NPM](https://nodejs.org/en/download/package-manager)
 
-- npm
+2. Run npm install
 
-```sh
-npm install npm@latest -g
-```
+3. Create a .env file and add the below information
 
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [example](https://example.com)
-2. Clone the repo
-   git clone [github](https://github.com/your_username_/Project-Name.git)
-3. Install NPM packages
-   ```sh
-   npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+   JWT_SECRET_KEY=
+   TOKEN_HEADER_KEY=
+   NEXT_PUBLIC_GOOGLE_CLIENT_ID=
+   OPENAI_API_KEY=
+   GOOGLE_EMAIL=
+   GOOGLE_PASS=
+   MONGODB_URI=
+   PORT=
    ```
 
-Now, you should be able to run Coffee Express locally and explore its features.
+4. run the frontend using
 
-```
+   ```
+   npm run dev
+   ```
 
-```
+5. run the backend using
+
+   ```
+   nodemon .
+   ```
