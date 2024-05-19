@@ -24,5 +24,7 @@ app.use(express.static("profilePictures"));
 app.listen(port, (err) => {
   if (err) throw new Error(err);
 
-  console.log(`Server is running on http://localhost:${port}`);
+  connect();
+
+  console.log(`Server is running on port: ${port}`);
 });
