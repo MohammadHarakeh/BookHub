@@ -113,9 +113,12 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 <!-- AWS Deployment -->
 <img src="./readme/title8.svg"/>
 
-### Efficient AI Deployment: Unleashing the Potential with AWS Integration:
+# Setting up Cloudflare Tunnel and MongoDB on AWS
 
-- This project leverages AWS deployment strategies to seamlessly integrate and deploy natural language processing models. With a focus on scalability, reliability, and performance, we ensure that AI applications powered by these models deliver robust and responsive solutions for diverse use cases.
+1. **Download cloudflared:**
+   ```bash
+   wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+   ```
 
 <br><br>
 
