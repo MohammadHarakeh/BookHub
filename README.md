@@ -47,7 +47,7 @@
 
 ### Mockups
 
-| Login screen                              | Menu Screen                               | Order Screen                           |
+| Login screen                              | Home Screen                               | Story Screen                           |
 | ----------------------------------------- | ----------------------------------------- | -------------------------------------- |
 | ![Landing](<./readme/Signin(Mockup).png>) | ![fsdaf](<./readme/HomePage(Mockup).png>) | ![fsdaf](<./readme/Story(Mockup).png>) |
 
