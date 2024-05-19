@@ -67,7 +67,7 @@
 
 | Login screen                              | Register screen                         |
 | ----------------------------------------- | --------------------------------------- |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](./readme/SignUp.gif)           |
+| ![Landing](./readme/SignIn.gif.gif)       | ![fsdaf](./readme/SignUp.gif)           |
 | Home screen                               | Menu Screen                             |
 | ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
 
