@@ -151,8 +151,28 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
    nano config.yml
    ```
 
-   <details>
-   <summary>Click to copy command</summary>
+7. Enter the following into the config file:
+
+   ```
+   tunnel: tunnel-id-copied
+   credentials-file: /home/ubuntu/.cloudflared/tunnel-id-copied.json
+   ```
+
+   ingress:
+
+   - hostname: yourdomainconfigured
+     service: http://localhost:3001
+   - service: http_status:404
+
+   ```
+
+   ```
+
+8. Run cloudflared:
+
+   ```
+   cloudflared tunnel run tunnel-name
+   ```
 
 <br><br>
 
@@ -175,9 +195,10 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 This is an example of how to list things you need to use the software and how to install them.
 
 - npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
+```sh
+npm install npm@latest -g
+```
 
 ### Installation
 
