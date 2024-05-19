@@ -46,7 +46,7 @@ const StoryVersions = () => {
 
       if (response.status === 200) {
         setRepoInfo(response.data.repository);
-        router.push("/editRepo");
+        router.push("/editCollaboratorRepo");
       } else {
         console.log("Failed to get repo data");
       }

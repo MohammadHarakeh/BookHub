@@ -18,7 +18,7 @@ import registerQuillSpellChecker from "react-quill-spell-checker";
 
 const EditRepo = () => {
   const { userInfo } = useEmailContext();
-  const { repoInfo } = useEmailContext();
+  const { repoInfo, collabInfo } = useEmailContext();
   const [content, setContent] = useState<string>("");
   const [selection, setSelection] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
@@ -182,7 +182,7 @@ const EditRepo = () => {
   }, [summarizedText]);
 
   useEffect(() => {
-    console.log(repoInfo?.repo_picture.split("repoPictures\\")[1]);
+    console.log(repoInfo?.repo_picture?.split("repoPictures\\")[1]);
   }, []);
 
   useEffect(() => {
@@ -192,6 +192,10 @@ const EditRepo = () => {
   useEffect(() => {
     const Quill = ReactQuill.Quill;
     registerQuillSpellChecker(Quill);
+  }, []);
+
+  useEffect(() => {
+    console.log("collab info: ", collabInfo);
   }, []);
 
   return (
@@ -240,7 +244,7 @@ const EditRepo = () => {
               <img
                 className={styles.repo_image}
                 src={`http://localhost:3001/${
-                  repoInfo.repo_picture.split("repoPictures\\")[1]
+                  repoInfo.repo_picture?.split("repoPictures\\")[1]
                 }`}
                 alt="Repository Image"
               />
