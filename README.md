@@ -74,6 +74,8 @@
 | ![Landing](./readme/CreateStory.gif)  | ![fsdaf](./readme/CommitStory.gif)         |
 | Invite screen                         | Accept Invite Screen                       |
 | ![Landing](./readme/InviteUser.gif)   | ![fsdaf](./readme/AcceptInviteToStory.gif) |
+| Invited Story screen                  | Accept Invite Screen                       |
+| ![Landing](./readme/InvitedStory.gif) | ![fsdaf](./readme/AcceptInviteToStory.gif) |
 
 <br><br>
 
