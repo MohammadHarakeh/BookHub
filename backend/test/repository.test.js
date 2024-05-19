@@ -9,7 +9,7 @@ const {
 
 const { register } = require("../controller/auth");
 
-const { toggleLike } = require("../controller/post");
+const { toggleLike, toggleCommentLike } = require("../controller/post");
 
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
@@ -137,6 +137,49 @@ describe("toggleLike Controller", () => {
     User.findOne.mockRejectedValueOnce("Database error");
 
     await toggleLike(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ message: "Internal server error" });
+  });
+});
+
+describe("toggleCommentLike Controller", () => {
+  it("should handle comment not found", async () => {
+    const userId = "mockUserId";
+    const commentId = "mockCommentId";
+    const req = {
+      user: { id: userId },
+      params: { commentId },
+    };
+    const res = {
+      status: jest.fn(() => res),
+      json: jest.fn(),
+    };
+
+    User.findOne.mockResolvedValueOnce(null);
+
+    await toggleCommentLike(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: "Comment not found" });
+  });
+
+  it("should handle internal server error", async () => {
+    const userId = "mockUserId";
+    const commentId = "mockCommentId";
+    const req = {
+      user: { id: userId },
+      params: { commentId },
+    };
+    const res = {
+      status: jest.fn(() => res),
+      json: jest.fn(),
+    };
+
+    // Mock User.findOne to throw an error
+    User.findOne.mockRejectedValueOnce("Database error");
+
+    await toggleCommentLike(req, res);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ message: "Internal server error" });
