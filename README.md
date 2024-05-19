@@ -65,11 +65,11 @@
 
 ### User Screens (Web)
 
-| Login screen                              | Register screen                         |
-| ----------------------------------------- | --------------------------------------- |
-| ![Landing](./readme/SignIn.gif.gif)       | ![fsdaf](./readme/SignUp.gif)           |
-| Home screen                               | Menu Screen                             |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| Login screen                          | Register screen                 |
+| ------------------------------------- | ------------------------------- |
+| ![Landing](./readme/SignIn.gif.gif)   | ![fsdaf](./readme/SignUp.gif)   |
+| Google Login screen                   | Home Screen                     |
+| ![Landing](./readme/GoogleSignin.gif) | ![fsdaf](./readme/HomePage.gif) |
 
 ### Admin Screens (Web)
 
