@@ -52,7 +52,11 @@ const VersionDifference = () => {
                 alt={currentRepoInfo.name}
               />
             ) : (
-              <img src={defaultImage.src} alt="Default Image" />
+              <img
+                className={styles.repo_image}
+                src={defaultImage.src}
+                alt="Default Image"
+              />
             )}
 
             <p className={styles.story_name}>
