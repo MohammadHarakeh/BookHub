@@ -8,6 +8,9 @@ const {
 } = require("../controller/user");
 
 const { register } = require("../controller/auth");
+
+const { toggleLike } = require("../controller/post");
+
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -95,5 +98,47 @@ describe("register Controller", () => {
       error: "Registration failed",
       error: "Hashing error",
     });
+  });
+});
+
+describe("toggleLike Controller", () => {
+  it("should handle post not found", async () => {
+    const userId = "mockUserId";
+    const postId = "mockPostId";
+    const req = {
+      user: { id: userId },
+      params: { postId },
+    };
+    const res = {
+      status: jest.fn(() => res),
+      json: jest.fn(),
+    };
+
+    User.findOne.mockResolvedValueOnce(null);
+
+    await toggleLike(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ message: "Post not found" });
+  });
+
+  it("should handle internal server error", async () => {
+    const userId = "mockUserId";
+    const postId = "mockPostId";
+    const req = {
+      user: { id: userId },
+      params: { postId },
+    };
+    const res = {
+      status: jest.fn(() => res),
+      json: jest.fn(),
+    };
+
+    User.findOne.mockRejectedValueOnce("Database error");
+
+    await toggleLike(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ message: "Internal server error" });
   });
 });
