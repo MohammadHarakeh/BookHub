@@ -117,12 +117,12 @@ const ProfileLeft = () => {
           src={
             imagePreview
               ? imagePreview
-              : userInfo.user.profile.profile_picture &&
-                userInfo.user.profile.profile_picture.startsWith("https://")
-              ? userInfo.user.profile.profile_picture
-              : userInfo.user.profile.profile_picture
+              : userInfo?.user?.profile?.profile_picture &&
+                userInfo?.user?.profile?.profile_picture.startsWith("https://")
+              ? userInfo?.user?.profile?.profile_picture
+              : userInfo?.user?.profile?.profile_picture
               ? `http://localhost:3001/${
-                  userInfo.user.profile.profile_picture.split(
+                  userInfo?.user?.profile?.profile_picture.split(
                     "profilePicture\\"
                   )[1]
                 }`

@@ -75,6 +75,13 @@ const HomeRight: React.FC = () => {
 
       if (response.status === 200) {
         console.log("Followed/Unfollowed user successfully");
+        setAllUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user._id === followeeId
+              ? { ...user, following: !user.following }
+              : user
+          )
+        );
 
         followingUsers();
       } else {
