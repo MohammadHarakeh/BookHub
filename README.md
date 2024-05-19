@@ -116,9 +116,10 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 # Setting up Cloudflare Tunnel and MongoDB on AWS
 
 1. **Download cloudflared:**
-   ```bash
-   wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-   ```
+   [![Copy Command](https://img.shields.io/badge/Copy%20Command-Copy-blue?style=flat-square)](<javascript:void(0)>)
+
+<details>
+<summary>Click to copy command</summary>
 
 <br><br>
 
@@ -162,3 +163,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 
 Now, you should be able to run Coffee Express locally and explore its features.
+
+```
+
+```
