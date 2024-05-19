@@ -116,10 +116,29 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 # Setting up Cloudflare Tunnel and MongoDB on AWS
 
 1. **Download cloudflared:**
-   [![Copy Command](https://img.shields.io/badge/Copy%20Command-Copy-blue?style=flat-square)](<javascript:void(0)>)
 
-<details>
-<summary>Click to copy command</summary>
+   wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+
+2. **Run the installer:**
+
+   ```
+   sudo dpkg -i cloudflared-linux-amd64.deb
+   ```
+
+3. **Authenticate cloudflared on a logged-in account that owns a domain:**
+
+   ```
+   cloudflared login
+   ```
+
+4. Create a tunnel:
+
+   ```
+   cloudflared tunnel create book-hub
+   ```
+
+   <details>
+   <summary>Click to copy command</summary>
 
 <br><br>
 
