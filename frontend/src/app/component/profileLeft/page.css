@@ -19,8 +19,10 @@
 
 .profileleft-image img {
   cursor: pointer;
-  border-radius: 50%;
-  width: 50%;
+  border-radius: 6rem;
+  width: 12rem;
+  height: 12rem;
+  background-color: red;
 }
 
 .profileleft-info {
