@@ -115,66 +115,66 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 
 # Setting up Cloudflare Tunnel and MongoDB on AWS
 
-1. **Download cloudflared:**
+1.  **Download cloudflared:**
 
-   ```
-   wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-   ```
+    ```
+    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+    ```
 
-2. **Run the installer:**
+2.  **Run the installer:**
 
-   ```
-   sudo dpkg -i cloudflared-linux-amd64.deb
-   ```
+    ```
+    sudo dpkg -i cloudflared-linux-amd64.deb
+    ```
 
-3. **Authenticate cloudflared on a logged-in account that owns a domain:**
+3.  **Authenticate cloudflared on a logged-in account that owns a domain:**
 
-   ```
-   cloudflared login
-   ```
+    ```
+    cloudflared login
+    ```
 
-4. Create a tunnel:
+4.  Create a tunnel:
 
-   ```
-   cloudflared tunnel create book-hub
-   ```
+    ```
+    cloudflared tunnel create book-hub
+    ```
 
-5. Copy the ID of the tunnel from the output.
+5.  Copy the ID of the tunnel from the output.
 
-   ```
-   cd ~/.cloudflared
-   ```
+    ```
+    cd ~/.cloudflared
+    ```
 
-6. Edit the config file:
+6.  Edit the config file:
 
-   ```
-   nano config.yml
-   ```
+    ```
+    nano config.yml
+    ```
 
-7. Enter the following into the config file:
+7.  Enter the following into the config file:
 
-   ```
-   tunnel: tunnel-id-copied
-   credentials-file: /home/ubuntu/.cloudflared/tunnel-id-copied.json
+    ```
+    tunnel: tunnel-id-copied
+    credentials-file: /home/ubuntu/.cloudflared/tunnel-id-copied.json
 
-   ingress:
+    ingress:
 
-   - hostname: yourdomainconfigured
-     service: http://localhost:3001
-   - service: http_status:404
-   ```
+    - hostname: yourdomainconfigured
+      service: http://localhost:3001
+    - service: http_status:404
+    ```
 
-8. Run cloudflared:
+8.  Run cloudflared:
 
-   ```
-   cloudflared tunnel run tunnel-name
-   ```
+    ```
+    cloudflared tunnel run tunnel-name
+    ```
 
-9. Install MongoDB
+9.  Install MongoDB
 
-   ```
-   sudo apt install -y mongodb-org
-   ```
+    ```
+    sudo apt install -y mongodb-org
+    ```
 
 10. Start MongoDB service:
 
@@ -188,7 +188,31 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
     sudo systemctl enable mongod
     ```
 
-<br><br>
+12. Start HTTPD (Apache) service:
+
+          ```
+          sudo systemctl start httpd
+          ```
+
+13. Enable HTTPD (Apache) service to start on boot:
+
+    ```
+    sudo systemctl enable httpd
+    ```
+
+14. Start MongoDB service:
+
+    ```
+    sudo systemctl start mongod
+    ```
+
+15. Enable MongoDB service to start on boot:
+
+    ```
+    sudo systemctl enable mongod
+    ```
+
+    <br><br>
 
 <!-- Unit Testing -->
 <img src="./readme/title9.svg"/>
