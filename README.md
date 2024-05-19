@@ -117,7 +117,9 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 
 1. **Download cloudflared:**
 
+   ```
    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+   ```
 
 2. **Run the installer:**
 
@@ -135,6 +137,18 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 
    ```
    cloudflared tunnel create book-hub
+   ```
+
+5. Copy the ID of the tunnel from the output.
+
+   ```
+   cd ~/.cloudflared
+   ```
+
+6. Edit the config file:
+
+   ```
+   nano config.yml
    ```
 
    <details>
