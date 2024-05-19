@@ -238,3 +238,8 @@
   font-size: 2rem;
   margin: 1rem 0rem;
 }
+
+.post-image {
+  max-width: 100%;
+  height: 75vh;
+}

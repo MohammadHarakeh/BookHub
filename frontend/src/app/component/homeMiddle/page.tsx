@@ -340,7 +340,6 @@ const HomeLeft = () => {
                   {new Date(post.createdAt).toLocaleTimeString("en-US", {
                     hour: "numeric",
                     minute: "numeric",
-                    second: "numeric",
                     hour12: true,
                   })}
                 </p>

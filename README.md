@@ -65,7 +65,7 @@
 <!-- Implementation -->
 <img src="./readme/title6.svg"/>
 
-### User Screens (Mobile)
+### User Screens (Web)
 
 | Login screen                              | Register screen                         | Landing screen                          | Loading screen                          |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |

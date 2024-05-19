@@ -119,6 +119,7 @@ const ProfileMiddle: React.FC = () => {
 
   useEffect(() => {
     console.log("profile userinfo: ", userInfo?.user?.repositories);
+    console.log("profile userinfo for user: ", userInfo?.user);
     fetchStarredRepos();
   }, [userInfo]);
 

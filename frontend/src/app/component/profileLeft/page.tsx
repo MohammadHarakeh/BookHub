@@ -43,8 +43,8 @@ const ProfileLeft = () => {
         toast.success("Profile updated successfully");
         setUserInfo({ ...userInfo, user: response.data.user });
         setEditMode(false);
-        setProfilePicture(null); // Reset profilePicture after update
-        setImagePreview(null); // Reset imagePreview after update
+        setProfilePicture(null);
+        setImagePreview(null);
       }
     } catch (error) {
       toast.error("Profile update failed");
@@ -120,11 +120,13 @@ const ProfileLeft = () => {
               : userInfo.user.profile.profile_picture &&
                 userInfo.user.profile.profile_picture.startsWith("https://")
               ? userInfo.user.profile.profile_picture
-              : `http://localhost:3001/${
+              : userInfo.user.profile.profile_picture
+              ? `http://localhost:3001/${
                   userInfo.user.profile.profile_picture.split(
                     "profilePicture\\"
                   )[1]
                 }`
+              : defaultImage.src
           }
           alt="User Picture"
         />
