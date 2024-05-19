@@ -65,24 +65,24 @@
 
 ### User Screens (Web)
 
-| Login screen                          | Register screen                            |
-| ------------------------------------- | ------------------------------------------ |
-| ![Landing](./readme/SignIn.gif)       | ![fsdaf](./readme/SignUp.gif)              |
-| Google Login screen                   | Home Screen                                |
-| ![Landing](./readme/GoogleSignin.gif) | ![fsdaf](./readme/HomePage.gif)            |
-| Create Story screen                   | Commit Story screen                        |
-| ![Landing](./readme/CreateStory.gif)  | ![fsdaf](./readme/CommitStory.gif)         |
-| Invite screen                         | Accept Invite Screen                       |
-| ![Landing](./readme/InviteUser.gif)   | ![fsdaf](./readme/AcceptInviteToStory.gif) |
-| Invited Story screen                  | Different Versions Screen                  |
-| ![Landing](./readme/InvitedStory.gif) | ![fsdaf](./readme/VersionDifference.gif)   |
+| Login screen                             | Register screen                            |
+| ---------------------------------------- | ------------------------------------------ |
+| ![Landing](./readme/SignIn.gif)          | ![fsdaf](./readme/SignUp.gif)              |
+| Google Login screen                      | Home Screen                                |
+| ![Landing](./readme/GoogleSignin.gif)    | ![fsdaf](./readme/HomePage.gif)            |
+| Create Story screen                      | Commit Story screen                        |
+| ![Landing](./readme/CreateStory.gif)     | ![fsdaf](./readme/CommitStory.gif)         |
+| AI Image screen                          | Invite screen                              |
+| ![Landing](./readme/GeneratedImage.gif)  | ![Landing](./readme/InviteUser.gif)        |
+| Invited Story screen                     | Accept Invite Screen                       |
+| ![Landing](./readme/InvitedStory.gif)    | ![fsdaf](./readme/AcceptInviteToStory.gif) |
+| Different Versions Screen                |
+| ![fsdaf](./readme/VersionDifference.gif) |
 
 <br><br>
 
 <!-- Prompt Engineering -->
 <img src="./readme/title7.svg"/>
-
-### Mastering AI Interaction: Unveiling the Power of Prompt Engineering:
 
 - This project uses advanced prompt engineering techniques to optimize the interaction with natural language processing models. By skillfully crafting input instructions, we tailor the behavior of the models to achieve precise and efficient language understanding and generation for various tasks and preferences.
 
