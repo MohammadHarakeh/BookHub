@@ -217,9 +217,7 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 <!-- Unit Testing -->
 <img src="./readme/title9.svg"/>
 
-### Precision in Development: Harnessing the Power of Unit Testing:
-
-- This project employs rigorous unit testing methodologies to ensure the reliability and accuracy of code components. By systematically evaluating individual units of the software, we guarantee a robust foundation, identifying and addressing potential issues early in the development process.
+![fsdaf](./readme/unitTesting.png)
 
 <br><br>
 
