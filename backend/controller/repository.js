@@ -347,13 +347,13 @@ const generateImage = async (req, res) => {
 
     const response = await openai.images.generate({
       model: "dall-e-3",
-      prompt: `give only a cover without text about ${prompt}`,
+      prompt: `Generate a book cover without any text depicting ${prompt}`,
       n: 1,
       size: "1024x1024",
     });
 
     const imageUrl = response.data[0].url;
-    res.status("200").json({ imageUrl });
+    res.status(200).json({ imageUrl });
   } catch (error) {
     console.error("Error generating image:", error);
     res.status(500).json({ error: "Failed to generate image" });
@@ -372,7 +372,7 @@ const generateText = async (req, res) => {
       messages: [
         {
           role: "user",
-          content: `can you summarize the following text by keeping the main points about the story and making it less than 50% characters: ${prompt}`,
+          content: `Can you summarize the provided text while maintaining its main points within a couple of lines and ensuring that it doesn't exceed the original character count? Here's the text: ${prompt}`,
         },
       ],
       model: "gpt-3.5-turbo",
