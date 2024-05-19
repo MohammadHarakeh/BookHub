@@ -104,7 +104,8 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
 
    Experience AI-driven storytelling with Book Hub, where your stories come to life through the power of OpenAI and DALL-E 3.
 
-   | OpenAi propmpt Screen |
+   | OpenAi propmpt Screen           |
+   | ------------------------------- |
    | ![fsdaf](./readme/AiPrompt.png) |
 
 <br><br>
