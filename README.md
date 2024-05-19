@@ -33,9 +33,8 @@
 - This project uses the [Next.js development framework](https://nextjs.org/docs). Next.js is a React-based web framework that enables server-side rendering, static site generation, and other powerful features for building modern web applications.
 - The website uses [useContext](https://vercel.com/guides/react-context-state-management-nextjs) for state management, providing a state container. This ensures efficient data flow throughout the application.
 - For persistent storage (database), the app uses the [MongoDB](https://www.mongodb.com/) database along with the Mongoose package, enabling the app to create a custom storage schema and interact seamlessly with MongoDB, our chosen database solution.
-- To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
-  - 🚨 Currently, notifications aren't working on macOS. This is a known issue that we are working to resolve!
-- The app uses the font ["Work Sans"](https://fonts.google.com/specimen/Work+Sans) as its main font, and the design of the app adheres to the material design guidelines.
+- This project utilizes [Node.js](https://nodejs.org/en) for backend development. Node.js is a runtime environment that allows developers to use JavaScript for server-side scripting, providing features and modules for efficient backend development. With Node.js, developers can handle routing, database operations, authentication, and API development, enabling the creation of powerful and scalable server-side applications.
+- To enrich user experience, our website integrates the advanced [DALLE-3](https://openai.com/index/dall-e-3/) model from [OpenAI](https://openai.com/), harnessing its powerful image generation capabilities. This AI-driven functionality enhances stories created by users by adding vibrant and immersive visuals, bringing their narratives to life with stunning imagery tailored to the context and content of their stories.
 
 <br><br>
 
