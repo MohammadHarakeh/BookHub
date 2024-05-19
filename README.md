@@ -86,19 +86,23 @@
 
 - At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E 3's creative capabilities to transform your stories into immersive, interactive experiences.
 
-- **User-Centric Story Collection:**
+**User-Centric Story Collection:**
+
 - Your journey begins with a personalized questionnaire. We analyze your responses to extract key phrases and words that capture your story's essence.
 
-- **Precise Prompt Crafting:**
+**Precise Prompt Crafting:**
+
 - Using these keywords, we create a prompt that guides OpenAI's GPT model to generate a concise, contextually rich summary of your narrative.
 
-- **Visual Enhancement with DALL-E 3:**
+**Visual Enhancement with DALL-E 3:**
+
 - The summary is then used to generate a high-quality, imaginative image with DALL-E 3, perfectly complementing your story.
 
-- **Contextual Integration:**
+**Contextual Integration:**
+
 - We enrich your story by integrating AI-generated text and visuals with additional data from our database, enhancing the overall experience.
 
-- Experience AI-driven storytelling with Book Hub, where your stories come to life through the power of OpenAI and DALL-E 3.
+Experience AI-driven storytelling with Book Hub, where your stories come to life through the power of OpenAI and DALL-E 3.
 
 <br><br>
 
