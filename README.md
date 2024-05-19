@@ -65,17 +65,13 @@
 
 ### User Screens (Web)
 
-| Login screen                          | Register screen                 |
-| ------------------------------------- | ------------------------------- |
-| ![Landing](./readme/SignIn.gif.gif)   | ![fsdaf](./readme/SignUp.gif)   |
-| Google Login screen                   | Home Screen                     |
-| ![Landing](./readme/GoogleSignin.gif) | ![fsdaf](./readme/HomePage.gif) |
-
-### Admin Screens (Web)
-
 | Login screen                            | Register screen                       |
 | --------------------------------------- | ------------------------------------- |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| ![Landing](./readme/SignIn.gif)         | ![fsdaf](./readme/SignUp.gif)         |
+| Google Login screen                     | Home Screen                           |
+| ![Landing](./readme/GoogleSignin.gif)   | ![fsdaf](./readme/HomePage.gif)       |
+| Create Story screen                     | Register screen                       |
+| ![Landing](./readme/CreateStory.gif)    | ![fsdaf](./readme/demo/1440x1024.png) |
 | Home screen                             | Menu Screen                           |
 | ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
 
