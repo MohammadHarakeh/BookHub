@@ -65,19 +65,19 @@
 
 ### User Screens (Web)
 
-| Login screen                              | Register screen                         | Landing screen                          |
-| ----------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](./readme/SignUp.gif)           | ![fsdaf](https://placehold.co/900x1600) |
-| Home screen                               | Menu Screen                             | Order Screen                            |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| Login screen                              | Register screen                         |
+| ----------------------------------------- | --------------------------------------- |
+| ![Landing](https://placehold.co/900x1600) | ![fsdaf](./readme/SignUp.gif)           |
+| Home screen                               | Menu Screen                             |
+| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
 
 ### Admin Screens (Web)
 
-| Login screen                            | Register screen                       | Landing screen                        |
-| --------------------------------------- | ------------------------------------- | ------------------------------------- |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
-| Home screen                             | Menu Screen                           | Order Screen                          |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| Login screen                            | Register screen                       |
+| --------------------------------------- | ------------------------------------- |
+| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| Home screen                             | Menu Screen                           |
+| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
 
 <br><br>
 
