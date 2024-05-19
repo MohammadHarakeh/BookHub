@@ -58,7 +58,7 @@
 
 ### Architecting Data Excellence: Innovative Database Design Strategies:
 
-| ![ER One](./readme/ERone.png) | ![ER Two](./readme/ERtwo.png) |
+![ER One](./readme/ERone.png) ![ER Two](./readme/ERtwo.png)
 
 <br><br>
 
