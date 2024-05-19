@@ -92,9 +92,9 @@ const Register: React.FC = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value.toLowerCase());
+              setEmail(e.target.value.toLowerCase().trim());
             }}
-          ></input>
+          />
 
           {step === 1 && (
             <button className={styles.continue_btn} onClick={handleContinue}>
