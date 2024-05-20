@@ -20,7 +20,7 @@ const HomeLeft = () => {
   const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>("");
   const [toggleComments, setToggleComments] = useState<boolean>(false);
-  const [comment, setComment] = useState<string>("");
+  const [comments, setComments] = useState<{ [key: string]: string }>({});
   const [currentPostId, setCurrentPostId] = useState<string>("");
   const [currentPostComments, setCurrentPostComments] = useState<any[]>([]);
   const { userLoggedIn, setUserLoggedIn } = useEmailContext();
@@ -169,18 +169,21 @@ const HomeLeft = () => {
     }
   };
 
-  const addComment = async () => {
+  const addComment = async (postId: string) => {
     try {
       const body = {
-        content: comment,
+        content: comments[postId],
       };
       const response = await sendRequest(
         requestMethods.POST,
-        `/user/addComment/${currentPostId}`,
+        `/user/addComment/${postId}`,
         body
       );
       if (response.status === 201) {
-        setComment("");
+        setComments((prevComments) => ({
+          ...prevComments,
+          [postId]: "",
+        }));
         getAllPosts();
         toast.success("Comment added successfully");
       } else {
@@ -193,9 +196,9 @@ const HomeLeft = () => {
     }
   };
 
-  const handleAddComment = () => {
+  const handleAddComment = (postId: string) => {
     if (userLoggedIn) {
-      addComment();
+      addComment(postId);
     } else {
       alert("Please login");
     }
@@ -204,7 +207,10 @@ const HomeLeft = () => {
   const toggleCommentSection = async (postId: string) => {
     setCurrentPostId(postId);
     setToggleComments(!toggleComments);
-    setComment("");
+    setComments((prevComments) => ({
+      ...prevComments,
+      [postId]: "",
+    }));
 
     const post = posts.find((post) => post._id === postId);
     if (post) {
@@ -288,13 +294,14 @@ const HomeLeft = () => {
               <input
                 id="fileInput"
                 type="file"
-                onChange={handleImageChange}
                 ref={fileInputRef}
+                onChange={handleImageChange}
+                style={{ display: "none" }}
               />
+              <button className="general-button" onClick={handleCreatePost}>
+                Post
+              </button>
             </div>
-            <button className="general-button" onClick={handleCreatePost}>
-              Upload
-            </button>
           </div>
         </div>
         <div className="imagePreview">
@@ -412,12 +419,17 @@ const HomeLeft = () => {
                   <input
                     className="blurred-comment homepage-input-text"
                     placeholder="Write a comment..."
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
+                    value={comments[post._id] || ""}
+                    onChange={(e) =>
+                      setComments((prevComments) => ({
+                        ...prevComments,
+                        [post._id]: e.target.value,
+                      }))
+                    }
                   ></input>
                   <button
                     className="general-button"
-                    onClick={() => handleAddComment()}
+                    onClick={() => handleAddComment(post._id)}
                   >
                     Submit
                   </button>

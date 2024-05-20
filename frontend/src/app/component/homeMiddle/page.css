@@ -41,8 +41,14 @@
   top: 0;
 }
 
+.upload-image-container {
+  display: flex;
+  gap: 1rem;
+}
+
 .upload-image-btn-wrapper {
   display: flex;
+  width: auto;
   gap: 1rem;
 }
 
