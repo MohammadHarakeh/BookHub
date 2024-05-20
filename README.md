@@ -212,6 +212,10 @@ At Book Hub, we harness OpenAI's advanced natural language processing and DALL-E
     sudo systemctl enable mongod
     ```
 
+    | Testing server on postman            |
+    | ------------------------------------ |
+    | ![fsdaf](./readme/HostedPostman.png) |
+
     <br><br>
 
 <!-- Unit Testing -->
